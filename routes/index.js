@@ -4,8 +4,10 @@ const adminRoutes = require('./admin');
 const path = require('path');
 
 const constructorMethod = (app) => {
-    app.use('/', (req, res) => {
-        res.render('broadband/index',{});
+    app.use('/users',userRoutes);
+    app.use('/', broadbandRoutes);
+    app.use('*', (req, res) => {
+        res.sendStatus(404);
     });
 };
 
