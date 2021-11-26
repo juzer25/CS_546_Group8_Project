@@ -41,13 +41,46 @@ router.post('/login',async (req,res)=>{
     try{
         let user = await userData.checkUser(userName,password);
         if(user.authenticated){
-            res.render("broadband/index");
+            req.session.user = {userName: userName.toLowerCase()};
+            res.redirect("/");
         }
         
     }catch(e){
         res.status(400).render('users/login');
     }
 
+});
+
+
+router.get('/profile', async (req,res) => {
+    if(!req.session.user){
+        res.redirect('/');
+    }
+
+    try{
+        let user = await userData.userProfile(req.session.user.userName);
+        if(user){
+            res.render('users/profile', {userName : user.userName,
+                fullName : user.fullName,
+                email : user.email,
+                dateOfBirth : user.dateOfBirth,
+                phoneNo : user.phoneNo,
+                address : user.address,
+                city : user.city,
+                state : user.state,
+                zipCode : user.zipcode})
+        }
+    }catch(e){
+        res.status(404).json({error:e})
+    }
+});
+
+router.get('/logout', async (req,res) => {
+    if(req.session.user){
+        req.session.destroy();
+        res.redirect('/');
+    }
+    
 });
 
 module.exports = router;

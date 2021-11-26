@@ -41,6 +41,14 @@ const exportedMethods = {
         if(!pwdMatch) throw "Either the username and or password is invalid";
         
         return {authenticated: true};
+    },
+
+    async userProfile(userName){
+        const userCollection = await users();
+        let user = await userCollection.findOne({userName: userName}); 
+        if(!user) throw "No user found";
+
+        return user;
     }
     
 };
