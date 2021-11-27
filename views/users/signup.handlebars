@@ -1,14 +1,17 @@
 <h2>Signup Form</h2>
-
+{{#if error}}
+    <p>{{error}}</p>
+{{/if}}
 <form id="signup-form" action="signup" method="POST">
-    <input type="text" name="userName"><br>
-    <input type="password" name="password"><br>
-    <input type="text" name="fullName"><br>
-    <input type="email" name="email"><br>
-    <input type="date" name="dateOfBirth"><br>
-    <input type="number" name="phoneNo"><br>
-    <input type="text" name="address"><br>
-    <input type="text" name="city"><br>
-    <input type="number" name="zipCode"><br>
+    <input type="text" name="userName" placeholder="userName"><br>
+    <input type="password" name="password" placeholder="password"><br>
+    <input type="text" name="fullName" placeholder="fullName"><br>
+    <input type="email" name="email" placeholder="email"><br>
+    <input type="date" name="dateOfBirth" placeholder="dateOfBirth"><br>
+    <input type="number" name="phoneNo" placeholder="phoneNo"><br>
+    <input type="text" name="address" placeholder="address"><br>
+    <input type="text" name="city" placeholder="city"><br>
+    <input type="text" name="state" placeholder="state"><br>
+    <input type="number" name="zipCode" placeholder="zipCode"><br>
     <input type="submit"> 
 </form>

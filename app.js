@@ -33,6 +33,25 @@ app.use(session({
   }
 });*/
 
+app.use('/users/profile', (req,res,next) => {
+  if(!req.session.user){
+    res.redirect('/');
+  }
+  else{
+    next();
+  }
+});
+
+
+app.use('/users/logout', (req,res,next) => {
+  if(!req.session.user){
+    res.redirect('/');
+  }
+  else{
+    next();
+  }
+});
+
 configRoutes(app);
 
 app.listen(3000, () => {
