@@ -4,15 +4,15 @@ const data = require('../data');
 const { checkUser } = require('../data/users');
 const userData = data.users;
 
-router.get('/signup',async(req,res)=>{
+router.get('/signup', async(req, res) => {
     res.render("users/signup");
 });
 
-router.get('/login',async(req,res)=>{
+router.get('/login', async(req, res) => {
     res.render("users/login");
 })
 
-router.post('/signup', async(req,res)=>{
+router.post('/signup', async(req, res) => {
     userName = req.body.userName;
     password = req.body.password;
     fullName = req.body.fullName;
@@ -24,63 +24,64 @@ router.post('/signup', async(req,res)=>{
     state = req.body.state;
     zipCode = req.body.zipCode;
 
-    try{
-        userCreated = await userData.createUser(userName,password,fullName,email,dateOfBirth,phoneNo,address,city,state,zipCode);
-        res.redirect('/login');
-    }
-    catch(e){
-        res.status(400).render("user/signup");
+    try {
+        userCreated = await userData.createUser(userName, password, fullName, email, dateOfBirth, phoneNo, address, city, state, zipCode);
+        res.redirect('/users/login');
+    } catch (e) {
+        res.status(400).render("users/signup");
     }
 });
 
 
-router.post('/login',async (req,res)=>{
+router.post('/login', async(req, res) => {
     let userName = req.body.userName;
     let password = req.body.password;
 
-    try{
-        let user = await userData.checkUser(userName,password);
-        if(user.authenticated){
-            req.session.user = {userName: userName.toLowerCase()};
-            res.redirect("/");
+    try {
+        let user = await userData.checkUser(userName, password);
+        if (user.authenticated) {
+            req.session.user = { userName: userName.toLowerCase() };
+            res.redirect("/broadband");
         }
-        
-    }catch(e){
+
+    } catch (e) {
         res.status(400).render('users/login');
     }
 
 });
 
 
-router.get('/profile', async (req,res) => {
-    if(!req.session.user){
+router.get('/profile', async(req, res) => {
+    if (!req.session.user) {
         res.redirect('/');
     }
 
-    try{
+    try {
         let user = await userData.userProfile(req.session.user.userName);
-        if(user){
-            res.render('users/profile', {userName : user.userName,
-                fullName : user.fullName,
-                email : user.email,
-                dateOfBirth : user.dateOfBirth,
-                phoneNo : user.phoneNo,
-                address : user.address,
-                city : user.city,
-                state : user.state,
-                zipCode : user.zipcode})
+        if (user) {
+            res.render('users/profile', {
+                userName: user.userName,
+                fullName: user.fullName,
+                email: user.email,
+                dateOfBirth: user.dateOfBirth,
+                phoneNo: user.phoneNo,
+                address: user.address,
+                city: user.city,
+                state: user.state,
+                zipCode: user.zipcode
+            })
         }
-    }catch(e){
-        res.status(404).json({error:e})
+    } catch (e) {
+        res.status(404).json({ error: e })
     }
 });
 
-router.get('/logout', async (req,res) => {
-    if(req.session.user){
+router.get('/logout', async(req, res) => {
+    if (req.session.user) {
         req.session.destroy();
         res.redirect('/');
     }
-    
+
 });
 
 module.exports = router;
