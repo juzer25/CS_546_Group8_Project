@@ -1,0 +1,13 @@
+<h2>BroadBand Plans</h2>
+{{#if broadbandList}}
+    <ol>
+    {{#each broadbandList}}
+        <li>{{this.planName}}<br>
+            {{this.price}}<br>
+            {{this.validity}}<br>
+            {{this.limit}}<br>
+            {{this.discount}}<br>
+        </li>
+    {{/each}}
+    </ol>
+{{/if}}

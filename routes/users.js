@@ -24,11 +24,93 @@ router.post('/signup', async(req, res) => {
     state = req.body.state;
     zipCode = req.body.zipCode;
 
-    try {
-        userCreated = await userData.createUser(userName, password, fullName, email, dateOfBirth, phoneNo, address, city, state, zipCode);
-        res.redirect('/users/login');
-    } catch (e) {
-        res.status(400).render("users/signup");
+    if(!userName) {
+        res.status(400).render("users/signup", {error:"Please provide a userName"});
+        return;
+    }
+
+    if(userName.length < 4){
+        res.status(400).render('users/index',{error:"Either the username and or password is invalid"});
+        return ;
+    } 
+
+    if(userName.trim().length === 0){
+        res.status(400).render('users/index',{error:"Either the username and or password is invalid"});
+        return ;
+    }
+
+    if(userName.includes(' ')){
+        res.status(400).render('users/signup',{error:"Either the username and or password is invalid"});
+        return ;
+    }
+
+    let reg = /[ `!@#$%^&*()_=\-=\[\]{};';"\\|,.<>\/?~\n’‘“”—]/g;
+
+    if(reg.test(userName)){
+        res.status(400).render('users/index',{error:"Either the username and or password is invalid"});
+        return ;
+    }
+
+    if(!password) {
+        res.status(400).render("users/signup", {error:"Please provide a password"});
+        return;
+    }
+
+    if(password.length < 6) {
+        res.status(400).render('users/index',{error: "Either the username and or password is invalid"});
+        return;
+    }
+
+    if(password.trim().length === 0){
+        res.status(400).render('users/index',{error: "Either the username and or password is invalid"});
+        return ;
+    }
+
+    if(!fullName) {
+        res.status(400).render("users/signup", {error:"Please provide a fullName"});
+        return;
+    }
+
+    if(!email) {
+        res.status(400).render("users/signup", {error:"Please provide a email"});
+        return;
+    }
+
+    if(!dateOfBirth) {
+        res.status(400).render("users/signup", {error:"Please provide a dateOfBirth"});
+        return;
+    }
+
+    if(!phoneNo) {
+        res.status(400).render("users/signup", {error:"Please provide a phoneNo"});
+        return;
+    }
+
+    if(!address) {
+        res.status(400).render("users/signup", {error:"Please provide a address"});
+        return;
+    }
+
+    if(!city) {
+        res.status(400).render("users/signup", {error:"Please provide a city"});
+        return;
+    }
+
+    if(!state) {
+        res.status(400).render("users/signup", {error:"Please provide a state"});
+        return;
+    }
+
+    if(!zipCode) {
+        res.status(400).render("users/signup", {error:"Please provide a zip code"});
+        return;
+    }
+    try{
+        userCreated = await userData.createUser(userName,password,fullName,email,dateOfBirth,phoneNo,address,city,state,zipCode);
+        res.redirect('login');
+    }
+    catch(e){
+        res.status(400).render("user/signup");
     }
 });
 
@@ -41,7 +123,7 @@ router.post('/login', async(req, res) => {
         let user = await userData.checkUser(userName, password);
         if (user.authenticated) {
             req.session.user = { userName: userName.toLowerCase() };
-            res.redirect("/broadband");
+            res.redirect("/");
         }
 
     } catch (e) {

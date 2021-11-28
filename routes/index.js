@@ -5,7 +5,7 @@ const path = require('path');
 
 const constructorMethod = (app) => {
     app.use('/users', userRoutes);
-    app.use('/broadband', broadbandRoutes);
+    app.use('/', broadbandRoutes);
     app.use('*', (req, res) => {
         res.sendStatus(404);
     });

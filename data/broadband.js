@@ -4,6 +4,14 @@ const broadband = mongoCollections.broadbandPlans;
 
 module.exports = {
 
+    async listPlans(){
+        const broadbandCollection = await broadband();
+        const broadbandList = await broadbandCollection.find({}).toArray();
+        if(!broadbandList) throw "No Plans found";
+
+        return broadbandList;
+    },
+
     async create(planName, price, validity, limit, discount) {
 
         try {

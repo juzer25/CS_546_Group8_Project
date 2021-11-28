@@ -32,6 +32,39 @@ app.use(session({
       next();
   }
 });*/
+/*
+app.use('/broadband/newPlan', (req,res,next) => {
+  if(req.session.user){
+    if(req.session.user.userName === 'admin'){
+      res.redirect('/broadband/newPlan');
+    }
+    else{
+      res.redirect('/')
+    }
+  }
+  else{
+    res.redirect('/')
+  }
+});*/
+
+app.use('/users/profile', (req,res,next) => {
+  if(!req.session.user){
+    res.redirect('/');
+  }
+  else{
+    next();
+  }
+});
+
+
+app.use('/users/logout', (req,res,next) => {
+  if(!req.session.user){
+    res.redirect('/');
+  }
+  else{
+    next();
+  }
+});
 
 configRoutes(app);
 
