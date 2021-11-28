@@ -4,7 +4,7 @@ const adminRoutes = require('./admin');
 const path = require('path');
 
 const constructorMethod = (app) => {
-    app.use('/users',userRoutes);
+    app.use('/users', userRoutes);
     app.use('/', broadbandRoutes);
     app.use('*', (req, res) => {
         res.sendStatus(404);
