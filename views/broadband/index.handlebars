@@ -2,14 +2,14 @@
 {{#if userName}}
     {{#if isAdmin}}
     <h2>{{userName}}</h2>
-    <a>Add Broadband service</a>
-    <a>Update BroadBand service</a>
-    <a>Delete Broadband service</a>
-    <a>Check user Requests</a>
-    <a href="users/logout">Logout</a>
+    <a href="/broadband/newPlan">Add Broadband service</a><br>
+    <a>Update BroadBand service</a><br>
+    <a>Delete Broadband service</a><br>
+    <a>Check user Requests</a><br>
+    <a href="users/logout">Logout</a><br>
     {{else}}
     <h2>{{userName}}</h2>
-    <a href="users/profile">Profile</a>
+    <a href="users/profile">Profile</a><br>
     <a href="users/logout">Logout</a>
     {{/if}}
 {{else}}
