@@ -113,3 +113,8 @@ textarea:focus~.bar:after {
     width: 100%;
     height: 200px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
