@@ -5,7 +5,7 @@ const broadbandData = data.broadband;
 
 router.get('/', async(req, res) => {
     if (req.session.user) {
-        let userName = req.session.user.userName;;
+        let userName = req.session.user.userName;
         if (userName === "admin") {
             res.render('broadband/index', { userName: userName, isAdmin: true });
         } else {
@@ -14,21 +14,19 @@ router.get('/', async(req, res) => {
     } else {
         res.render('broadband/index');
     }
-
 });
 
 
 router.get('/broadband/newPlan', async(req, res) => {
-    if (!req.session.user) {
-        res.redirect('/');
-    } else {
-        if (req.session.user.userName === 'admin') {
-            res.render('broadband/newPlan', { userName: req.session.user.userName });
-        } else {
-            res.redirect('/');
-        }
-    }
-
+    // if (!req.session.user) {
+    //     res.redirect('/');
+    // } else {
+    //     if (req.session.user.userName === 'admin') {
+    res.render('broadband/newPlan');
+    //     } else {, { userName: req.session.user.userName }
+    //         res.redirect('/');
+    //     }
+    // }
 });
 
 router.get('/broadband/broadbandPlans', async(req, res) => {
@@ -58,5 +56,6 @@ router.post('/broadband/insert', async(req, res) => {
             res.status(500).json({ error: e });
     }
 });
+
 
 module.exports = router;
