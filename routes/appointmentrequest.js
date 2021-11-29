@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
-const appointmentRequestData = data.appointmentRequest;
+const appointmentRequestData = data.appointmentrequest;
 router.post('/newrequest', async(req, res) => {
     date=req.body.date;
     queries=req.body.queries;

@@ -1,4 +1,3 @@
-const { appointmentRequest } = require('../config/mongoCollections');
 const mongoCollections = require('../config/mongoCollections');
 const broadband = mongoCollections.appointmentRequest;
 const exportedMethods = {
