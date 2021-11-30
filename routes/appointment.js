@@ -15,7 +15,7 @@ router.post('/appointment/newappointment', async(req, res) => {
     requestType = req.body.requestType;
     try{
         let appointmentCreated = await appointmentRequestData.createappointment(userName,date,queries,requestType);
-        res.redirect('allappointments');
+        res.redirect('appointment/allappointments');
     }
     catch(e){
         res.status(400).render("appointment/newappointment");
