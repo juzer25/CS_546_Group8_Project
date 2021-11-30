@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
+let {ObjectId} = require("mongodb");
 
 const exportedMethods = {
     async createUser(userName, password,fullName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
@@ -104,6 +105,34 @@ const exportedMethods = {
         if(!user) throw "No user found";
 
         return user;
+    },
+
+
+    async updateUser(id,userName, password,fullName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
+        const userCollection = await users();
+        id = ObjectId(id);
+        let updatedUser = {
+            userName:userName,
+            password:password,
+            fullName:fullName,
+            email:email,
+            dateOfBirth:dateOfBirth,
+            phoneNo:phoneNo,
+            address:address,
+            city:city,
+            state:state,
+            zipcode:zipcode
+        }
+        const updateInfo = await userCollection.updateOne(
+            {_id : id},
+            { $set: updatedUser}
+        );
+
+        if(updateInfo.modifiedCount === 0){
+            throw new Error('could not update the record successfully or record does not exist');
+        }
+
+        return true;
     }
     
 };
