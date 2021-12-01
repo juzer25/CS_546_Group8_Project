@@ -161,15 +161,6 @@ router.post('/login', async(req, res) => {
 });
 
 
-
-router.get('/profile', async(req, res) => {
-    if (!req.session.user) {
-        res.redirect('/');
-    }
-
-    try {
-        let user = await userData.userProfile(req.session.user.userName);
-
 router.post('/update', async(req, res)=>{
     if (!req.session.user) {
         res.redirect('/');

@@ -56,7 +56,7 @@ app.use('/users/login' , (req,res,next) => {
   }
 })
 
-app.use('users/signup' , (req,res,next) => {
+app.use('/users/signup' , (req,res,next) => {
   if(req.session.user){
     res.redirect('/');
   }
