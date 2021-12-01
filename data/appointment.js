@@ -8,9 +8,19 @@ const exportedMethods = {
             queries:queries,
             requestType:requestType
         }
-        const userCollection = await appointment();
-        let insertInfo = await userCollection.insertOne(newrequest);
+        const appointmentCollection = await appointment();
+        let insertInfo = await appointmentCollection.insertOne(newrequest);
         return {userInserted: true};
+    },
+    async listappointmentRequest(){
+        const appointmentCollection = await appointment();
+        let appointments = await appointmentCollection.find({}).toArray();
+        if(!appointments) throw "No Appointment found";
+        return appointments;
     }
+
+
+
+    
 };
 module.exports = exportedMethods;

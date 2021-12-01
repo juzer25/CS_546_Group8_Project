@@ -8,7 +8,7 @@
             <label>Username</label>
 	    </div>
         <div class="group">
-            <input type="date" name="dateOfBirth" >
+            <input type="date" name="Date" >
             <span class="bar"></span>
             <label>DATE OF BIRTH</label>
 	    </div>
@@ -18,10 +18,20 @@
             <label>Querise</label>
 	    </div>
         <div class="group">
-            <input type="text" name="Request Type" >
-            <span class="bar"></span>
             <label>Request Type</label>
-	    </div>
+            <br>
+            <span class="bar">
+                <select name="RequestType">  
+                <option value="TechnicalIssue">Technical Issue</option>
+                <option value="NewAppointment">New Appointment</option>
+                <option value="Others">Others</option>
+                </select>
+            </span>
+            
+
+            
+        </div>
+        
     </div>
     <div>
         <input id="reg" type="submit" value="Submit"> 

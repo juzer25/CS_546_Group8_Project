@@ -5,20 +5,30 @@ const appointmentRequestData = data.appointment;
 router.get('/appointment', async(req, res) => {
     res.render("appointment/newappointment")
 });
-router.get('/appointment/allappointments', async(req, res) => {
-    res.render("appointment/allappointments");
-});
-router.post('/appointment/newappointment', async(req, res) => {
-    userName=req.body.userName;
-    date = req.body.date;
-    queries = req.body.queries;
-    requestType = req.body.requestType;
+
+router.post('/appointment', async(req, res) => {
+    userName=req.body.Username;
+    date = req.body.Date;
+    queries = req.body.Querise;
+    requestType = req.body.RequestType;
     try{
-        let appointmentCreated = await appointmentRequestData.createappointment(userName,date,queries,requestType);
-        res.redirect('appointment/allappointments');
+        const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
+        res.redirect('allappointments');
     }
     catch(e){
         res.status(400).render("appointment/newappointment");
     }
+});
+
+
+router.get('/allappointments', async(req, res) => {
+    try{
+        let apts = await appointmentRequestData.listappointmentRequest();
+        res.render('appointment/allappointments', {AppointmentRequest:apts});
+    }
+    catch(e){
+        res.status(500).json({ error: e });
+    }
+    
 });
 module.exports = router;
