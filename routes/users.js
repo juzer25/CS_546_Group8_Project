@@ -239,4 +239,28 @@ router.get('/logout', async(req, res) => {
 
 });
 
+router.delete('/delete', async(req,res) => {
+    let user;
+    try{
+       user = await userData.userProfile(req.session.user.userName);
+    }
+    catch(e){
+        res.sendStatus(404);
+    }
+    try{
+        id = user._id; 
+        deletedUser = await deleteUser(id);
+        if(deletedUser){
+            if (req.session.user) {
+                req.session.destroy();
+                res.redirect('/');
+            }
+        }
+        
+    }
+    catch(e){
+        res.redirect('profile');
+    }
+})
+
 module.exports = router;
