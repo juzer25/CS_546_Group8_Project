@@ -133,6 +133,19 @@ const exportedMethods = {
         }
 
         return true;
+    },
+
+    async deleteUser(id){
+        id = ObjectId(id);
+        const userCollection = await users();
+        const deleteInfo = await userCollection.deleteOne({_id: id});
+        
+        if(deletionInfo.deletedCount === 0){
+            throw `Could not delete user`;
+        }
+
+        return true;
+    
     }
     
 };
