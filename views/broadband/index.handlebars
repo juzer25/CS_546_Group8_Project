@@ -1,4 +1,30 @@
+<div class="container">
+		<div style="width:84%;float:left">
+ 		<ul>
+ 			<li><a href="/">HOME</a></li>
+            {{#if userName}} 
+		        <li><a href="users/profile">PROFILE</a></li>
+                <li><a href="users/logout">LOGOUT</a></li>
+            {{/if}}
+		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
+ 		</ul>	
+ 		</div>
+ 		<div style="width: 16%;float:right">
+        <ul> 
+        {{#if userName}}      
+
+         {{else}}
+          	
+            <li><a href="/users/signup">REGISTER</a></li>
+			<li><a href="/users/login">LOGIN</a></li>
+ 		    
+        {{/if}}	
+        </ul>
+ 		</div>
+</div>
+
 <h1>Welcome to BroadBand Website!!!</h1>
+
 {{#if userName}}
     {{#if isAdmin}}
     <h2>{{userName}}</h2>
@@ -6,6 +32,7 @@
     <a>Update BroadBand service</a><br>
     <a>Delete Broadband service</a><br>
     <a>Check user Requests</a><br>
+
     <a href="users/logout">Logout</a><br>
     {{else}}
     <h2>{{userName}}</h2>
@@ -17,3 +44,12 @@
     <br>
     <a href="users/login">Already have an account? Click here to log-in</a>
 {{/if}}
+
+    
+    {{else}}
+    <h2>{{userName}}</h2>
+    {{/if}}
+
+{{/if}}
+
+

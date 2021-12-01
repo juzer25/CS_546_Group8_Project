@@ -12,3 +12,47 @@
     <input type="number" name="zipCode"><br> --}}
     <input type="submit"> 
 </form>
+
+
+<div class="void">&nbsp
+</div>
+<div class="form_center">
+<form id="newPlan" action="/broadband/insert" method="POST">
+    <legend><h1>NEW PLAN</h1></legend>
+    <div class="inputs">
+	    <div class="group">
+        <input type="text" name="planName">
+        <span class="bar"></span>
+	    <label>NAME OF THE PLAN</label>
+	</div>
+    {{!-- <input type="password" name="password"><br> --}}
+    <div class="group">
+        <input type="text" name="price">
+        <span class="bar"></span>
+        <label>PRICE</label>
+	</div>
+    <div class="group">
+        <input type="text" name="validity">
+        <span class="bar"></span>
+        <label>VALIDITY</label>
+	</div>
+    <div class="group">
+        <input type="text" name="limit">
+        <span class="bar"></span>
+        <label>LIMIT</label>
+	</div>
+    <div class="group">
+        <input type="text" name="discount">
+        <span class="bar"></span>
+        <label>DISCOUNT</label>
+	</div>
+    {{!-- <input type="text" name="address"><br>
+    <input type="text" name="city"><br>
+    <input type="number" name="zipCode"><br> --}}
+    <div>
+        <input id="reg" type="submit" value="Submit"> 
+    </div>
+    </div>
+</form>
+</div>
+
