@@ -213,6 +213,7 @@ router.get('/profile', async(req, res) => {
 
     try {
         let user = await userData.userProfile(req.session.user.userName);
+
         if (user) {
             res.render('users/profile', {
                 userName: user.userName,
