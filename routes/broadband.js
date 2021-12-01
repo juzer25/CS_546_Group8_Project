@@ -8,7 +8,6 @@ router.get('/', async(req, res) => {
 
         let userName = req.session.user.userName;;
 
-        let userName = req.session.user.userName;
 
         if (userName === "admin") {
             res.render('broadband/index', { userName: userName, isAdmin: true });
@@ -57,26 +56,6 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
 });
 
 
-router.post('/broadband/insert', async(req, res) => {
-
-    const broadbandPlans = req.body;
-    try {
-        const { planName, price, validity, limit, discount } = broadbandPlans;
-        const newBroadband = await broadbandData.create(planName, price, validity, limit, discount);
-        // res.json(newBroadband);
-        let plans = [];
-        plans.push(newBroadband)
-        res.redirect('/broadbandPlans');
-    } catch (e) {
-        if (e.statusCode) {
-            res.status(e.statusCode).json({ error: e.message });
-        } else
-            res.status(500).json({ error: e });
-    }
-});
-
-    }
-});
 
 
 router.post('/broadband/insert', async(req, res) => {
