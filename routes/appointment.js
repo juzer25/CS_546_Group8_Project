@@ -29,6 +29,6 @@ router.get('/allappointments', async(req, res) => {
     catch(e){
         res.status(500).json({ error: e });
     }
-    
 });
+
 module.exports = router;
