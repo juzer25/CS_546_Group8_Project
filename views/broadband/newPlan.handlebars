@@ -1,5 +1,18 @@
 <h2>New BroadBand Plan</h2>
 <h2>{{userName}}</h2>
+<form id="newPlan" action="/broadband/insert" method="POST">
+    <input type="text" name="planName"><br>
+    {{!-- <input type="password" name="password"><br> --}}
+    <input type="text" name="price"><br>
+    <input type="text" name="validity"><br>
+    <input type="text" name="limit"><br>
+    <input type="text" name="discount"><br>
+    {{!-- <input type="text" name="address"><br>
+    <input type="text" name="city"><br>
+    <input type="number" name="zipCode"><br> --}}
+    <input type="submit"> 
+</form>
+
 
 <div class="void">&nbsp
 </div>
@@ -42,3 +55,4 @@
     </div>
 </form>
 </div>
+

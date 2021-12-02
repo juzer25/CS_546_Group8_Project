@@ -12,6 +12,9 @@ body {
 .void {
     float: left;
     width: 400px;
+}
+
+.form_center {
     height: 100px;
 }
 
