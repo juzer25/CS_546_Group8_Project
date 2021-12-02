@@ -11,6 +11,18 @@ router.post('/appointment', async(req, res) => {
     date = req.body.Date;
     queries = req.body.Querise;
     requestType = req.body.RequestType;
+    if(!userName) {
+        res.status(400).render("appointment/newappointment", {error:"Please provide a Username"});
+        return;
+    }
+    if(!date) {
+        res.status(400).render("appointment/newappointment", {error:"Please provide a Appointment Date"});
+        return;
+    }
+    if(!queries) {
+        res.status(400).render("appointment/newappointment", {error:"Please provide Queries"});
+        return;
+    }
     try{
         const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
         res.redirect('allappointments');
