@@ -241,7 +241,7 @@ a:focus::before {
   }
   
   input[type=text] {
-    width: 20%;
+    width: 40%;
     margin-bottom: 20px;
     padding: 12px;
     border: 1px solid #ccc;
