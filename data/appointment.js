@@ -18,8 +18,6 @@ const exportedMethods = {
         }
         const appointmentCollection = await appointment();
         let insertInfo = await appointmentCollection.insertOne(newrequest);
-        
-
         return newrequest;
     },
     async listappointmentRequest(){
