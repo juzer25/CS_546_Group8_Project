@@ -48,7 +48,7 @@ router.post('/broadband/insert', async(req, res) => {
         // res.json(newBroadband);
         let plans = [];
         plans.push(newBroadband)
-        res.redirect('/broadbandPlans');
+        res.redirect('/');
     } catch (e) {
         if (e.statusCode) {
             res.status(e.statusCode).json({ error: e.message });
