@@ -25,7 +25,7 @@ router.post('/appointment', async(req, res) => {
     }
     try{
         const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
-        res.render('broadband/index',{userAppointmentRequest:newAppointment});
+        res.redirect('/');
     }
     catch(e){
         res.status(400).render("appointment/newappointment");
