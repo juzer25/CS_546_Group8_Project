@@ -18,7 +18,9 @@ const exportedMethods = {
         }
         const appointmentCollection = await appointment();
         let insertInfo = await appointmentCollection.insertOne(newrequest);
-        return {userInserted: true};
+        
+
+        return newrequest;
     },
     async listappointmentRequest(){
         const appointmentCollection = await appointment();
@@ -26,9 +28,5 @@ const exportedMethods = {
         if(!appointments) throw "No Appointment found";
         return appointments;
     }
-
-
-
-    
 };
 module.exports = exportedMethods;

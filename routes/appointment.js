@@ -11,12 +11,6 @@ router.post('/appointment', async(req, res) => {
     date = req.body.Date;
     queries = req.body.Querise;
     requestType = req.body.RequestType;
-    
-    let CurrentDate = new Date();
-    date = new Date(date);
-
-
-
     if(!userName) {
         res.status(400).render("appointment/newappointment", {error:"Please provide a Username"});
         return;
@@ -29,14 +23,9 @@ router.post('/appointment', async(req, res) => {
         res.status(400).render("appointment/newappointment", {error:"Please provide Queries"});
         return;
     }
-
-    if(date<CurrentDate) {
-        res.status(400).render("appointment/newappointment", {error:"Please select different Date"});
-        return;
-    }
     try{
         const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
-        res.redirect('/');
+        res.render('/');
     }
     catch(e){
         res.status(400).render("appointment/newappointment");
