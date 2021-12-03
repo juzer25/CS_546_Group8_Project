@@ -37,7 +37,7 @@ router.get('/broadband/newPlan', async(req, res) => {
     //     res.redirect('/');
     // } else {
     //     if (req.session.user.userName === 'admin') {
-    res.render('broadband/newPlan');
+    // res.render('broadband/newPlan');
     //     } else {, { userName: req.session.user.userName }
     //         res.redirect('/');
     //     }
@@ -67,7 +67,8 @@ router.post('/broadband/insert', async(req, res) => {
         // res.json(newBroadband);
         let plans = [];
         plans.push(newBroadband)
-        res.redirect('/');
+        res.redirect('/broadband/broadbandPlans');
+
     } catch (e) {
         if (e.statusCode) {
             res.status(e.statusCode).json({ error: e.message });
@@ -79,7 +80,6 @@ router.post('/broadband/insert', async(req, res) => {
 router.post('/broadband/scrap/:name', async(req, res) => {
 
     try {
-        console.log(req.params.name);
         const removeBroadband = await broadbandData.remove(req.params.name);
         if (removeBroadband == 'Success') {
             res.redirect('/broadband/broadbandPlans');
