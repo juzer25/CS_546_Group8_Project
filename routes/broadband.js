@@ -76,5 +76,23 @@ router.post('/broadband/insert', async(req, res) => {
     }
 });
 
+router.post('/broadband/scrap/:name', async(req, res) => {
+
+    try {
+        console.log(req.params.name);
+        const removeBroadband = await broadbandData.remove(req.params.name);
+        if (removeBroadband == 'Success') {
+            res.redirect('/broadband/broadbandPlans');
+        }
+    } catch (e) {
+        if (e.statusCode) {
+            res.status(e.statusCode).json({ error: e.message });
+        } else
+            res.status(500).json({ error: e.message });
+    }
+
+
+});
+
 
 module.exports = router;
