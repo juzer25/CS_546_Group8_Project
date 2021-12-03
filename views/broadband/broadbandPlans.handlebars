@@ -32,9 +32,10 @@
             <td colspan="3">{{this.validity}}</td>
             <td colspan="3">{{this.limit}}</td>
             <td colspan="3">{{this.discount}}</td>
-            <td colspan="3"><input class="subs" id="reg" type="submit" value="Subscribe"></td>
-            <br><br>
-            
+            <form method="post">
+            <td colspan="3"><button type="submit" class="subs" id="reg" formaction="/broadband/subs/{{this.planName}}">Subscribe</button></td>
+            <td colspan="3"><button type="submit" class="subs" formenctype="text/plain" formmethod="post" id="reg" formaction="/broadband/scrap/{{this.planName}}">Delete</button></td>
+            </form><br><br>
         </tr>{{/each}}
     </table>
 </div>

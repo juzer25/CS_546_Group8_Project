@@ -4,10 +4,10 @@ const broadband = mongoCollections.broadbandPlans;
 
 module.exports = {
 
-    async listPlans(){
+    async listPlans() {
         const broadbandCollection = await broadband();
         const broadbandList = await broadbandCollection.find({}).toArray();
-        if(!broadbandList) throw "No Plans found";
+        if (!broadbandList) throw "No Plans found";
 
         return broadbandList;
     },
@@ -34,5 +34,24 @@ module.exports = {
             } else
                 throw { statusCode: 500, message: `Internal Server error` };
         }
+    },
+    async remove(name) {
+
+        try {
+            const broadbandCollection = await broadband();
+            const deletionInfo = await broadbandCollection.deleteOne({ planName: name });
+            if (deletionInfo.deletedCount === 0) {
+                throw { statusCode: 400, message: `Could not delete Plan` };
+            }
+            return 'Success';
+        } catch (e) {
+            if (e.statusCode) {
+                throw { statusCode: e.statusCode, message: e.message };
+            } else
+                throw { statusCode: 500, message: `Internal Server error` };
+        }
+
+
+
     }
 };
