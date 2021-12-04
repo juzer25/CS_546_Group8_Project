@@ -2,17 +2,24 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const broadbandData = data.broadband;
+const appointmentRequestData = data.appointment;
 
 router.get('/', async(req, res) => {
     if (req.session.user) {
-
-        let userName = req.session.user.userName;;
+        let userappointment;
+        let userName = req.session.user.userName;
+        try{
+            userappointment = await appointmentRequestData.requestOfuser(userName);
+            //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});
+        }catch(e){
+            res.status(500).json({ error: e });
+        }
 
 
         if (userName === "admin") {
             res.render('broadband/index', { userName: userName, isAdmin: true });
         } else {
-            res.render('broadband/index', { userName: userName, isAdmin: false });
+            res.render('broadband/index', { userName: userName, appointmentdate:userappointment ,isAdmin: false });
         }
     } else {
         res.render('broadband/index');
