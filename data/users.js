@@ -3,7 +3,7 @@ const users = mongoCollections.users;
 let {ObjectId} = require("mongodb");
 
 const exportedMethods = {
-    async createUser(userName, password,fullName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
+    async createUser(userName, password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
 
     if(!userName) throw "Please provide a userName"
 
@@ -24,9 +24,9 @@ const exportedMethods = {
     if(password.includes(' ')) throw "Invalid password";
 
 
-    if(!fullName) throw "Please provide full name"
+    if(!firstName) throw "Please provide full name"
         
-    
+    if(!lastName) throw "Please provide full name"
 
     if(!email) throw "Please provide email"
         
@@ -59,7 +59,8 @@ const exportedMethods = {
         let newUser = {
             userName:userName,
             password:password,
-            fullName:fullName,
+            firstName:firstName,
+            lastName : lastName,
             email:email,
             dateOfBirth:dateOfBirth,
             phoneNo:phoneNo,
@@ -83,6 +84,10 @@ const exportedMethods = {
     },
 
     async checkUser(userName , password){
+        /**
+         * this is a temporary code. Will remove code after 
+         * seed file is made.
+         */
         if (userName === 'admin' && password==='admin'){
             return {authenticated: true};
         }
@@ -108,13 +113,14 @@ const exportedMethods = {
     },
 
 
-    async updateUser(id,userName, password,fullName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
+    async updateUser(id,userName, password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
         const userCollection = await users();
         id = ObjectId(id);
         let updatedUser = {
             userName:userName,
             password:password,
-            fullName:fullName,
+            firstName:firstName,
+            lastName:lastName,
             email:email,
             dateOfBirth:dateOfBirth,
             phoneNo:phoneNo,
@@ -126,6 +132,29 @@ const exportedMethods = {
         const updateInfo = await userCollection.updateOne(
             {_id : id},
             { $set: updatedUser}
+        );
+
+        if(updateInfo.modifiedCount === 0){
+            throw new Error('could not update the record successfully or record does not exist');
+        }
+
+        return true;
+    },
+
+    async updatePlan(userName,plan,cardDetails){
+        const userCollection = await users();
+        let user = await userCollection.findOne({userName: userName}); 
+        selected = {
+            "broadbandPlanId": plan._id,
+            "startDate":new Date(),
+            "endData":plan.validity
+        }
+        user.planSelected.push(selected);
+        user.cardDetails.push(cardDetails);
+
+        const updateInfo = await userCollection.updateOne(
+            {_id : user._id},
+            { $set: {planSelected:user.planSelected,cardDetails:user.cardDetails}}
         );
 
         if(updateInfo.modifiedCount === 0){

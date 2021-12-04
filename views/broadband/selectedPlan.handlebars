@@ -1,0 +1,62 @@
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+<h2>selected Plan</h2>
+
+<div class="row">
+  <div class="col-75">
+    <div class="container-form">
+      <form id="myForm" method="POST">
+
+          <label for="planName">Plan Name </label><input type="text" id="planName" name="planName" value="{{planName}}" readonly>
+          <label for="price">Price </label><input type="text" id="price" name="price" value="{{price}}" readonly>
+          <label for="validity">Validity </label><input type="text" id="validity" name="validity" value="{{validity}}" readonly>
+          <label for="limit">Limit </label><input type="text" id="limit" name="limit" value="{{limit}}" readonly>
+          <label for="discount">Discount </label><input type="text" id="discount" name="discount" value="{{discount}}" readonly>
+
+<div class="icon-container">
+              <i class="fa fa-cc-visa" style="color:navy;"></i>
+              <i class="fa fa-cc-amex" style="color:blue;"></i>
+              <i class="fa fa-cc-mastercard" style="color:red;"></i>
+              <i class="fa fa-cc-discover" style="color:orange;"></i>
+            </div>
+           
+         
+           <p> Please select type of the card </p>
+          <select name="cars" id="cars">
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit card</option>
+            </select>
+         <br>
+         <br>
+         <br>
+
+            <input type="text" id="username" name="Username" placeholder="Username">
+            <input type="text" id="cname" name="cardname" placeholder="Name on Card">
+            <label for="ccnum">Credit card number</label>
+            <input type="text" id="ccnum" name="cardnumber" placeholder="Card Number">
+            <label for="expmonth">Exp Month</label>
+            <input type="text" id="expmonth" name="expmonth" placeholder="Month">
+
+            <div class="row">
+              <div class="col-50">
+                <label for="expyear">Exp Year</label>
+                <input type="text" id="expyear" name="expyear" placeholder="Year">
+              </div>
+              <div class="col-50">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="CVV">
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <input type="submit" value="Continue to checkout" class="btn">
+        <input name= '_method' value="PUT" type='hidden'>
+      </form>
+    </div>
+</div>
+
+<a href='/broadband/broadbandPlans'>Go Back</a>
+
+
+<script src="/public/js/checkoutScript.js"></script>

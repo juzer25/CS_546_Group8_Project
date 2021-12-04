@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const { checkUser } = require('../data/users');
+const broadbandData = require('../data/broadband');
 const userData = data.users;
+
 
 router.get('/signup', async(req, res) => {
     res.render("users/signup");
@@ -23,7 +25,8 @@ router.get('/update', async(req,res) => {
                 res.render('users/update', {
                     userName: user.userName,
                     password: user.password,
-                    fullName: user.fullName,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     email: user.email,
                     dateOfBirth: user.dateOfBirth,
                     phoneNo: user.phoneNo,
@@ -43,7 +46,8 @@ router.get('/update', async(req,res) => {
 router.post('/signup', async(req, res) => {
     userName = req.body.userName;
     password = req.body.password;
-    fullName = req.body.fullName;
+    firstName = req.body.firstName;
+    lastName = req.body.lastName;
     email = req.body.email;
     dateOfBirth = req.body.dateOfBirth;
     phoneNo = req.body.phoneNo;
@@ -94,7 +98,12 @@ router.post('/signup', async(req, res) => {
         return ;
     }
 
-    if(!fullName) {
+    if(!firstName) {
+        res.status(400).render("users/signup", {error:"Please provide a fullName"});
+        return;
+    }
+
+    if(!lastName) {
         res.status(400).render("users/signup", {error:"Please provide a fullName"});
         return;
     }
@@ -134,11 +143,11 @@ router.post('/signup', async(req, res) => {
         return;
     }
     try{
-        userCreated = await userData.createUser(userName,password,fullName,email,dateOfBirth,phoneNo,address,city,state,zipCode);
+        userCreated = await userData.createUser(userName,password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipCode);
         res.redirect('login');
     }
     catch(e){
-        res.status(400).render("user/signup");
+        res.status(400).render("users/signup");
     }
 });
 
@@ -161,14 +170,15 @@ router.post('/login', async(req, res) => {
 });
 
 
-router.post('/update', async(req, res)=>{
+router.put('/update', async(req, res)=>{
     if (!req.session.user) {
         res.redirect('/');
     }
     //let updatedUser = {};
     let newUserName = req.body.userName.toLowerCase();
     let newPassword = req.body.password;
-    let newFullName = req.body.fullName;
+    let newFirstName = req.body.firstName;
+    let newLastName = req.body.lastName;
     let newEmail = req.body.email;
     let newDateOfBirth = req.body.dateOfBirth;
     let newPhoneNo = req.body.phoneNo;
@@ -191,13 +201,13 @@ router.post('/update', async(req, res)=>{
         updatedUser.zipCode = newZipCode;*/
         let id = user._id.toString();
         let updatedUser = await userData.updateUser(id,newUserName,newPassword,
-            newFullName,newEmail,newDateOfBirth,newPhoneNo,newAddress,newCity,
+            newFirstName,newLastName,newEmail,newDateOfBirth,newPhoneNo,newAddress,newCity,
             newState,newZipCode);
         if(updatedUser){
             if(newUserName !== req.session.user.userName ){
                 req.session.user.userName = newUserName;
             }
-            res.redirect('profile');
+            res.render('users/updated');
         }
         
     }
@@ -217,7 +227,8 @@ router.get('/profile', async(req, res) => {
         if (user) {
             res.render('users/profile', {
                 userName: user.userName,
-                fullName: user.fullName,
+                firstName: user.firstName,
+                lastName:user.lastName,
                 email: user.email,
                 dateOfBirth: user.dateOfBirth,
                 phoneNo: user.phoneNo,
@@ -236,6 +247,53 @@ router.get('/logout', async(req, res) => {
     if (req.session.user) {
         req.session.destroy();
         res.redirect('/');
+    }
+
+});
+
+router.put('/checkout', async(req,res)=>{
+    if(!req.session.user){
+        res.redirect('/');
+    }
+    let user;
+    let plan
+
+    try{
+        user = await userData.userProfile(req.session.user.userName);
+    }
+    catch(e){
+        res.status(404);
+    }
+
+    let data = req.body;
+    try{
+        plan = await broadbandData.getPlan(data.planName);
+    }
+    catch(e)
+    {
+        res.status(404);
+    }
+    let updateUser
+    try{
+        updateUser = await userData.updatePlan(req.session.user.userName, plan, data.cardDetails);
+    }
+    catch(e){
+        res.sendStatus(500);
+    }
+
+    let adduser;
+    try{
+        adduser = await broadbandData.addUser(user._id,plan);
+    }
+    catch(e)
+    {
+        res.status(404);
+    }
+    
+
+    if(updateUser === true && adduser === true){
+        //res.render('checkout/bill');
+        res.json({ success: true});
     }
 
 });

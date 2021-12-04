@@ -1,16 +1,19 @@
 <h2>Update Profile</h2>
 
 <form id='update-form' action='update' method='POST'>
-    <input type='text' name='userName' id='userName' value={{userName}}>
-    <input type='password' name='password' id='password' value={{password}}>
-    <input type='text' name='fullName' id='fullName' value={{fullName}}>
-    <input type='email' name='email' id='email' value={{email}}>
-    <input type='date' name='dateOfBirth' id='dateOfBirth' value={{dateOfBirth}}>
-    <input type='number' name='phoneNo' id='phoneNo'value={{phoneNo}}>
-    <input type='text' name='address' id='address' value={{address}}>
-    <input type='text' name='city' id='city' value={{city}}>
-    <input type='text' name='state' id='state' value={{state}}>
-    <input type='number' name='zipCode' id='zipCode' value={{zipCode}}>
+    <input type='text' name='userName' id='userName' value='{{userName}}'>
+    <input type='password' name='password' id='password' value='{{password}}'>
+    <input type='text' name='firstName' id='firstName' value='{{firstName}}'>
+    <input type='text' name='lastName' id='lastName' value='{{lastName}}'>
+    <input type='email' name='email' id='email' value='{{email}}'>
+    <input type='date' name='dateOfBirth' id='dateOfBirth' value='{{dateOfBirth}}'>
+    <input type='number' name='phoneNo' id='phoneNo'value='{{phoneNo}}'>
+    <input type='text' name='address' id='address' value='{{address}}'>
+    <input type='text' name='city' id='city' value='{{city}}'>
+    <input type='text' name='state' id='state' value='{{state}}'>
+    <input type='number' name='zipCode' id='zipCode' value='{{zipCode}}'>
 
     <input type='submit' value="Update Profile">
+
+    <input name= '_method' value="PUT" type='hidden'>
 </form>
