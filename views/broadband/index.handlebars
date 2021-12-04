@@ -28,9 +28,6 @@
 </div>
 
 <h1>Welcome to BroadBand Website!!!</h1>
-{{#if userAppointmentRequest}}
-        <p>Hey {{userAppointmentRequest.userName}} you have appointment on {{userAppointmentRequest.date}}</p>
-{{/if}}
 <img id="myimg" src="/public/img/server_room.jpg" width="100%" height="100%">
 		<br><br>
 		<div style="width:100%">
@@ -70,7 +67,15 @@
 
     <a href="users/logout">Logout</a><br>
     {{else}}
+
     <h2>{{userName}}</h2>
+	{{#if appointmentdate}}
+    	
+    		{{#each appointmentdate}}
+				<p>Hey {{userName}} you have appointment on {{date}}</p>
+			{{/each}}
+		
+	{{/if}}
     {{/if}}
 
 {{/if}}
