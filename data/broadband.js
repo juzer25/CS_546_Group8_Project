@@ -82,5 +82,15 @@ module.exports = {
 
 
 
+    },
+    async plansubscribeByusers(planName){
+        const broadbandCollection = await broadband();
+        let planssucribebyusers = await broadbandCollection.find({planName: planName}).toArray();
+        if(!planssucribebyusers) throw "This plan is selected by nobody";
+
+        return planssucribebyusers;
+
+
+
     }
 };
