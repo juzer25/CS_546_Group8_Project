@@ -23,16 +23,20 @@ router.post('/appointment', async(req, res) => {
         res.status(400).render("appointment/newappointment", {error:"Please provide Queries"});
         return;
     }
+    let CurrentDate = new Date();
+    date = new Date(date);
+    if(date<CurrentDate) {
+        res.status(400).render("appointment/newappointment", {error:"Please select different Date"});
+        return;
+    }
     try{
         const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
-        res.render('/');
+        res.render('broadband/index',{userAppointmentRequest:newAppointment});
     }
     catch(e){
         res.status(400).render("appointment/newappointment");
     }
 });
-
-
 router.get('/allappointments', async(req, res) => {
     try{
         let apts = await appointmentRequestData.listappointmentRequest();
