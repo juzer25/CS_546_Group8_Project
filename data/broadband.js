@@ -12,6 +12,16 @@ module.exports = {
         return broadbandList;
     },
 
+    async getPlan(planName){
+        const broadbandCollection = await broadband();
+        
+        let plan = await broadbandCollection.findOne({planName: planName});
+
+        if(!plan) throw "Plan not found";
+
+        return plan;
+    },
+
     async create(planName, price, validity, limit, discount) {
 
         try {
@@ -35,6 +45,25 @@ module.exports = {
                 throw { statusCode: 500, message: `Internal Server error` };
         }
     },
+
+    async addUser(id,plan){
+        plan.userID.push(id);
+
+        const broadbandCollection = await broadband();
+
+        const updateInfo = await broadbandCollection.updateOne(
+            {_id : plan._id},
+            { $set: plan}
+        );
+
+        if(updateInfo.modifiedCount === 0){
+            throw new Error('could not update the record successfully or record does not exist');
+        }
+
+        return true;
+
+    },
+
     async remove(name) {
 
         try {

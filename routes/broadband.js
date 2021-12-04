@@ -76,7 +76,17 @@ router.post('/broadband/insert', async(req, res) => {
             res.status(500).json({ error: e });
     }
 });
+router.get('/broadband/subscribe/:name', async (req,res) =>{
+    planName =  req.params.name;
+    try{
+        let plan = await broadbandData.getPlan(planName);
 
+        res.render('broadband/selectedPlan',{planName:plan.planName, price:plan.price,validity:plan.validity,limit:plan.limit,discount:plan.discount});
+    }
+    catch(e){
+        res.sendStatus(404);
+    }
+})
 router.post('/broadband/scrap/:name', async(req, res) => {
 
     try {
