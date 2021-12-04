@@ -28,11 +28,9 @@
 </div>
 
 <h1>Welcome to BroadBand Website!!!</h1>
-{{!-- {{#if userAppointmentRequest}}
-    {{#each userAppointmentRequest}}
-        <p>Hey {{this.userName}} you have appointment on {{this.date}}</p>
-    {{/each}}
-{{/if}} --}}
+{{#if userAppointmentRequest}}
+        <p>Hey {{userAppointmentRequest.userName}} you have appointment on {{userAppointmentRequest.date}}</p>
+{{/if}}
 <img id="myimg" src="/public/img/server_room.jpg" width="100%" height="100%">
 		<br><br>
 		<div style="width:100%">

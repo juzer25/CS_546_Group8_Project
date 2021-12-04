@@ -3,7 +3,10 @@ const router = express.Router();
 const data = require('../data');
 const appointmentRequestData = data.appointment;
 router.get('/appointment', async(req, res) => {
-    res.render("appointment/newappointment")
+    if(!req.session.user){
+        res.redirect('/');
+    }
+    res.render("appointment/newappointment",{userName:req.session.user.userName})
 });
 
 router.post('/appointment', async(req, res) => {
@@ -25,18 +28,20 @@ router.post('/appointment', async(req, res) => {
     }
     let CurrentDate = new Date();
     date = new Date(date);
-    if(date<CurrentDate) {
-        res.status(400).render("appointment/newappointment", {error:"Please select different Date"});
+    if(date<CurrentDate){
+        res.status(400).render("appointment/newappointment", {error:"Please Select Different Date"});
         return;
     }
     try{
         const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
-        res.render('broadband/index',{userAppointmentRequest:newAppointment});
+        res.render("broadband/index",{userAppointmentRequest:newAppointment});
     }
     catch(e){
         res.status(400).render("appointment/newappointment");
     }
 });
+
+
 router.get('/allappointments', async(req, res) => {
     try{
         let apts = await appointmentRequestData.listappointmentRequest();
