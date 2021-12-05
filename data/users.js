@@ -6,10 +6,12 @@ const exportedMethods = {
     async createUser(userName, password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
 
     if(!userName) throw "Please provide a userName"
-
+    
     if(userName.length < 4) throw "Invalid username";
 
     if(userName.trim().length === 0) throw "Invalid username";
+
+    userName = userName.toLowerCase();
 
     let reg = /[ `!@#$%^&*()_=\-=\[\]{};';"\\|,.<>\/?~\n’‘“”—]/g;
     if(reg.test(userName)) throw "Invalid username";
@@ -95,20 +97,20 @@ const exportedMethods = {
 
     if(!state.trim().length === 0) throw "Please provide state"
 
-    if(!zipCode) throw "Please provide zipCode"
+    if(!zipcode) throw "Please provide zipcode"
     
-    if(zipCode.length === 0) throw "Please provide zipCode"
+    if(zipcode.length === 0) throw "Please provide zipcode"
 
-    if(zipCode.trim().length === 0) throw "Please provide zipCode"
+    if(zipcode.trim().length === 0) throw "Please provide zipcode"
     
     zipReg = /\d{5}/;
 
-    if(!zipReg.test(zipCode)){
-        throw "Please provide a valid zipCode";
+    if(!zipReg.test(zipcode)){
+        throw "Please provide a valid zipcode";
     }
     
         let newUser = {
-            userName:userName,
+            userName:userName.toLowerCase(),
             password:password,
             firstName:firstName,
             lastName : lastName,
@@ -124,7 +126,10 @@ const exportedMethods = {
         } 
 
         const userCollection = await users();
-
+        let userExist = await userCollection.findOne({userName: userName});
+        if(userExist){
+            throw "User already exists";
+        }
         let insertInfo = await userCollection.insertOne(newUser);
 
         if(insertInfo.insertCount === 0){
@@ -139,13 +144,13 @@ const exportedMethods = {
          * this is a temporary code. Will remove code after 
          * seed file is made.
          */
-        if (userName === 'admin' && password==='admin'){
+        /*if (userName === 'admin' && password==='admin'){
             return {authenticated: true};
-        }
+        }*/
         const userCollection = await users();
         let user = await userCollection.findOne({userName: userName}); 
         
-        if(user === null) throw "Either the username and or password is invalid";
+        if(user === null) return {authenticated: false};
 
         
         //pwdMatch = await bcrypt.compare(password , user.password);
@@ -256,16 +261,16 @@ const exportedMethods = {
 
     if(!state.trim().length === 0) throw "Please provide state"
 
-    if(!zipCode) throw "Please provide zipCode"
+    if(!zipcode) throw "Please provide zipcode"
     
-    if(zipCode.length === 0) throw "Please provide zipCode"
+    if(zipcode.length === 0) throw "Please provide zipcode"
 
-    if(zipCode.trim().length === 0) throw "Please provide zipCode"
+    if(zipcode.trim().length === 0) throw "Please provide zipcode"
     
     zipReg = /\d{5}/;
 
-    if(!zipReg.test(zipCode)){
-        throw "Please provide a valid zipCode";
+    if(!zipReg.test(zipcode)){
+        throw "Please provide a valid zipcode";
     }
         
         const userCollection = await users();
