@@ -18,6 +18,9 @@
 <div class="void">&nbsp
 </div>
 <div class="form_center">
+{{#if error}}
+	<p>{{error}}</p>
+{{/if}}
 <form id="login-form" action="login" method="POST">
     <legend><h1>LOGIN</h1></legend>
     <div class="inputs">

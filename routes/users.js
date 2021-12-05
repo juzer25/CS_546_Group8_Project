@@ -397,7 +397,7 @@ router.post('/login', async(req, res) => {
         }
 
     } catch (e) {
-        res.status(400).render('users/login');
+        res.status(500).render('users/login');
     }
 
 });
