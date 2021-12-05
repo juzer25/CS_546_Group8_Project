@@ -24,37 +24,88 @@ const exportedMethods = {
     if(password.includes(' ')) throw "Invalid password";
 
 
-    if(!firstName) throw "Please provide full name"
-        
-    if(!lastName) throw "Please provide full name"
+    if(!firstName) throw "Please provide full name";
 
-    if(!email) throw "Please provide email"
+    if(firstName.length === 0) throw "Please provide full name";
         
+    if(firstName.trim().length === 0) throw "Please provide full name";
+
+    if(!lastName) throw "Please provide Last name"
+
+    if(!lastName.length === 0) throw "Please provide Last name"
+
+    if(!lastName.trim().length === 0) throw "Please provide Last name"
+
+    if(!email) throw "Please provide an email"
+        
+    if(email.length === 0) throw "Please provide an email"
+
+    if(email.trim().length === 0) throw "Please provide an email";
+
+    //emailReg = /^[a-zA-Z0-9][(-._|a-zA-Z0-9)]+@[(.com|.org|.edu)]$]/;
+    emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(!emailReg.test(email)){
+        throw "Please provide a valid email"
+    }
     
-
     if(!dateOfBirth) throw "Please provide date of birth"
         
-    
+    if(dateOfBirth.length === 0) throw "Please provide date of birth"
 
+    if(dateOfBirth.trim().length === 0 )throw "Please provide date of birth";
+
+    d1 = new Date(dateOfBirth+" 00:00:00");
+    d2 = new Date();
+    diffDate = d2.getFullYear() - d1.getFullYear();
+    if(d1 > d2 || d1 === d2){
+        throw "Please provide a valid date of birth";
+    }
+
+    if(diffDate < 18){
+        throw "Date of birth is not valid user should be 18 or above"
+    }
+    
     if(!phoneNo) throw "Please provide phoneNo."
         
-    
+    if(phoneNo.length === 0) throw "Please provide phoneNo."    
 
+    if(phoneNo.trim().length === 0) throw "Please provide phoneNo."
+    
+    let val = /[0-9]{3}\-[0-9]{3}\-[0-9]{4}/;
+    if(!val.test(phoneNo)){
+        throw "Please provide a valid phone number";
+    }
+    
     if(!address) throw "Please provide address"
         
+    if(address.length === 0) throw "Please provide address"
+    
+    if(address.trim().length === 0) throw "Please provide address"
     
 
     if(!city) throw "Please provide city"
         
-    
+    if(city.length === 0) throw "Please provide city"
+
+    if(city.trim().length === 0) throw "Please provide city"
 
     if(!state) throw "Please provide state"
         
-    
+    if(state.length === 0) throw "Please provide state"
 
+    if(!state.trim().length === 0) throw "Please provide state"
 
     if(!zipCode) throw "Please provide zipCode"
-        
+    
+    if(zipCode.length === 0) throw "Please provide zipCode"
+
+    if(zipCode.trim().length === 0) throw "Please provide zipCode"
+    
+    zipReg = /\d{5}/;
+
+    if(!zipReg.test(zipCode)){
+        throw "Please provide a valid zipCode";
+    }
     
         let newUser = {
             userName:userName,
@@ -114,6 +165,109 @@ const exportedMethods = {
 
 
     async updateUser(id,userName, password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
+        
+        if(!userName) throw "Please provide a userName"
+
+    if(userName.length < 4) throw "Invalid username";
+
+    if(userName.trim().length === 0) throw "Invalid username";
+
+    let reg = /[ `!@#$%^&*()_=\-=\[\]{};';"\\|,.<>\/?~\n’‘“”—]/g;
+    if(reg.test(userName)) throw "Invalid username";
+
+
+    if(!password) throw "Please provide password"
+        
+    if(password.length < 6) throw "Invalid password";
+
+    if(password.trim().length === 0) throw "Invalid password";
+
+    if(password.includes(' ')) throw "Invalid password";
+
+
+    if(!firstName) throw "Please provide full name";
+
+    if(firstName.length === 0) throw "Please provide full name";
+        
+    if(firstName.trim().length === 0) throw "Please provide full name";
+
+    if(!lastName) throw "Please provide Last name"
+
+    if(!lastName.length === 0) throw "Please provide Last name"
+
+    if(!lastName.trim().length === 0) throw "Please provide Last name"
+
+    if(!email) throw "Please provide an email"
+        
+    if(email.length === 0) throw "Please provide an email"
+
+    if(email.trim().length === 0) throw "Please provide an email";
+
+    //emailReg = /^[a-zA-Z0-9][(-._|a-zA-Z0-9)]+@[(.com|.org|.edu)]$]/;
+    emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(!emailReg.test(email)){
+        throw "Please provide a valid email"
+    }
+    
+    if(!dateOfBirth) throw "Please provide date of birth"
+        
+    if(dateOfBirth.length === 0) throw "Please provide date of birth"
+
+    if(dateOfBirth.trim().length === 0 )throw "Please provide date of birth";
+
+    d1 = new Date(dateOfBirth+" 00:00:00");
+    d2 = new Date();
+    diffDate = d2.getFullYear() - d1.getFullYear();
+    if(d1 > d2 || d1 === d2){
+        throw "Please provide a valid date of birth";
+    }
+
+    if(diffDate < 18){
+        throw "Date of birth is not valid user should be 18 or above"
+    }
+    
+    if(!phoneNo) throw "Please provide phoneNo."
+        
+    if(phoneNo.length === 0) throw "Please provide phoneNo."    
+
+    if(phoneNo.trim().length === 0) throw "Please provide phoneNo."
+    
+    let val = /[0-9]{3}\-[0-9]{3}\-[0-9]{4}/;
+    if(!val.test(phoneNo)){
+        throw "Please provide a valid phone number";
+    }
+    
+    if(!address) throw "Please provide address"
+        
+    if(address.length === 0) throw "Please provide address"
+    
+    if(address.trim().length === 0) throw "Please provide address"
+    
+
+    if(!city) throw "Please provide city"
+        
+    if(city.length === 0) throw "Please provide city"
+
+    if(city.trim().length === 0) throw "Please provide city"
+
+    if(!state) throw "Please provide state"
+        
+    if(state.length === 0) throw "Please provide state"
+
+    if(!state.trim().length === 0) throw "Please provide state"
+
+    if(!zipCode) throw "Please provide zipCode"
+    
+    if(zipCode.length === 0) throw "Please provide zipCode"
+
+    if(zipCode.trim().length === 0) throw "Please provide zipCode"
+    
+    zipReg = /\d{5}/;
+
+    if(!zipReg.test(zipCode)){
+        throw "Please provide a valid zipCode";
+    }
+        
         const userCollection = await users();
         id = ObjectId(id);
         let updatedUser = {
