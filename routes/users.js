@@ -33,7 +33,7 @@ router.get('/update', async(req,res) => {
                     address: user.address,
                     city: user.city,
                     state: user.state,
-                    zipCode: user.zipcode
+                    zipcode: user.zipcode
                 });
             }
         } catch (e) {
@@ -54,7 +54,7 @@ router.post('/signup', async(req, res) => {
     address = xss(req.body.address);
     city = xss(req.body.city);
     state = xss(req.body.state);
-    zipCode = xss(req.body.zipCode);
+    zipcode = xss(req.body.zipcode);
 
     if(!userName) {
         res.status(400).render("users/signup",
@@ -62,7 +62,7 @@ router.post('/signup', async(req, res) => {
          password:password, firstName:firstName, lastName:lastName,
         email:email, dateOfBirth:dateOfBirth,
     phoneNo:phoneNo, address:address,city:city,state:state,
-    zipCode:zipCode});
+    zipcode:zipcode});
         return;
     }
 
@@ -71,7 +71,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     } 
 
@@ -80,7 +80,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -89,7 +89,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -100,7 +100,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -109,7 +109,7 @@ router.post('/signup', async(req, res) => {
         password:"", firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -118,7 +118,7 @@ router.post('/signup', async(req, res) => {
         password:'', firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -127,7 +127,7 @@ router.post('/signup', async(req, res) => {
         password:'', firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -136,7 +136,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:'', lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -145,7 +145,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:'',
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -154,7 +154,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -163,7 +163,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -172,7 +172,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -183,7 +183,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -192,7 +192,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:'',
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -204,7 +204,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:'',
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -213,7 +213,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:'',
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     
     }
@@ -223,7 +223,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -232,7 +232,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -241,7 +241,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -251,7 +251,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -260,7 +260,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:'',city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -269,7 +269,7 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:'',state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -278,54 +278,61 @@ router.post('/signup', async(req, res) => {
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:'',
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
-    if(!zipCode) {
+    if(!zipcode) {
         res.status(400).render("users/signup", {error:"Please provide a zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
-    if(zipCode.length === 0){
+    if(zipcode.length === 0){
         res.status(400).render("users/signup", {error:"Please provide a zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
-    if(zipCode.trim().length === 0){
+    if(zipcode.trim().length === 0){
         res.status(400).render("users/signup", {error:"Please provide a zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
     zipReg = /\d{5}/;
 
-    if(!zipReg.test(zipCode)){
+    if(!zipReg.test(zipcode)){
         res.status(400).render("users/signup", {error:"Please provide a valid zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
     try{
-        userCreated = await userData.createUser(userName,password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipCode);
+        check = await userData.checkUser(userName.toLowerCase(),password);
+    }
+    catch(e){
+        res.status(400).render("users/signup", {error:"user already exists"});
+    }
+
+    try{
+        userCreated = await userData.createUser(userName,password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipcode);
         res.redirect('login');
     }
     catch(e){
-        res.status(400).render("users/signup");
+        res.status(500).render("users/signup",{error:"Something went wrong"});
     }
 });
 
@@ -384,6 +391,10 @@ router.post('/login', async(req, res) => {
             req.session.user = { userName: userName.toLowerCase() };
             res.redirect("/");
         }
+        else{
+            res.status(404).render('users/login',{error:"No such user"});
+            return;
+        }
 
     } catch (e) {
         res.status(400).render('users/login');
@@ -407,7 +418,7 @@ router.put('/update', async(req, res)=>{
     address = xss(req.body.address);
     city = xss(req.body.city);
     state = xss(req.body.state);
-    zipCode = xss(req.body.zipCode);
+    zipcode = xss(req.body.zipcode);
 
 
 
@@ -417,7 +428,7 @@ router.put('/update', async(req, res)=>{
          password:password, firstName:firstName, lastName:lastName,
         email:email, dateOfBirth:dateOfBirth,
     phoneNo:phoneNo, address:address,city:city,state:state,
-    zipCode:zipCode});
+    zipcode:zipcode});
         return;
     }
 
@@ -426,7 +437,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     } 
 
@@ -435,7 +446,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -444,7 +455,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -455,7 +466,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -464,7 +475,7 @@ router.put('/update', async(req, res)=>{
         password:"", firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -473,7 +484,7 @@ router.put('/update', async(req, res)=>{
         password:'', firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -482,7 +493,7 @@ router.put('/update', async(req, res)=>{
         password:'', firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return ;
     }
 
@@ -491,7 +502,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:'', lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -500,7 +511,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:'',
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -509,7 +520,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -518,7 +529,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -527,7 +538,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -538,7 +549,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:'', dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -547,7 +558,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:'',
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -559,7 +570,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:'',
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -568,7 +579,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:'',
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     
     }
@@ -577,7 +588,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -586,7 +597,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -595,7 +606,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -605,7 +616,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:'', address:address,city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -614,7 +625,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:'',city:city,state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -623,7 +634,7 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:'',state:state,
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
@@ -632,45 +643,45 @@ router.put('/update', async(req, res)=>{
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:'',
-   zipCode:zipCode});
+   zipcode:zipcode});
         return;
     }
 
-    if(!zipCode) {
+    if(!zipcode) {
         res.status(400).render("users/update", {error:"Please provide a zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
-    if(zipCode.length === 0){
+    if(zipcode.length === 0){
         res.status(400).render("users/update", {error:"Please provide a zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
-    if(zipCode.trim().length === 0){
+    if(zipcode.trim().length === 0){
         res.status(400).render("users/update", {error:"Please provide a zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
     zipReg = /\d{5}/;
 
-    if(!zipReg.test(zipCode)){
+    if(!zipReg.test(zipcode)){
         res.status(400).render("users/update", {error:"Please provide a valid zip code",userName:userName,
         password:password, firstName:firstName, lastName:lastName,
        email:email, dateOfBirth:dateOfBirth,
    phoneNo:phoneNo, address:address,city:city,state:state,
-   zipCode:''});
+   zipcode:''});
         return;
     }
 
@@ -685,7 +696,7 @@ router.put('/update', async(req, res)=>{
     let newAddress = req.body.address;
     let newCity = req.body.city;
     let newState = req.body.state;
-    let newZipCode = req.body.zipCode;*/
+    let newzipcode = req.body.zipcode;*/
     try{
         let user = await userData.userProfile(req.session.user.userName);
         //if(newUserName===user.userName && newPassword===user.password && )
@@ -698,11 +709,11 @@ router.put('/update', async(req, res)=>{
         updatedUser.address = newAddress;
         updatedUser.city = newCity;
         updatedUser.state = newState;
-        updatedUser.zipCode = newZipCode;*/
+        updatedUser.zipcode = newzipcode;*/
         let id = user._id.toString();
         let updatedUser = await userData.updateUser(id,userName,password,
             firstName,lastName,email,dateOfBirth,phoneNo,address,city,
-            state,zipCode);
+            state,zipcode);
         if(updatedUser){
             if(userName !== req.session.user.userName ){
                 req.session.user.userName = userName;
@@ -735,7 +746,7 @@ router.get('/profile', async(req, res) => {
                 address: user.address,
                 city: user.city,
                 state: user.state,
-                zipCode: user.zipcode
+                zipcode: user.zipcode
             })
         }
     } catch (e) {
