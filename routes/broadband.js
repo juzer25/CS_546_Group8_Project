@@ -54,12 +54,17 @@ router.get('/broadband/newPlan', async(req, res) => {
 
 router.get('/broadband/broadbandPlans', async(req, res) => {
     let userName;
+    let isAdmin = false;
     if(req.session.user){
         userName = req.session.user.userName;
     }
+
+    if(userName === 'admin'){
+        isAdmin = true;
+    }
     try {
         let broadbandList = await broadbandData.listPlans();
-        res.render('broadband/broadbandPlans', { broadbandList: broadbandList, userName:userName });
+        res.render('broadband/broadbandPlans', {broadbandList: broadbandList, userName:userName, isAdmin:isAdmin});
     } catch (e) {
         res.status(500).json({ error: e });
 

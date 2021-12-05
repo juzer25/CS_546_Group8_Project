@@ -33,6 +33,20 @@
 </div>
 
 <h1>Welcome to BroadBand Website!!!</h1>
+<div>
+	{{#if userName}}
+
+	{{#if appointmentdate}}
+    	
+    		{{#each appointmentdate}}
+				<p>Hey {{userName}} you have an appointment on {{date}}</p>
+			{{/each}}
+		
+	{{/if}}
+    
+
+{{/if}}
+</div>
 <img id="myimg" src="/public/img/server_room.jpg" width="100%" height="100%">
 		<br><br>
 		<div style="width:100%">
@@ -61,16 +75,3 @@
 		<div class="box">
 			<h3>Reliable Speed</h3><h5>Speed is most important factor, we deliver unmatchable speed.</h5>
 		</div>
-
-{{#if userName}}
-
-	{{#if appointmentdate}}
-    	
-    		{{#each appointmentdate}}
-				<p>Hey {{userName}} you have appointment on {{date}}</p>
-			{{/each}}
-		
-	{{/if}}
-    
-
-{{/if}}

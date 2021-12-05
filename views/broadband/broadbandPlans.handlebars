@@ -11,11 +11,12 @@
  		</div>
  		<div style="width: 16%;float:right"> 
         {{#if userName}}
-            <h2>{{userName}}</h2>
+            <h2 class="userType">{{userName}}</h2>
         {{else}}
+        <h2 class="userType" hidden>guest</h2>
  		<ul>	
             <li><a href="/users/signup">REGISTER</a></li>
-			<li><a href="users/login">LOGIN</a></li>
+			<li><a href="/users/login">LOGIN</a></li>
  		</ul>
          {{/if}}	
  		</div>
@@ -39,9 +40,11 @@
             <td colspan="3"><p id='limit'>{{this.limit}}</p></td>
             <td colspan="3"><p id='discount'>{{this.discount}}</p></td>
             
+          
             <td colspan="3"><button type="submit" class="select" >Subscribe</button></td>
+         
             <td colspan="3"><button type="submit" class="delete" >Delete</button></td>
-            
+         
         </tr>{{/each}}
     </table>
 </div>
