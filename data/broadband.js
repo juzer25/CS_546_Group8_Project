@@ -1,3 +1,4 @@
+let {ObjectId} = require("mongodb");
 const { create } = require('express-handlebars');
 const mongoCollections = require('../config/mongoCollections');
 const broadband = mongoCollections.broadbandPlans;
@@ -16,6 +17,18 @@ module.exports = {
         const broadbandCollection = await broadband();
         
         let plan = await broadbandCollection.findOne({planName: planName});
+
+        if(!plan) throw "Plan not found";
+
+        return plan;
+    },
+
+    //get plan by ID
+    async getPlanById(planId){
+        ObjectId(planId);
+        const broadbandCollection = await broadband();
+
+        plan = await broadbandCollection.findOne({_id:planId});
 
         if(!plan) throw "Plan not found";
 

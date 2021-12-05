@@ -53,9 +53,13 @@ router.get('/broadband/newPlan', async(req, res) => {
 });
 
 router.get('/broadband/broadbandPlans', async(req, res) => {
+    let userName;
+    if(req.session.user){
+        userName = req.session.user.userName;
+    }
     try {
         let broadbandList = await broadbandData.listPlans();
-        res.render('broadband/broadbandPlans', { broadbandList: broadbandList });
+        res.render('broadband/broadbandPlans', { broadbandList: broadbandList, userName:userName });
     } catch (e) {
         res.status(500).json({ error: e });
 
