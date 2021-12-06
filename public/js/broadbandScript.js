@@ -1,8 +1,19 @@
 (function($) {
     let table = document.getElementById('plansTable');
-    var plansTable = $('#plansTable');
+    
+    var plansTable = $('#plansTable'),
+        userType = $('.userType');
     $(document).ready(function(){
         plansTable.on('click','.select',function(){
+            console.log(userType.text().toString())
+            if(userType.text() === 'admin'){
+                return;
+            }
+
+            if(userType.text() === 'guest'){
+                window.location = '/users/login';
+                return ;
+            }
             var currentRow = $(this).closest('tr');
 
             var col1 = currentRow.find('#planName').html();

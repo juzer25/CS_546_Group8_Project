@@ -3,12 +3,18 @@
  		<ul>
  			<li><a href="/">HOME</a></li>
             {{#if userName}} 
-		        <li><a href="users/profile">PROFILE</a></li>
+				
                 <li><a href="users/logout">LOGOUT</a></li>
+				{{#if isAdmin}}
+				<li><a href="/broadband/newPlan">Add Broadband service</a></li>
+    			<li><a>Update BroadBand service</a></li>
+    			<li><a>Delete Broadband service</a></li>
+    			<li><a>Check user Requests</a></li>
+				{{else}}
+		        <li><a href="users/profile">PROFILE</a></li>
                 <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+				{{/if}}
 
-
-                
             {{/if}}
 			<li><a href="/broadband/broadbandPlans">PLANS</a></li>
 		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
@@ -17,18 +23,30 @@
  		<div style="width: 16%;float:right">
         <ul> 
         {{#if userName}}      
-
+			<h2>{{userName}}</h2>
          {{else}}
-          	
             <li><a href="/users/signup">REGISTER</a></li>
 			<li><a href="/users/login">LOGIN</a></li>
- 		    
         {{/if}}	
         </ul>
  		</div>
 </div>
 
 <h1>Welcome to BroadBand Website!!!</h1>
+<div>
+	{{#if userName}}
+
+	{{#if appointmentdate}}
+    	
+    		{{#each appointmentdate}}
+				<p>Hey {{userName}} you have an appointment on {{date}}</p>
+			{{/each}}
+		
+	{{/if}}
+    
+
+{{/if}}
+</div>
 <img id="myimg" src="/public/img/server_room.jpg" width="100%" height="100%">
 		<br><br>
 		<div style="width:100%">
@@ -57,26 +75,3 @@
 		<div class="box">
 			<h3>Reliable Speed</h3><h5>Speed is most important factor, we deliver unmatchable speed.</h5>
 		</div>
-
-{{#if userName}}
-    {{#if isAdmin}}
-    <h2>{{userName}}</h2>
-    <a href="/broadband/newPlan">Add Broadband service</a><br>
-    <a>Update BroadBand service</a><br>
-    <a>Delete Broadband service</a><br>
-    <a>Check user Requests</a><br>
-
-    <a href="users/logout">Logout</a><br>
-    {{else}}
-
-    <h2>{{userName}}</h2>
-	{{#if appointmentdate}}
-    	
-    		{{#each appointmentdate}}
-				<p>Hey {{userName}} you have appointment on {{date}}</p>
-			{{/each}}
-		
-	{{/if}}
-    {{/if}}
-
-{{/if}}

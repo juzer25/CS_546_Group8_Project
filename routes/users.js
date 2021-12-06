@@ -397,7 +397,7 @@ router.post('/login', async(req, res) => {
         }
 
     } catch (e) {
-        res.status(400).render('users/login');
+        res.status(500).render('users/login');
     }
 
 });
@@ -831,6 +831,34 @@ router.delete('/delete', async(req,res) => {
     catch(e){
         res.redirect('profile');
     }
-})
+});
+
+router.get("/profile/myPlans" , async (req,res)=>{
+    if(!req.session.user){
+        res.redirect('/');
+    }
+    let user
+    try{
+        user = await userData.userProfile(req.session.user.userName);
+    }
+    catch(e){
+        res.status(500);
+    }
+
+    let userPlans = [];
+
+    for (const plans of user.planSelected) {
+        try{
+            let broadbandPlan = await broadbandData.getPlanById(plans.broadbandPlanId);
+            userPlans.push(broadbandPlan);
+        }
+        catch(e){
+            res.status(404);
+        }   
+    }
+
+    res.render('users/myPlans', {user:user, plans:userPlans});
+    
+});
 
 module.exports = router;

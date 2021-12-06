@@ -4,15 +4,21 @@
 		<div style="width:84%;float:left">
  		<ul>
  			<li><a href="/">HOME</a></li>
-             <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+             <!-- Don't think we need this link if we are already on that page -->
+             <!--<li><a href="/broadband/broadbandPlans">PLANS</a></li>-->
 		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
  		</ul>	
  		</div>
  		<div style="width: 16%;float:right"> 
+        {{#if userName}}
+            <h2 class="userType">{{userName}}</h2>
+        {{else}}
+        <h2 class="userType" hidden>guest</h2>
  		<ul>	
             <li><a href="/users/signup">REGISTER</a></li>
-			<li><a href="users/login">LOGIN</a></li>
- 		</ul>	
+			<li><a href="/users/login">LOGIN</a></li>
+ 		</ul>
+         {{/if}}	
  		</div>
 </div>
 <h2 class="table_heading">Broadband Plans</h2>
@@ -38,9 +44,11 @@
             <td colspan="4"><p id='ststs'>{{this.userID.length}}</p></td>
 
             
+          
             <td colspan="3"><button type="submit" class="select" >Subscribe</button></td>
+         
             <td colspan="3"><button type="submit" class="delete" >Delete</button></td>
-            
+         
         </tr>{{/each}}
     </table>
 </div>
