@@ -93,7 +93,5 @@ module.exports = {
                 throw { statusCode: 500, message: `Internal Server error` };
         }
 
-
-
     }
 };
