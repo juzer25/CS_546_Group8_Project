@@ -23,16 +23,17 @@
 {{/if}}
 <form id="login-form" action="login" method="POST">
     <legend><h1>LOGIN</h1></legend>
+	<div id="error" hidden></div>
     <div class="inputs">
 	    <div class="group">
-            <input type="text" name="userName">
+            <input type="text" id="userName" name="userName">
             <span class="bar"></span>
-	        <label>USERNAME</label>
+	        <label for="userName">USERNAME</label>
 	    </div>
         <div class="group">
-            <input type="password" name="password">
+            <input type="password" id="password" name="password">
             <span class="bar"></span>
-	        <label>PASSWORD</label>
+	        <label for="password">PASSWORD</label>
 	    </div>
     </div>
     <div>
