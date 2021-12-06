@@ -195,6 +195,8 @@ router.post('/signup', async(req, res) => {
    zipcode:zipcode});
         return;
     }
+    //let tempDate = dateOfBirth;
+    //tempDate = tempDate.split("-").reverse().join("-");
 
     d1 = new Date(dateOfBirth+" 00:00:00");
     d2 = new Date();

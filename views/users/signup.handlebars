@@ -26,61 +26,62 @@
 <div class="form_center">
 <form id="signup-form" name="registration" action="signup" method="POST">
     <legend><h1>REGISTRATION FORM</h1></legend>
+    <div id="error" hidden></div>
     <div class="inputs">
         <div class="group"> 
             <input type="text" id="userName" name="userName" value='{{userName}}'>
             <span class="bar"></span>
-            <label for="userName">USERNAME</label>
+            <label id="1" for="userName">USERNAME</label>
 	    </div>
         <div class="group">
             <input type="password" id="password" name="password" value='{{password}}'>
             <span class="bar"></span>
-            <label for="password">PASSWORD</label>
+            <label id="2" for="password">PASSWORD</label>
 	    </div>
         <div class="group">
             <input type="text" id="firstName" name="firstName" value='{{firstName}}' >
             <span class="bar"></span>
-            <label for="firstName">FIRST NAME</label>
+            <label id="3" for="firstName">FIRST NAME</label>
 	    </div>
         <div class="group">
             <input type="text" id="lastName" name="lastName" value='{{lastName}}' >
             <span class="bar"></span>
-            <label for="lastName">LAST NAME</label>
+            <label id="4" for="lastName">LAST NAME</label>
 	    </div>
         <div class="group">
             <input type="email" id="email" name="email" value='{{email}}' >
             <span class="bar"></span>
-            <label for="email">EMAIL</label> 
+            <label id="5" for="email">EMAIL</label> 
 	    </div>
         <div class="group">
-            <input type="date" id="dob" name="dateOfBirth" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value='{{dateOfBirth}}'>
+            <input type="date" id="dob" name="dateOfBirth" value='{{dateOfBirth}}'>
             <span class="bar"></span>
-            <label for="dob">DATE OF BIRTH</label>
+            <label id="6" for="dob">DATE OF BIRTH</label>
 	    </div>
         <div class="group">
             <input type="text" id="phoneNo" name="phoneNo" value='{{phoneNo}}' >
             <span class="bar"></span>
-            <label for="phoneNo">PHONE NUMBER</label>
+            <label id="7" for="phoneNo">PHONE NUMBER</label>
 	    </div>
         <div class="group">
             <input type="text" id="addr" name="address" value='{{address}}' >
             <span class="bar"></span>
-            <label for="addr">ADDRESS</label>
+            <label id="8" for="addr">ADDRESS</label>
 	    </div>
         <div class="group">
             <input type="text" id="city" name="city" value='{{city}}' >
             <span class="bar"></span>
-            <label for="city">CITY</label>
+            <label id="9" for="city">CITY</label>
 	    </div>
         <div class="group">
             <input type="text" id="state" name="state" value='{{state}}'>
             <span class="bar"></span>
-            <label for="state">STATE</label>
+            <label id="10" for="state">STATE</label>
 	    </div>
         <div class="group">
             <input type="text" id="zip" name="zipcode" value='{{zipcode}}'>
             <span class="bar"></span>
-            <label for="zip">ZIPCODE</label>
+            <label id="11" for="zip">ZIPCODE</label>
 	    </div>
     </div>
     <div>
@@ -88,3 +89,6 @@
     </div>
 </form>
 </div>
+
+
+<script src="/public/js/signup.js"></script>
