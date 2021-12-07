@@ -124,7 +124,7 @@ router.get('/broadband/subscribe/:name', async (req,res) =>{
         res.redirect('/broadband/broadbandPlans');
         return;
     }
-    //let val = atob(req.query.val);
+    let val = atob(req.query.val);
     //console.log(val);
     if(val !== 'true'){
         res.redirect('broadbandPlans');

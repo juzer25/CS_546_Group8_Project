@@ -35,6 +35,9 @@
             if(responseMessage.success){
                 window.location = '/checkout/bill';
             }
+            else{
+                window.location = '/broadband/broadbandPlans';
+            }
         });
     });
 
