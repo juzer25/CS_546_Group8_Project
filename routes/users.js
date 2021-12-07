@@ -778,6 +778,7 @@ router.put('/checkout', async(req,res)=>{
         res.status(404);
     }
 
+
     let data = req.body;
     try{
         plan = await broadbandData.getPlan(data.planName);
@@ -786,6 +787,17 @@ router.put('/checkout', async(req,res)=>{
     {
         res.status(404);
     }
+    if(user.planSelected.length != 0){
+        for(let e of user.planSelected){
+             let pid = plan._id;
+             if(pid.toString() === e.broadbandPlanId.toString()){
+                res.json({ success: false});
+                return;
+             }
+        }
+    }
+    
+
     let updateUser
     try{
         updateUser = await userData.updatePlan(req.session.user.userName, plan, data.cardDetails);

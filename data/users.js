@@ -305,9 +305,17 @@ const exportedMethods = {
         let user = await userCollection.findOne({userName: userName}); 
         selected = {
             "broadbandPlanId": plan._id,
-            "startDate":new Date(),
+            "startDate":new Date().toString(),
             "endData":plan.validity
         }
+
+        for(let e of user.planSelected){
+            let pid = plan._id;
+            if(pid.toString() === e.broadbandPlanId.toString()){
+               throw "Plan already selected";
+            }
+       }
+
         user.planSelected.push(selected);
         user.cardDetails.push(cardDetails);
 
