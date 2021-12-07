@@ -1,24 +1,36 @@
-<h2>My Plans</h2>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
 
+<h2>My Plans</h2>
+<a href="/users/profile">Back to Profile</a>
 {{#if user}}
     {{#if plans}}
         <div class="my_plan">
+        <table id='plansTable' border="0">
+        <tr>
+            <th colspan="3">Plan Name</th>
+            <th colspan="3">Validity</th>
+            <th colspan="3">Limit</th>
+
+            <th colspan="3"></th>
+        </tr>
         {{#each plans}}
-            <dl>
-                <dt>Plan Name</dt>
-                <dd>{{this.planName}}</dd>
-
-                <dt>Validity</dt>
-                <dd>{{this.validity}}</dd>
-
-                <dt>Limit</dt>
-                <dd>{{this.limit}}</dd>
-
-            </dl>
-            <button>Remove Plan</button>
-        {{/each}}
+        <tr>
+            <td colspan="3"><p id='planName'>{{this.planName}}</p></td>
+            
+            <td colspan="3"><p id='validity'>{{this.validity}}</p></td>
+            <td colspan="3"><p id='limit'>{{this.limit}}</p></td>
+            
+            <td colspan="3"><button type="submit" class="select" >Remove Plan</button></td>
+         
+            
+        </tr>{{/each}}
+    </table>
         </div>
+    
     {{else}}
         <p>No plans selected currently.</p>
     {{/if}}
 {{/if}}
+
+<script src="/public/js/removePlan.js"></script>

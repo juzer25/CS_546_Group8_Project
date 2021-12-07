@@ -323,6 +323,28 @@ const exportedMethods = {
         return true;
     },
 
+    async removePlan(userName , planId){
+        const userCollection = await users();
+        let user = await userCollection.findOne({userName: userName}); 
+        for(let plans of user.planSelected){
+            if(planId === plans.broadbandPlanId.toString()){
+                let i = user.planSelected.indexOf(plans);
+                user.planSelected.splice(i,1);
+            }
+        }
+
+        const updateInfo = await userCollection.updateOne(
+            {_id : user._id},
+            { $set: {planSelected:user.planSelected}}
+        );
+
+        if(updateInfo.modifiedCount === 0){
+            throw new Error('could not update the record successfully or record does not exist');
+        }
+
+        return true;
+    },
+
     async deleteUser(id){
         id = ObjectId(id);
         const userCollection = await users();
