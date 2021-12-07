@@ -1,10 +1,15 @@
+//var trial = require('bcrypt');
+//var saltRounds = 16;
 (function($) {
     let table = document.getElementById('plansTable');
     
     var plansTable = $('#plansTable'),
         userType = $('.userType');
+    
+    let btnClicked = false;
     $(document).ready(function(){
         plansTable.on('click','.select',function(){
+            btnClicked = true;
             console.log(userType.text().toString())
             if(userType.text() === 'admin'){
                 return;
@@ -23,8 +28,12 @@
             var col5 = currentRow.find('#discount').html();
 
             console.log(col1);
-
-            window.location = 'subscribe/'+col1;
+            if(btnClicked){
+                //let hashed =  bcrypt.hash(btnClicked,saltRounds);
+                //console.log();
+                window.location = 'subscribe/'+col1+'?val='+btoa(''+btnClicked+'');;
+            }
+            
         });
     });
 })(window.jQuery);

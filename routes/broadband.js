@@ -109,7 +109,31 @@ router.post('/broadband/insert', async(req, res) => {
     }
 });
 router.get('/broadband/subscribe/:name', async (req,res) =>{
+    //console.log(req.query.val);
+    if(!req.session.user){
+        res.redirect('/users/login');
+        return;
+    }
+
+    if(req.session.user.userName === 'admin'){
+        res.redirect('broadbandPlans');
+        return;
+    }
+    
+    if(!req.query.val){
+        res.redirect('/broadband/broadbandPlans');
+        return;
+    }
+    //let val = atob(req.query.val);
+    //console.log(val);
+    if(val !== 'true'){
+        res.redirect('broadbandPlans');
+        return;
+    }
     planName =  req.params.name;
+    
+
+    
     try{
         let plan = await broadbandData.getPlan(planName);
 
