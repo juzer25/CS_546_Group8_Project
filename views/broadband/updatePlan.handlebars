@@ -1,0 +1,59 @@
+<div class="container">
+		<div style="width:84%;float:left">
+ 		<ul>
+ 			<li><a href="/">HOME</a></li>
+             <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
+ 		</ul>	
+ 		</div>
+ 		<div style="width: 16%;float:right"> 
+ 		<ul>	
+            <li><a href="/users/signup">REGISTER</a></li>
+			<li><a href="users/login">LOGIN</a></li>
+ 		</ul>	
+ 		</div>
+</div>
+
+
+<div class="void">&nbsp
+</div>
+<div class="form_center">
+<form id="newPlan" action="/broadband/update" method="POST">
+    <legend><h1>NEW PLAN</h1></legend>
+    <div class="inputs">
+	    <div class="group">
+        <input type="text" name="planName" value="{{plan.planName}}" disabled>
+        <span class="bar"></span>
+	    <label>NAME OF THE PLAN</label>
+	</div>
+    {{!-- <input type="password" name="password"><br> --}}
+    <div class="group">
+        <input type="text" name="price" value="{{plan.price}}">
+        <span class="bar"></span>
+        <label>PRICE</label>
+	</div>
+    <div class="group">
+        <input type="text" name="validity" value="{{plan.validity}}">
+        <span class="bar"></span>
+        <label>VALIDITY</label>
+	</div>
+    <div class="group">
+        <input type="text" name="limit" value="{{plan.limit}}">
+        <span class="bar"></span>
+        <label>LIMIT</label>
+	</div>
+    <div class="group">
+        <input type="text" name="discount" value="{{plan.discount}}">
+        <span class="bar"></span>
+        <label>DISCOUNT</label>
+	</div>
+    {{!-- <input type="text" name="address"><br>
+    <input type="text" name="city"><br>
+    <input type="number" name="zipCode"><br> --}}
+    <div>
+        <input id="reg" type="submit" value="Update"> 
+    </div>
+    </div>
+</form>
+</div>
+

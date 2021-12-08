@@ -1,6 +1,9 @@
 const mongoCollections = require('../config/mongoCollections');
+const bcrypt = require('bcrypt');
 const users = mongoCollections.users;
 let {ObjectId} = require("mongodb");
+
+const saltRounds = 16;
 
 const exportedMethods = {
     async createUser(userName, password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
@@ -108,10 +111,12 @@ const exportedMethods = {
     if(!zipReg.test(zipcode)){
         throw "Please provide a valid zipcode";
     }
+
+    let hashedpwd = await bcrypt.hash(password,saltRounds);
     
         let newUser = {
             userName:userName.toLowerCase(),
-            password:password,
+            password:hashedpwd,
             firstName:firstName,
             lastName : lastName,
             email:email,
@@ -148,15 +153,17 @@ const exportedMethods = {
             return {authenticated: true};
         }*/
         const userCollection = await users();
-        let user = await userCollection.findOne({userName: userName}); 
+        let user = await userCollection.findOne({userName: userName.toLowerCase()}); 
         
         if(user === null) return {authenticated: false};
 
         
         //pwdMatch = await bcrypt.compare(password , user.password);
-        pwdMatch = (password === user.password);
-        if(!pwdMatch) throw "Either the username and or password is invalid";
+        //pwdMatch = (password === user.password);
+        pwdMatch = await bcrypt.compare(password , user.password);
         
+        if(!pwdMatch) throw "Either the username and or password is invalid";
+         
         return {authenticated: true};
     },
 
@@ -164,7 +171,7 @@ const exportedMethods = {
         const userCollection = await users();
         let user = await userCollection.findOne({userName: userName}); 
         if(!user) throw "No user found";
-
+        
         return user;
     },
 
@@ -275,6 +282,15 @@ const exportedMethods = {
         
         const userCollection = await users();
         id = ObjectId(id);
+        const user = await this.userProfile(userName);
+
+        pwdMatch = await bcrypt.compare(password , user.password);
+        
+        if(!pwdMatch){
+            password = await bcrypt.hash(password,saltRounds);
+    
+        }
+
         let updatedUser = {
             userName:userName,
             password:password,
