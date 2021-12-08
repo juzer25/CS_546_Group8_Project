@@ -305,15 +305,45 @@ const exportedMethods = {
         let user = await userCollection.findOne({userName: userName}); 
         selected = {
             "broadbandPlanId": plan._id,
-            "startDate":new Date(),
+            "startDate":new Date().toString(),
             "endData":plan.validity
         }
+
+        for(let e of user.planSelected){
+            let pid = plan._id;
+            if(pid.toString() === e.broadbandPlanId.toString()){
+               throw "Plan already selected";
+            }
+       }
+
         user.planSelected.push(selected);
         user.cardDetails.push(cardDetails);
 
         const updateInfo = await userCollection.updateOne(
             {_id : user._id},
             { $set: {planSelected:user.planSelected,cardDetails:user.cardDetails}}
+        );
+
+        if(updateInfo.modifiedCount === 0){
+            throw new Error('could not update the record successfully or record does not exist');
+        }
+
+        return true;
+    },
+
+    async removePlan(userName , planId){
+        const userCollection = await users();
+        let user = await userCollection.findOne({userName: userName}); 
+        for(let plans of user.planSelected){
+            if(planId === plans.broadbandPlanId.toString()){
+                let i = user.planSelected.indexOf(plans);
+                user.planSelected.splice(i,1);
+            }
+        }
+
+        const updateInfo = await userCollection.updateOne(
+            {_id : user._id},
+            { $set: {planSelected:user.planSelected}}
         );
 
         if(updateInfo.modifiedCount === 0){

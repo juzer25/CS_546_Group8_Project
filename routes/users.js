@@ -778,6 +778,7 @@ router.put('/checkout', async(req,res)=>{
         res.status(404);
     }
 
+
     let data = req.body;
     try{
         plan = await broadbandData.getPlan(data.planName);
@@ -786,6 +787,17 @@ router.put('/checkout', async(req,res)=>{
     {
         res.status(404);
     }
+    if(user.planSelected.length != 0){
+        for(let e of user.planSelected){
+             let pid = plan._id;
+             if(pid.toString() === e.broadbandPlanId.toString()){
+                res.json({ success: false});
+                return;
+             }
+        }
+    }
+    
+
     let updateUser
     try{
         updateUser = await userData.updatePlan(req.session.user.userName, plan, data.cardDetails);
@@ -810,6 +822,56 @@ router.put('/checkout', async(req,res)=>{
     }
 
 });
+
+
+router.post('/removePlan', async(req,res)=>{
+    if(!req.session.user){
+        res.redirect('/');
+    }
+    let user;
+    let plan;
+
+    try{
+        user = await userData.userProfile(req.session.user.userName);
+    }
+    catch(e){
+        res.status(404);
+    }
+
+    let data = req.body;
+    try{
+        plan = await broadbandData.getPlan(data.planName);
+    }
+    catch(e)
+    {
+        res.status(404);
+    }
+    let updateUser
+    try{
+        updateUser = await userData.removePlan(req.session.user.userName, plan._id.toString());
+    }
+    catch(e){
+        res.sendStatus(500);
+    }
+
+    let userRemoved;
+    try{
+        userRemoved = await broadbandData.removeUser(user._id,plan);
+    }
+    catch(e)
+    {
+        res.status(404);
+    }
+    
+
+    if(updateUser === true && userRemoved === true){
+        //res.render('checkout/bill');
+        res.json({ success: true});
+    }
+
+});
+
+
 
 router.delete('/delete', async(req,res) => {
     let user;

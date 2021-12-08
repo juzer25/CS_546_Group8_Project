@@ -32,7 +32,7 @@ app.use(session({
   secret: 'some secret string!',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 1600000 }
 })
 );
 //Need to check which route to take for logged in user...

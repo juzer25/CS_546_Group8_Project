@@ -77,6 +77,30 @@ module.exports = {
 
     },
 
+    async removeUser(id , plan){
+        const broadbandCollection = await broadband();
+        for(let user of plan.userID){
+            if(id.toString() === user.toString())
+            {
+                let i = plan.userID.indexOf(user);
+                plan.userID.splice(i,1);
+            }
+        }
+
+        const updateInfo = await broadbandCollection.updateOne(
+            {_id : plan._id},
+            { $set: {userID: plan.userID}}
+        );
+
+        if(updateInfo.modifiedCount === 0){
+            throw new Error('could not update the record successfully or record does not exist');
+        }
+
+        return true;
+
+
+    },
+
     async remove(name) {
 
         try {
