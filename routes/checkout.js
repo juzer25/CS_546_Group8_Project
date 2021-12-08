@@ -5,12 +5,12 @@ const xss = require('xss');
 const userCardData = data.checkout;
 
 router.get('/checkout', async(req, res) => {
-   // if (req.session.user) {
+    if (req.session.user) {
         res.render("checkout/checkout")
-    // }
-    // else {
-    //     res.redirect('/');
-    // }
+    }
+    else {
+        res.redirect('/');
+    }
 });
 
 
@@ -19,8 +19,8 @@ router.get('/checkout/bill', async(req, res) => {
 });
 
 router.post('/payment', async(req, res) => {
-    let userName = "shivank";
-    //let userName = xss(req.session.user.userName);
+    //let userName = "shivank";
+    let userName = xss(req.session.user.userName);
     let nameOfCardHolder = xss(req.body.cardname);
     let cardNumber = xss(req.body.cardnumber);
     let expirationMonth = xss(req.body.expmonth);
@@ -169,7 +169,7 @@ router.post('/payment', async(req, res) => {
     }
     //TODO: check if cvv should be added to database or not
     
-       // if (req.session.user) {
+        if (req.session.user) {
             try{
             // let userName = req.session.user.userName;
 
@@ -179,9 +179,9 @@ router.post('/payment', async(req, res) => {
             catch(e){
                 res.status(500).json({ error: e });
             }
-        // }else {
-        //     res.redirect('/');
-        // }
+        }else {
+            res.redirect('/');
+        }
     
  
 });
