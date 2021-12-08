@@ -19,33 +19,35 @@
 </div>
 <div class="form_center">
 <form id="newPlan" action="/broadband/update" method="POST">
-    <legend><h1>NEW PLAN</h1></legend>
+    <legend><h1>UPDATE PLAN</h1></legend>
     <div class="inputs">
+        <input  type="hidden" name="id" value="{{plan._id}}" >
+
 	    <div class="group">
         <input type="text" name="planName" value="{{plan.planName}}" disabled>
         <span class="bar"></span>
-	    <label>NAME OF THE PLAN</label>
+	    <label for="planName">NAME OF THE PLAN</label>
 	</div>
     {{!-- <input type="password" name="password"><br> --}}
     <div class="group">
         <input type="text" name="price" value="{{plan.price}}">
         <span class="bar"></span>
-        <label>PRICE</label>
+        <label for="price">PRICE</label>
 	</div>
     <div class="group">
         <input type="text" name="validity" value="{{plan.validity}}">
         <span class="bar"></span>
-        <label>VALIDITY</label>
+        <label for="validity">VALIDITY</label>
 	</div>
     <div class="group">
         <input type="text" name="limit" value="{{plan.limit}}">
         <span class="bar"></span>
-        <label>LIMIT</label>
+        <label for="limit">LIMIT</label>
 	</div>
     <div class="group">
         <input type="text" name="discount" value="{{plan.discount}}">
         <span class="bar"></span>
-        <label>DISCOUNT</label>
+        <label for="discount">DISCOUNT</label>
 	</div>
     {{!-- <input type="text" name="address"><br>
     <input type="text" name="city"><br>
