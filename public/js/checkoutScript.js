@@ -1,5 +1,6 @@
 (function($) {
     var myForm = $('#myForm'),
+        userName = $('userName'),
         planName=$('#planName'),
         price=$('#price'),
         validity=$('#validity'),
@@ -16,6 +17,7 @@
     myForm.submit(function(event){
         event.preventDefault();
         var dataVal = {
+            "userName":userName.val(),
             "planName":planName.val(),
             "cardDetails":{
                 "nameOfCardHolder":cardname.val(),
