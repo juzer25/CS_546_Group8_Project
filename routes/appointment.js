@@ -58,11 +58,11 @@ router.get('/users/appointment', async(req, res) => {
         let userName = req.session.user.userName;
         try {
             userappointment = await appointmentRequestData.requestOfuser(userName);
+            res.render('appointment/viewappointments', { userName: userName, appointmentdate: userappointment, isAdmin: false });
             //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});
         } catch (e) {
             res.status(500).json({ error: e });
         }
-        res.render('appointment/viewappointments', { userName: userName, appointmentdate: userappointment, isAdmin: false });
     }
 });
 module.exports = router;
