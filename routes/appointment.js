@@ -11,6 +11,7 @@ router.get('/appointment', async(req, res) => {
 
 router.post('/appointment', async(req, res) => {
     userName=req.body.Username;
+    email=req.body.email;
     date = req.body.Date;
     queries = req.body.Querise;
     requestType = req.body.RequestType;
@@ -33,7 +34,7 @@ router.post('/appointment', async(req, res) => {
         return;
     }
     try{
-        const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
+        const newAppointment = await appointmentRequestData.createappointment(userName,email,date,queries,requestType);
         res.redirect('/');
     }
     catch(e){
