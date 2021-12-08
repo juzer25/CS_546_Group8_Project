@@ -132,27 +132,26 @@ module.exports = {
     },
 
 
-    async update(name, price, validity, limit, discount) {
+    async update(id, name, price, validity, limit, discount) {
 
         try {
             const broadbandCollection = await broadband();
-            let plan = await broadbandCollection.findOne({ planName: name });
-            console.log(plan);
-            console.log("0");
-
+            let objectId = new ObjectId(id);
+            let plan = await broadbandCollection.findOne({ _id: objectId });
             // if (plan == null) return null;
-            let updatePlan = {
-                planName: planName,
-                price: price,
-                validity: validity,
-                limit: limit,
-                discount: discount,
-            }
-            const updatedPlan = await broadbandCollection.updateOne({ _id: plan._id }, { $set: updatePlan });
-            console.log(updatePlan)
-            if (updatedRestuarant.modifiedCount === 0) {
-                throw { statusCode: 400, message: 'Could not update plan successfully' };
-            }
+            // let updatePlan = {
+            //     planName: planName,
+            //     price: price,
+            //     validity: validity,
+            //     limit: limit,
+            //     discount: discount,
+            // }
+            const updatedPlan = await broadbandCollection.updateOne({ _id: objectId }, { $set: { price: price, validity: validity, limit: limit, discount: discount } });
+            // console.log(updatePlan)
+            // if (updatedRestuarant.modifiedCount === 0) {
+            //     throw { statusCode: 400, message: 'Could not update plan successfully' };
+            // }
+            return "Update successful"
         } catch (e) {
             if (e.statusCode) {
                 throw { statusCode: e.statusCode, message: e.message };
