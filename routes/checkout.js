@@ -60,6 +60,7 @@ router.post('/payment', async(req, res) => {
          {error:"Please provide a card number"});
         return;
     }
+
     if(cardNumber.trim().length === 0) {
         res.status(400).render("checkout/checkout",
          {error:"Please provide a card number"});
