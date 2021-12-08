@@ -48,9 +48,11 @@
             
           
             <td colspan="3"><button type="submit" class="select" >Subscribe</button></td>
-         
-            <td colspan="3"><button type="submit" class="delete" >Delete</button></td>
-         
+         <form >
+            <td colspan="3"><button type="submit" class="delete" formmethod="post" formaction="/broadband/scrap/{{this.planName}}">Delete</button></td>
+            {{!-- <td colspan="3"><button type="submit" class="update" formmethod="get" formaction="/broadband/getByName/{{this.planName}}" >Update</button></td> --}}
+            <a href="/broadband/getByName/{{this._id}}">Update</a>
+         </form>
         </tr>{{/each}}
     </table>
 </div>
