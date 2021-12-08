@@ -138,8 +138,9 @@ router.get('/broadband/subscribe/:name', async(req, res) => {
     try {
         let plan = await broadbandData.getPlan(planName);
 
-        res.render('broadband/selectedPlan', { planName: plan.planName, price: plan.price, validity: plan.validity, limit: plan.limit, discount: plan.discount });
-    } catch (e) {
+        res.render('broadband/selectedPlan',{userName:req.session.user.userName,planName:plan.planName, price:plan.price,validity:plan.validity,limit:plan.limit,discount:plan.discount});
+    }
+    catch(e){
         res.sendStatus(404);
     }
 });
