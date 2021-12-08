@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const users = mongoCollections.users;
 let {ObjectId} = require("mongodb");
 
-const saltRounds = 5;
+const saltRounds = 16;
 
 const exportedMethods = {
     async createUser(userName, password,firstName,lastName,email,dateOfBirth,phoneNo,address,city,state,zipcode){
