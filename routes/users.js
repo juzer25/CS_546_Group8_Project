@@ -930,5 +930,37 @@ router.get("/profile/myPlans" , async (req,res)=>{
     res.render('users/myPlans', {user:user, plans:userPlans});
     
 });
+router.post("/referafriend",async(req,res)=>{
+    if (req.session.user) {
+        let userName = req.session.user.userName;
+        let email = req.body.email;
+        try {
+            let referafriend = await userData.referafriend(email,userName);
+            res.redirect("/")
+        }
+        catch(e){
+            res.status(404).json({ error: e });
+        }
+    }
+
+
+});
+
+router.get("/referafriend",async(req,res)=>{
+    if (req.session.user) {
+        // let userName = req.session.user.userName;
+        // let email = req.body.email;
+        try {
+            const user = await userData.userProfile(req.session.user.userName);
+            // let referafriend = await userData.referafriend(email,userName);
+            res.render("users/referafriend",{refercode:user.refercode})
+        }
+        catch(e){
+            res.status(404).json({ error: e });
+        }
+    }
+
+
+});
 
 module.exports = router;
