@@ -768,8 +768,14 @@ router.put('/checkout', async(req,res)=>{
     if(!req.session.user){
         res.redirect('/');
     }
+
+    let data = req.body;
     let user;
-    let plan
+    let plan;
+
+    if(req.session.user.userName !== xss(data.userName)){
+        res.status(400).render('broadband/broadbandPlans',{ error:"Invalid username"});
+    }
 
     try{
         user = await userData.userProfile(req.session.user.userName);
@@ -779,9 +785,9 @@ router.put('/checkout', async(req,res)=>{
     }
 
 
-    let data = req.body;
+    
     try{
-        plan = await broadbandData.getPlan(data.planName);
+        plan = await broadbandData.getPlan(xss(data.planName));
     }
     catch(e)
     {
@@ -800,7 +806,7 @@ router.put('/checkout', async(req,res)=>{
 
     let updateUser
     try{
-        updateUser = await userData.updatePlan(req.session.user.userName, plan, data.cardDetails);
+        updateUser = await userData.updatePlan(req.session.user.userName, plan, xss(data.cardDetails));
     }
     catch(e){
         res.sendStatus(500);
@@ -840,7 +846,7 @@ router.post('/removePlan', async(req,res)=>{
 
     let data = req.body;
     try{
-        plan = await broadbandData.getPlan(data.planName);
+        plan = await broadbandData.getPlan(xss(data.planName));
     }
     catch(e)
     {

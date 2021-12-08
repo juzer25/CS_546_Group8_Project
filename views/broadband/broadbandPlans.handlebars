@@ -25,6 +25,9 @@
 <a href="/broadband/statistics" target="_blank">Check Statistics</a>
 <h2 class="table_heading">Broadband Plans</h2>
 <div style="width:100%;float:left">
+    {{#if error}}
+        <p>{{error}}</p>
+    {{/if}}
 	<table id='plansTable' border="0">
         <tr>
             <th colspan="3">Plan Name</th>
@@ -48,9 +51,11 @@
             
           
             <td colspan="3"><button type="submit" class="select" >Subscribe</button></td>
-         
-            <td colspan="3"><button type="submit" class="delete" >Delete</button></td>
-         
+         <form >
+            <td colspan="3"><button type="submit" class="delete" formmethod="post" formaction="/broadband/scrap/{{this.planName}}">Delete</button></td>
+            {{!-- <td colspan="3"><button type="submit" class="update" formmethod="get" formaction="/broadband/getByName/{{this.planName}}" >Update</button></td> --}}
+            <a href="/broadband/getByName/{{this._id}}">Update</a>
+         </form>
         </tr>{{/each}}
     </table>
 </div>

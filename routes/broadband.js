@@ -8,10 +8,10 @@ router.get('/', async(req, res) => {
     if (req.session.user) {
         let userappointment;
         let userName = req.session.user.userName;
-        try{
+        try {
             userappointment = await appointmentRequestData.requestOfuser(userName);
             //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});
-        }catch(e){
+        } catch (e) {
             res.status(500).json({ error: e });
         }
 
@@ -19,23 +19,23 @@ router.get('/', async(req, res) => {
         if (userName === "admin") {
             res.render('broadband/index', { userName: userName, isAdmin: true });
         } else {
-            res.render('broadband/index', { userName: userName, appointmentdate:userappointment ,isAdmin: false });
+            res.render('broadband/index', { userName: userName, appointmentdate: userappointment, isAdmin: false });
         }
     } else {
         res.render('broadband/index');
     }
 });
 
-router.get('/broadband/statistics' , async(req,res) => {
+router.get('/broadband/statistics', async(req, res) => {
     try {
         let broadbandList = await broadbandData.listPlans();
         let plan = [];
         let users = [];
-        for(let ele of broadbandList){
+        for (let ele of broadbandList) {
             plan.push(ele.planName);
             users.push(ele.userID.length)
         }
-        res.render('broadband/statistics', {plan: plan , users:users});
+        res.render('broadband/statistics', { plan: plan, users: users });
     } catch (e) {
         res.status(500).json({ error: e });
 
@@ -71,16 +71,16 @@ router.get('/broadband/newPlan', async(req, res) => {
 router.get('/broadband/broadbandPlans', async(req, res) => {
     let userName;
     let isAdmin = false;
-    if(req.session.user){
+    if (req.session.user) {
         userName = req.session.user.userName;
     }
 
-    if(userName === 'admin'){
+    if (userName === 'admin') {
         isAdmin = true;
     }
     try {
         let broadbandList = await broadbandData.listPlans();
-        res.render('broadband/broadbandPlans', {broadbandList: broadbandList, userName:userName, isAdmin:isAdmin});
+        res.render('broadband/broadbandPlans', { broadbandList: broadbandList, userName: userName, isAdmin: isAdmin });
     } catch (e) {
         res.status(500).json({ error: e });
 
@@ -108,41 +108,43 @@ router.post('/broadband/insert', async(req, res) => {
             res.status(500).json({ error: e });
     }
 });
-router.get('/broadband/subscribe/:name', async (req,res) =>{
+
+router.get('/broadband/subscribe/:name', async(req, res) => {
     //console.log(req.query.val);
-    if(!req.session.user){
+    if (!req.session.user) {
         res.redirect('/users/login');
         return;
     }
 
-    if(req.session.user.userName === 'admin'){
+    if (req.session.user.userName === 'admin') {
         res.redirect('broadbandPlans');
         return;
     }
-    
-    if(!req.query.val){
+
+    if (!req.query.val) {
         res.redirect('/broadband/broadbandPlans');
         return;
     }
     let val = atob(req.query.val);
     //console.log(val);
-    if(val !== 'true'){
+    if (val !== 'true') {
         res.redirect('broadbandPlans');
         return;
     }
-    planName =  req.params.name;
-    
+    planName = req.params.name;
 
-    
-    try{
+
+
+    try {
         let plan = await broadbandData.getPlan(planName);
 
-        res.render('broadband/selectedPlan',{planName:plan.planName, price:plan.price,validity:plan.validity,limit:plan.limit,discount:plan.discount});
+        res.render('broadband/selectedPlan',{userName:req.session.user.userName,planName:plan.planName, price:plan.price,validity:plan.validity,limit:plan.limit,discount:plan.discount});
     }
     catch(e){
         res.sendStatus(404);
     }
-})
+});
+
 router.post('/broadband/scrap/:name', async(req, res) => {
 
     try {
@@ -159,6 +161,47 @@ router.post('/broadband/scrap/:name', async(req, res) => {
 
 
 });
+
+router.post('/broadband/update', async(req, res) => {
+
+    try {
+        const broadbandPlans = req.body;
+        const { planName, price, validity, limit, discount } = broadbandPlans;
+        console.log("90");
+
+        const UpdatedPlan = await broadbandData.update(planName, price, validity, limit, discount);
+        // if (UpdatedRestaurant == null) {
+        //     res.status(404).json({ error: `No plan found with id}` });
+        //     return
+        // }
+        res.render('broadband/broadbandPlans');
+
+    } catch (e) {
+        if (e.statusCode) {
+            res.status(e.statusCode).send({ error: e.message });
+        } else
+            res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+router.get('/broadband/getByName/:id', async(req, res) => {
+
+    try {
+        const plan = await broadbandData.get(req.params.id);
+        res.render('broadband/updatePlan', { plan: plan });
+    } catch (e) {
+        if (e.statusCode) {
+            res.status(e.statusCode).send({ error: e.message });
+        } else
+            res.status(500).json({ error: 'Internal Server Error' });
+
+    }
+});
+
+
+
+
+
 
 
 module.exports = router;
