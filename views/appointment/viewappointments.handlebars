@@ -1,14 +1,13 @@
 <div>
+	<h2>Your Appointments</h2>
 	{{#if userName}}
-
 	{{#if appointmentdate}}
-    	
+    	<ol>
     		{{#each appointmentdate}}
-				<p>Hey {{userName}} you have an appointment on {{date}}</p>
+				<li>Hey {{userName}} you have an appointment on {{date}}</li>
 			{{/each}}
-		
+			
+		</ol>
 	{{/if}}
-    
-
 {{/if}}
 </div>

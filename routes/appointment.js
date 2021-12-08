@@ -52,5 +52,17 @@ router.get('/allappointments', async(req, res) => {
         res.status(500).json({ error: e });
     }
 });
-
+router.get('/users/appointment', async(req, res) => {
+    if (req.session.user) {
+        let userappointment;
+        let userName = req.session.user.userName;
+        try {
+            userappointment = await appointmentRequestData.requestOfuser(userName);
+            //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});
+        } catch (e) {
+            res.status(500).json({ error: e });
+        }
+        res.render('appointment/viewappointments', { userName: userName, appointmentdate: userappointment, isAdmin: false });
+    }
+});
 module.exports = router;
