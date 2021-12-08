@@ -62,34 +62,19 @@ const exportedMethods = {
         throw "Expiry year should be Interger";
     }
 
-        //console.log(expirationYear);
         let CurrentDate = new Date();
         let currYearStr = CurrentDate.getFullYear().toString();
-        //let curr_date_str = CurrentDate.toString();
-        // console.log(CurrentDate);
-        // console.log(CurrentDate.getFullYear());
-        
-        //let yearValidation = CurrentDate.getFullYear().toString();
-       // yearValidation = yearValidationtion.toString();
-        //console.log(yearValidation);
-        //yearValidation = yearValidation[2] + yearValidation[3];
         let expirationYearFourDigit = "20";
         
         if(expirationYear.length === 2){
             expirationYearFourDigit = expirationYearFourDigit + expirationYear;
         }
 
-        // console.log(expirationYearFourDigit);
-        // console.log(currYearStr);
         if(expirationYearFourDigit < currYearStr)
             console.log("You card has been expired. Please use different card for payment");
         else if(parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10){
             console.log("Please use different card for payment. This card seems ambitious");
         }
-        //console.log(parseInt(expirationYearFourDigit), parseInt(currYearStr) + 10);
-        // console.log(expirationYear);
-        // console.log(yearValidation);
-        //console.log(CurrentDate.getUTCFullYear());
 
         let cardDetails = {
             nameOfCardHolder:nameOfCardHolder,
@@ -97,7 +82,7 @@ const exportedMethods = {
             expirationMonth:expirationMonth,
             expirationYear:expirationYear
         }
-        //console.log(userName);
+       
         const userCollection = await users();
         const userData = await userCollection.findOne({ userName : userName });
 
