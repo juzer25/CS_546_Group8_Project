@@ -3,24 +3,58 @@ const router = express.Router();
 const data = require('../data');
 const xss = require('xss');
 const userCardData = data.checkout;
+const userData = data.users;
 
 router.get('/checkout', async(req, res) => {
-    if (req.session.user) {
+   // if (req.session.user) {
         res.render("checkout/checkout")
-    }
-    else {
-        res.redirect('/');
-    }
+    // }
+    // else {
+    //     res.redirect('/');
+    // }
 });
 
 
 router.get('/checkout/bill', async(req, res) => {
-    res.render("checkout/bill")
+
+    // if (!req.session.user) {
+    //     res.redirect('/');
+    // }
+
+    try {
+       // let user = await userData.userProfile(req.session.user.userName);
+        let user = "shivank";
+        if (user) {
+
+            let CurrentDate = new Date();
+            let currDateString = CurrentDate.toString();
+
+            let orderId = Date.now();
+            
+            res.render('checkout/bill', {
+                orderId: orderId,
+                billDate: currDateString, 
+                userName: user.userName,
+                firstName: user.firstName,
+                lastName:user.lastName,
+                email: user.email,
+                dateOfBirth: user.dateOfBirth,
+                phoneNo: user.phoneNo,
+                address: user.address,
+                city: user.city,
+                state: user.state,
+                zipcode: user.zipcode
+            })
+        }
+    } catch (e) {
+        res.status(404).json({ error: e })
+    }
+    //res.render("checkout/bill")
 });
 
 router.post('/payment', async(req, res) => {
-    //let userName = "shivank";
-    let userName = xss(req.session.user.userName);
+    let userName = "shivank";
+    //let userName = xss(req.session.user.userName);
     let nameOfCardHolder = xss(req.body.cardname);
     let cardNumber = xss(req.body.cardnumber);
     let expirationMonth = xss(req.body.expmonth);
@@ -28,148 +62,148 @@ router.post('/payment', async(req, res) => {
     let cvv = xss(req.body.cvv)
      
 
-    if(!userName) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a userName"});
-        return;
-    }
+    // if(!userName) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a userName"});
+    //     return;
+    // }
     
-    if(!nameOfCardHolder) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a card holder name"});
-        return;
-    }
-    if(nameOfCardHolder.length === 0){
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a card holder name"});
-        return;
-    }
-    if(nameOfCardHolder.trim().length === 0){
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a card holder name"});
-        return;
-    }
+    // if(!nameOfCardHolder) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a card holder name"});
+    //     return;
+    // }
+    // if(nameOfCardHolder.length === 0){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a card holder name"});
+    //     return;
+    // }
+    // if(nameOfCardHolder.trim().length === 0){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a card holder name"});
+    //     return;
+    // }
 
-    if(!cardNumber) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a card number"});
-        return;
-    }
-    if(cardNumber.length === 0) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a card number"});
-        return;
-    }
+    // if(!cardNumber) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a card number"});
+    //     return;
+    // }
+    // if(cardNumber.length === 0) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a card number"});
+    //     return;
+    // }
 
-    if(cardNumber.trim().length === 0) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a card number"});
-        return;
-    }
-    if(cardNumber.length !== 16) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a valid card number"});
-        return;
-    }
-    if(typeof parseInt(cardNumber) !== 'number'){
-        res.status(400).render("checkout/checkout",
-         {error:"Card number should be Interger"});
-        return;
-    }
+    // if(cardNumber.trim().length === 0) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a card number"});
+    //     return;
+    // }
+    // if(cardNumber.length !== 16) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a valid card number"});
+    //     return;
+    // }
+    // if(typeof parseInt(cardNumber) !== 'number'){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Card number should be Interger"});
+    //     return;
+    // }
 
-    if(!expirationMonth) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a expiry Month"});
-        return;
-    }
-    if(expirationMonth.length === 0) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a expiry Month"});
-        return;
-    }
-    if(expirationMonth.trim().length === 0) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a expiry Month"});
-        return;
-    }
-    if(expirationMonth.length !== 2 && expirationMonth.length !== 1){
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a valid expiry Month"});
-        return;
-    }
-    if(expirationMonth > 12){
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a valid expiry Month"});
-        return;
-    }
-    if(typeof parseInt(expirationMonth) !== 'number'){
-        res.status(400).render("checkout/checkout",
-         {error:"Expirt month should be Interger"});
-        return;
-    }
+    // if(!expirationMonth) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a expiry Month"});
+    //     return;
+    // }
+    // if(expirationMonth.length === 0) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a expiry Month"});
+    //     return;
+    // }
+    // if(expirationMonth.trim().length === 0) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a expiry Month"});
+    //     return;
+    // }
+    // if(expirationMonth.length !== 2 && expirationMonth.length !== 1){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a valid expiry Month"});
+    //     return;
+    // }
+    // if(expirationMonth > 12){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a valid expiry Month"});
+    //     return;
+    // }
+    // if(typeof parseInt(expirationMonth) !== 'number'){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Expirt month should be Interger"});
+    //     return;
+    // }
 
-    if(!expirationYear) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a expiry year"});
-        return;
-    }
-    if(expirationYear.trim().length === 0) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a expiry year"});
-        return;
-    }
-    if(expirationYear.length !== 2) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please provide a valid expiry year"});
-        return;
-    }
-    if(typeof parseInt(expirationYear) !== 'number'){
-        res.status(400).render("checkout/checkout",
-         {error:"Expiry year should be Interger"});
-        return;
-    }
+    // if(!expirationYear) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a expiry year"});
+    //     return;
+    // }
+    // if(expirationYear.trim().length === 0) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a expiry year"});
+    //     return;
+    // }
+    // if(expirationYear.length !== 2) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please provide a valid expiry year"});
+    //     return;
+    // }
+    // if(typeof parseInt(expirationYear) !== 'number'){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Expiry year should be Interger"});
+    //     return;
+    // }
 
-    let CurrentDate = new Date();
-    let currYearStr = CurrentDate.getFullYear().toString();
-    let expirationYearFourDigit = "20";
+    // let CurrentDate = new Date();
+    // let currYearStr = CurrentDate.getFullYear().toString();
+    // let expirationYearFourDigit = "20";
         
-    if(expirationYear.length === 2){
-        expirationYearFourDigit = expirationYearFourDigit + expirationYear;
-    }
-    if(expirationYearFourDigit < currYearStr){
-        res.status(400).render("checkout/checkout",
-         {error:"You card has been expired. Please use different card for payment"});
-        return;
-    }
-    else if(parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10){
-        res.status(400).render("checkout/checkout",
-         {error:"Please use different card for payment. This card seems ambitious"});
-        return;
-    }
-    //TODO: Month expiry errorhandling is not perfect
-    if(!cvv) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please enter a cvv"});
-        return;
-    }
-    if(cvv.trim().length === 0) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please enter a cvv"});
-        return;
-    }
-    if(cvv.length > 3) {
-        res.status(400).render("checkout/checkout",
-         {error:"Please enter a cvv"});
-        return;
-    }
-    if(typeof parseInt(cvv) !== 'number'){
-        res.status(400).render("checkout/checkout",
-         {error:"CVV should be Interger"});
-        return;
-    }
+    // if(expirationYear.length === 2){
+    //     expirationYearFourDigit = expirationYearFourDigit + expirationYear;
+    // }
+    // if(expirationYearFourDigit < currYearStr){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"You card has been expired. Please use different card for payment"});
+    //     return;
+    // }
+    // else if(parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please use different card for payment. This card seems ambitious"});
+    //     return;
+    // }
+    // //TODO: Month expiry errorhandling is not perfect
+    // if(!cvv) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please enter a cvv"});
+    //     return;
+    // }
+    // if(cvv.trim().length === 0) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please enter a cvv"});
+    //     return;
+    // }
+    // if(cvv.length > 3) {
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"Please enter a cvv"});
+    //     return;
+    // }
+    // if(typeof parseInt(cvv) !== 'number'){
+    //     res.status(400).render("checkout/checkout",
+    //      {error:"CVV should be Interger"});
+    //     return;
+    // }
     //TODO: check if cvv should be added to database or not
     
-        if (req.session.user) {
+       // if (req.session.user) {
             try{
             // let userName = req.session.user.userName;
 
@@ -179,9 +213,9 @@ router.post('/payment', async(req, res) => {
             catch(e){
                 res.status(500).json({ error: e });
             }
-        }else {
-            res.redirect('/');
-        }
+        // }else {
+        //     res.redirect('/');
+        // }
     
  
 });
