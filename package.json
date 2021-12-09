@@ -16,6 +16,8 @@
     "express-handlebars": "^5.3.4",
     "express-session": "^1.17.2",
     "mongodb": "^4.1.4",
+    "nodemailer": "^6.7.2",
+    "referral-code-generator": "^1.0.8",
     "xss": "^1.0.10"
   }
 }

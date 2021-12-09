@@ -13,6 +13,7 @@
 				{{else}}
 		        <li><a href="users/profile">PROFILE</a></li>
                 <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+				<li><a href="users/referafriend">REFER A FRIEND</a></li>
 				{{/if}}
 
             {{/if}}
@@ -33,20 +34,7 @@
 </div>
 
 <h1>Welcome to BroadBand Website!!!</h1>
-<div>
-	{{#if userName}}
 
-	{{#if appointmentdate}}
-    	
-    		{{#each appointmentdate}}
-				<p>Hey {{userName}} you have an appointment on {{date}}</p>
-			{{/each}}
-		
-	{{/if}}
-    
-
-{{/if}}
-</div>
 <img id="myimg" src="/public/img/server_room.jpg" width="100%" height="100%">
 		<br><br>
 		<div style="width:100%">

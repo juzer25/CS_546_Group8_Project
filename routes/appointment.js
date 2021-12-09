@@ -11,6 +11,7 @@ router.get('/appointment', async(req, res) => {
 
 router.post('/appointment', async(req, res) => {
     userName=req.body.Username;
+    email=req.body.email;
     date = req.body.Date;
     queries = req.body.Querise;
     requestType = req.body.RequestType;
@@ -33,7 +34,7 @@ router.post('/appointment', async(req, res) => {
         return;
     }
     try{
-        const newAppointment = await appointmentRequestData.createappointment(userName,date,queries,requestType);
+        const newAppointment = await appointmentRequestData.createappointment(userName,email,date,queries,requestType);
         res.redirect('/');
     }
     catch(e){
@@ -51,5 +52,17 @@ router.get('/allappointments', async(req, res) => {
         res.status(500).json({ error: e });
     }
 });
-
+router.get('/users/appointment', async(req, res) => {
+    if (req.session.user) {
+        let userappointment;
+        let userName = req.session.user.userName;
+        try {
+            userappointment = await appointmentRequestData.requestOfuser(userName);
+            res.render('appointment/viewappointments', { userName: userName, appointmentdate: userappointment, isAdmin: false });
+            //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});
+        } catch (e) {
+            res.status(500).json({ error: e });
+        }
+    }
+});
 module.exports = router;

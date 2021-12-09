@@ -1,7 +1,9 @@
 const mongoCollections = require('../config/mongoCollections');
 const appointment = mongoCollections.appointmentRequest;
+const nodemailer = require("nodemailer");
+const { text } = require('express');
 const exportedMethods = {
-    async createappointment(userName,date,queries,requestType){
+    async createappointment(userName,email,date,queries,requestType){
         let CurrentDate = new Date();
         dateforValidation = new Date(date);
         if(dateforValidation<CurrentDate) throw "Please select different Date"
@@ -12,6 +14,7 @@ const exportedMethods = {
 
         let newrequest = {
             userName:userName,
+            email:email,
             date:date,
             queries:queries,
             requestType:requestType
@@ -21,6 +24,28 @@ const exportedMethods = {
         if(insertInfo.insertCount === 0){
             throw "Insertion failed";
         }
+        var transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: "mybroadband47@gmail.com",
+              pass: "mybroadband@123",
+            },
+          });
+        
+          var mailOptions = {
+            from: "mybroadband47@gmail.com",
+            to: email,
+            subject: "Your appointment created successfully",
+            text: `Hey ${userName} your appointment is successfully created on ${newrequest.date}`
+          };
+        
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Email sent: " + info.response);
+            }
+          });
         return {appointmentInserted:true};
     },
     async listappointmentRequest(){
