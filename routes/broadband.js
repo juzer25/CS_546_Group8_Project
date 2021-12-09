@@ -52,13 +52,17 @@ router.get('/broadband/statistics', async(req, res) => {
         let broadbandList = await broadbandData.listPlans();
         let plan = [];
         let users = [];
-        for (let ele of broadbandList) {
-            plan.push(ele.planName);
-            users.push(ele.userID.length)
+        if (broadbandList == null) {
+            res.render('broadband/statistics', { plan: plan, users: users, error: 'No plans' });
+        } else {
+            for (let ele of broadbandList) {
+                plan.push(ele.planName);
+                users.push(ele.userID.length)
+            }
+            res.render('broadband/statistics', { plan: plan, users: users });
         }
-        res.render('broadband/statistics', { plan: plan, users: users });
     } catch (e) {
-        res.status(500).json({ error: e });
+        res.status(500).render('broadband/statistics', { error: 'Internal Server Error' });
 
     }
 })
@@ -101,12 +105,14 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
     }
     try {
         let broadbandList = await broadbandData.listPlans();
-        if (broadbandList == null) {
-            res.status(400).render('broadband/broadbandPlans', { noPlan: "No plans found" });
+        if (broadbandList === null) {
+            res.status(400).render('broadband/broadbandPlans', { noPlan: "No plans found", userName: userName, isAdmin: isAdmin });
+            return
+        } else {
+            res.render('broadband/broadbandPlans', { broadbandList: broadbandList, userName: userName, isAdmin: isAdmin });
         }
-        res.render('broadband/broadbandPlans', { broadbandList: broadbandList, userName: userName, isAdmin: isAdmin });
     } catch (e) {
-        res.status(500).render('broadband/broadbandPlans', { error: e });
+        res.status(500).render('broadband/broadbandPlans', { error: 'Internal Server Error' });
 
     }
 });
