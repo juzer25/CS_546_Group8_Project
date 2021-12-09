@@ -2,7 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 let {ObjectId} = require("mongodb");
 const data = require('../data');
-const userData = data.users;
+//const userData = data.users;
 const nodemailer = require("nodemailer");
 
 const exportedMethods = {

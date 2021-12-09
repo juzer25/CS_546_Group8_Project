@@ -321,6 +321,110 @@ const exportedMethods = {
     },
 
     async updatePlan(userName,plan,cardDetails){
+
+        if(!userName) throw "Please provide a userName";
+        if(!cardDetails) throw "Please provide card details";
+        if(!plan) throw "Please provide broadband plans";
+        if(!cardDetails.nameOfCardHolder) throw "Please provide a Card holder name";
+        if(!cardDetails.cardNumber) throw "Please provide a card number";
+        if(!cardDetails.expirationMonth) throw "Please provide a expiration month";
+        if(!cardDetails.expirationYear) throw "Please provide a expiration year";
+
+
+        if(!plan.planName) throw "Please provide planName";
+        if(plan.planName.length === 0) throw "Please provide planName";
+        if(plan.planName.trim().length === 0)throw "Please provide planName";
+
+        if(!plan.price) throw "Please provide plan price";
+        
+
+        if(!plan.validity) throw "Please provide plan validity";
+
+        if(!plan.limit) throw "Please provide plan limit";
+
+
+
+    if(cardDetails.nameOfCardHolder.length === 0){
+        throw "Please provide a card holder name";
+    }
+    if(cardDetails.nameOfCardHolder.trim().length === 0){
+        throw "Please provide a card holder name";
+    }
+
+
+    if(cardDetails.cardNumber.length === 0) {
+         throw "Please provide a card number";
+    }
+    if(cardDetails.cardNumber.trim().length === 0) {
+         throw "Please provide a card number";
+    }
+    if(cardDetails.cardNumber.length !== 16) {
+         throw"Please provide a valid card number";
+    }
+
+    var regNo = /[0-9]{16}/;
+    if(!regNo.test(cardDetails.cardNumber)){
+        throw"Please provide a valid card number";
+    }
+
+    if(typeof parseInt(cardDetails.cardNumber) !== 'number'){
+        throw "Card number should be Interger";
+    }
+
+
+    if(cardDetails.expirationMonth.length === 0) {
+        throw" Please provide a expiry Month";
+    }
+    if(cardDetails.expirationMonth.trim().length === 0) {
+         throw "Please provide a expiry Month";
+     }
+    if(cardDetails.expirationMonth.length !== 2){
+          throw "Please provide a valid expiry Month";
+    }
+    if(cardDetails.expirationMonth > 12){
+        throw "Please provide a valid expiry Month";
+    }
+
+    var regDate = /^\d{2}$/;
+    if(!regDate.test(cardDetails.expirationMonth)){
+        throw "Please provide a valid expiry Month";
+    }
+
+    if(typeof parseInt(cardDetails.expirationMonth) !== 'number'){
+        throw "Expiration month should be Interger";
+    }
+
+
+    if(cardDetails.expirationYear.trim().length === 0) {
+         throw "Please provide a expiry year";
+    }
+    if(cardDetails.expirationYear.length !== 2) {
+       throw "Please provide a valid expiry year";
+    }
+
+    if(!regDate.test(cardDetails.expirationYear)){
+        throw "Please provide a valid expiry Month";
+    }
+
+    if(typeof parseInt(cardDetails.expirationYear) !== 'number'){
+        throw "Expiry year should be Interger";
+    }
+
+         let CurrentDate = new Date();
+         let currYearStr = CurrentDate.getFullYear().toString();
+         let expirationYearFourDigit = "20";
+        
+         if(cardDetails.expirationYear.length === 2){
+            expirationYearFourDigit = expirationYearFourDigit + cardDetails.expirationYear;
+         }
+
+         if(expirationYearFourDigit < currYearStr){
+             throw "You card has been expired. Please use different card for payment";}
+         else if(parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10){
+             throw "Please use different card for payment. This card seems ambitious";
+         }
+
+
         const userCollection = await users();
         let user = await userCollection.findOne({userName: userName}); 
         selected = {
@@ -366,6 +470,8 @@ const exportedMethods = {
     },
 
     async removePlan(userName , planId){
+        if(!userName) throw "Please provide username";
+        if(!planId) throw "Please provide planId";
         const userCollection = await users();
         let user = await userCollection.findOne({userName: userName}); 
         for(let plans of user.planSelected){

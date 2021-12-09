@@ -931,6 +931,12 @@ router.put('/checkout', async(req,res)=>{
         return;
     }
 
+  
+    if(!regDate.test(xss(cardDetails.expirationYear))){
+        res.json({success: false});
+        return;
+    }
+
     if(typeof parseInt(xss(cardDetails.expirationYear)) !== 'number'){
         res.json({success: false});
         return;
