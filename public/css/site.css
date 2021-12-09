@@ -1,6 +1,21 @@
 .voidx {
     float: left;
     width: 175px;
+ 
+}
+
+.outerDiv{
+    width:84%;
+    float:left;
+}
+
+.innerDiv{
+    width: 16%;
+    float:right;
+}
+
+.div2{
+    width:100%;
 }
 
 body {
@@ -130,10 +145,10 @@ textarea:focus~.bar:after {
     height: 200px;
 }
 
-input::-webkit-outer-spin-button,
+/*input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
-}
+}*/
 
 ul li {
     display: inline;
@@ -213,7 +228,9 @@ a:focus::before {
     padding: 10px;
     width: 200px;
     float: left;
-    opacity: 0.6
+    opacity: 0.6;
+    margin-right: 120px;
+    margin-left: 70px;
 }
 
 tr,
@@ -237,6 +254,8 @@ th {
 
 img {
     opacity: 1;
+    width:100%; 
+    height:100%;
 }
 
 img:hover {
@@ -348,7 +367,7 @@ span.price {
 
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
-
+/*
 @media (max-width: 800px) {
     .row {
         flex-direction: column-reverse;
@@ -356,7 +375,7 @@ span.price {
     .col-25 {
         margin-bottom: 20px;
     }
-}
+}*/
 
 
 .my_plan{
