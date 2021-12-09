@@ -22,34 +22,37 @@
     <legend><h1>NEW PLAN</h1></legend>
     <div class="inputs">
 	    <div class="group">
-        <input type="text" id="planName" name="planName">
+        <input type="text" id="planName" name="planName" value="{{planName}}">
         <span class="bar"></span>
 	    <label for="planName">NAME OF THE PLAN</label>
 	</div>
     {{!-- <input type="password" name="password"><br> --}}
     <div class="group">
-        <input type="text" id="price" name="price">
+        <input type="text" id="price" name="price" value="{{price}}">
         <span class="bar"></span>
         <label for="price">PRICE</label>
 	</div>
     <div class="group">
-        <input type="text" id="validity" name="validity">
+        <input type="text" id="validity" name="validity" value="{{validity}}">
         <span class="bar"></span>
         <label for="validity">VALIDITY</label>
 	</div>
     <div class="group">
-        <input type="text" id="limit" name="limit">
+        <input type="text" id="limit" name="limit" value="{{limit}}">
         <span class="bar"></span>
         <label for="limit">LIMIT</label>
 	</div>
     <div class="group">
-        <input type="text" id="discount" name="discount">
+        <input type="text" id="discount" name="discount" value="{{discount}}">
         <span class="bar"></span>
         <label for="discount">DISCOUNT</label>
 	</div>
     {{!-- <input type="text" name="address"><br>
     <input type="text" name="city"><br>
     <input type="number" name="zipCode"><br> --}}
+    {{#if error}}
+    <div>{{error}}</div>
+    {{/if}}
     <div>
         <input id="reg" type="submit" value="Submit"> 
     </div>

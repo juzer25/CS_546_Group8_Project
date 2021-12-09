@@ -37,6 +37,11 @@
 
             <th colspan="3"></th>
         </tr>
+        <tr>
+            {{#if noPlan}}
+            <th colspan="19">{{noPlan}}</th>
+            {{/if}}
+        </tr>
         {{#each broadbandList}}
         <tr>
             <td colspan="3"><p id='planName'>{{this.planName}}</p></td>
@@ -44,13 +49,10 @@
             <td colspan="3"><p id='validity'>{{this.validity}}</p></td>
             <td colspan="3"><p id='limit'>{{this.limit}}</p></td>
             <td colspan="3"><p id='discount'>{{this.discount}}</p></td>
-            <td colspan="4"><p id='ststs'>{{this.userID.length}}</p></td>
-
-            
-          
+            <td colspan="4"><p id='ststs'>{{this.userID.length}}</p></td>          
             <td colspan="3"><button type="submit" class="select" >Subscribe</button></td>
          <form >
-            <td colspan="3"><button type="submit" class="delete" formmethod="post" formaction="/broadband/scrap/{{this.planName}}">Delete</button></td>
+            <td colspan="3"><button type="submit" class="delete" formmethod="post" formaction="/broadband/scrap/{{this._id}}">Delete</button></td>
             {{!-- <td colspan="3"><button type="submit" class="update" formmethod="get" formaction="/broadband/getByName/{{this.planName}}" >Update</button></td> --}}
             <a href="/broadband/getByName/{{this._id}}">Update</a>
          </form>
