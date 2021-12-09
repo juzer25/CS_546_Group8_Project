@@ -2,6 +2,8 @@ const mongoCollections = require('../config/mongoCollections');
 const bcrypt = require('bcrypt');
 const users = mongoCollections.users;
 let {ObjectId} = require("mongodb");
+let referralCodeGenerator = require('referral-code-generator');
+const nodemailer = require("nodemailer");
 
 const saltRounds = 16;
 
@@ -111,6 +113,7 @@ const exportedMethods = {
     if(!zipReg.test(zipcode)){
         throw "Please provide a valid zipcode";
     }
+    let refercode = referralCodeGenerator.alpha('lowercase', 12)
 
     let hashedpwd = await bcrypt.hash(password,saltRounds);
     
@@ -127,7 +130,8 @@ const exportedMethods = {
             state:state,
             zipcode:zipcode,
             cardDetails:[],
-            planSelected:[]
+            planSelected:[],
+            refercode:refercode
         } 
 
         const userCollection = await users();
@@ -331,9 +335,23 @@ const exportedMethods = {
                throw "Plan already selected";
             }
        }
+       let newCard = true;
+       if(user.cardDetails.length !== 0){
+           for(let e of user.cardDetails){
+               if(cardDetails.cardNumber === e.cardNumber){
+                    //throw "Card number already exists";
+                    //break;
+                    newCard = false;
+                    break;
+               }
+           }
+       }
 
-        user.planSelected.push(selected);
+
+       if(newCard){
         user.cardDetails.push(cardDetails);
+       }
+        user.planSelected.push(selected);
 
         const updateInfo = await userCollection.updateOne(
             {_id : user._id},
@@ -380,7 +398,36 @@ const exportedMethods = {
 
         return true;
     
+    },
+    async referafriend(email,userName){
+        const userCollection = await users();
+        let user = await userCollection.findOne({userName: userName}); 
+        
+        var transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: "mybroadband47@gmail.com",
+              pass: "mybroadband@123",
+            },
+          });
+        
+          var mailOptions = {
+            from: "mybroadband47@gmail.com",
+            to: email,
+            subject: "Referal code",
+            text: `${userName} sent you a refer code: ${user.refercode}`
+          };
+        
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Email sent: " + info.response);
+            }
+          });
+          return user;
     }
+    
     
 };
 

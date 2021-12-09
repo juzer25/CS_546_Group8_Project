@@ -766,38 +766,245 @@ router.get('/logout', async(req, res) => {
 
 router.put('/checkout', async(req,res)=>{
     if(!req.session.user){
-        res.redirect('/');
+        res.json({success: false});
+        return;
+    }
+    if(!req.body){
+        res.json({success: false});
+        return;
     }
 
-    let data = req.body;
+    if(!xss(req.body.userName)){
+        res.json({success: false});
+        return;
+    }
+
+    if(!xss(req.body.planName)){
+        res.json({success: false});
+        return;
+    }
+
+    if(!xss(req.body.cardDetails)){
+        res.json({success: false});
+        return;
+    }
+    let userName = xss(req.body.userName);
+    let planName = xss(req.body.planName);
+    let cardDetails =  req.body.cardDetails;
+
+    
+
+    if(userName.length === 0){
+        res.json({success: false});
+        return;
+    }
+
+    if(userName.trim().length === 0){
+        res.json({success: false});
+        return;
+    }
+
+    if(!planName){
+        res.json({success: false});
+        return;
+    }
+
+    if(planName.length === 0){
+        res.json({success: false});
+        return;
+    }
+
+    if(planName.trim().length === 0){
+        res.json({success: false});
+        return;
+    }
+
+    if(!cardDetails){
+        res.json({success: false});
+        return;
+    }
+
+    if(!xss(cardDetails.nameOfCardHolder)){
+        res.json({success: false});
+        return;
+    }
+
+    if(!xss(cardDetails.cardNumber)){
+        res.json({success: false});
+        return;;
+    }
+
+    if(!xss(cardDetails.expirationMonth)){
+        res.json({success: false});
+        return;
+    }
+
+    if(!xss(cardDetails.expirationYear)){
+        res.json({success: false});
+        return;
+    }
+
+    if(!xss(cardDetails.cardType)){
+        res.json({success: false});
+        return;
+    }
+
+
+    if(!xss(cardDetails.cardNumber)){
+        res.json({success: false});
+        return;
+    }
+
+    if(xss(cardDetails.cardNumber).length === 0){
+        res.json({success: false});
+        return;
+    }
+
+    if(xss(cardDetails.cardNumber).trim().length === 0){
+        res.json({success: false});
+        return;
+    }
+
+    if(xss(cardDetails.cardNumber).length !== 16){
+        res.json({success: false});
+        return;;
+    }
+
+    var regNo = /[0-9]{16}/;
+    if(!regNo.test(xss(cardDetails.cardNumber))){
+        res.json({success: false});
+        return;
+    }
+
+
+    if(!xss(cardDetails.expirationMonth)){
+        res.json({success: false});
+        return;
+    }
+
+
+    if(xss(cardDetails.expirationMonth).length === 0) {
+        res.json({success: false});
+        return;
+    }
+    if(xss(cardDetails.expirationMonth).trim().length === 0) {
+        res.json({success: false});
+        return;
+    }
+    if(xss(cardDetails.expirationMonth).length !== 2){
+        res.json({success: false});
+        return;;
+    }
+    
+
+    var regDate = /^\d{2}$/;
+    if(!regDate.test(xss(cardDetails.expirationMonth))){
+        res.json({success: false});
+        return;
+    }
+    if(typeof parseInt(xss(cardDetails.expirationMonth)) !== 'number'){
+        res.json({success: false});
+        return;
+    }
+
+    if(xss(cardDetails.expirationMonth) > 12){
+        res.json({success: false});
+        return;
+    }
+
+    if(!xss(cardDetails.expirationYear)){
+        res.json({success: false});
+        return;
+    }
+
+    if(xss(cardDetails.expirationYear).trim().length === 0) {
+        res.json({success: false});
+        return;
+    }
+    if(xss(cardDetails.expirationYear).length !== 2) {
+        res.json({success: false});
+        return;
+    }
+
+    if(!regDate.test(xss(cardDetails.expirationYear))){
+        res.json({success: false});
+        return;
+    }
+
+    if(typeof parseInt(xss(cardDetails.expirationYear)) !== 'number'){
+        res.json({success: false});
+        return;
+    }
+
+    let CurrentDate = new Date();
+    let currYearStr = CurrentDate.getFullYear().toString();
+    let expirationYearFourDigit = "20";
+    
+    if(xss(cardDetails.expirationYear).length === 2){
+        expirationYearFourDigit = expirationYearFourDigit + xss(cardDetails.expirationYear);
+    }
+
+    if(expirationYearFourDigit < currYearStr){
+        res.json({success: false});
+        return;
+    }
+    else if(parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10){
+        res.json({success: false});
+        return;
+    }
+/*
+    if(!cardDetails.cvv){
+        res.status(400).json({error:"Invalid data" ,success: false});
+        return;
+    }
+
+    if(cardDetails.cvv.length === 0 || cvv.length > 3){
+        res.status(400).json({error:"Invalid data" ,success: false});
+        return;
+    }
+
+    if(cardDetails.cvv.trim().length === 0){
+        res.status(400).json({error:"Invalid data" ,success: false});
+        return;
+    }
+
+    var regCvv = /^\d{3}$/;
+    if(!regCvv.test(cardDetails.cvv)){
+        res.status(400).json({error:"Invalid data" ,success: false});
+        return;
+    }*/
+
+    
     let user;
     let plan;
 
-    if(req.session.user.userName !== xss(data.userName)){
-        res.status(400).render('broadband/broadbandPlans',{ error:"Invalid username"});
+    if(req.session.user.userName !== userName){
+        res.json({ success: false});
+        return;
     }
 
     try{
         user = await userData.userProfile(req.session.user.userName);
     }
     catch(e){
-        res.status(404);
+        res.json({success: false});
     }
 
 
     
     try{
-        plan = await broadbandData.getPlan(xss(data.planName));
+        plan = await broadbandData.getPlan(planName);
     }
     catch(e)
     {
-        res.status(404);
+        res.json({success: false});
+       
     }
     if(user.planSelected.length != 0){
         for(let e of user.planSelected){
              let pid = plan._id;
              if(pid.toString() === e.broadbandPlanId.toString()){
-                res.json({ success: false});
+                res.json({success: false});
                 return;
              }
         }
@@ -806,7 +1013,7 @@ router.put('/checkout', async(req,res)=>{
 
     let updateUser
     try{
-        updateUser = await userData.updatePlan(req.session.user.userName, plan, xss(data.cardDetails));
+        updateUser = await userData.updatePlan(req.session.user.userName, plan,cardDetails);
     }
     catch(e){
         res.sendStatus(500);
@@ -818,7 +1025,7 @@ router.put('/checkout', async(req,res)=>{
     }
     catch(e)
     {
-        res.status(404);
+        res.status(500);
     }
     
 
@@ -929,6 +1136,38 @@ router.get("/profile/myPlans" , async (req,res)=>{
 
     res.render('users/myPlans', {user:user, plans:userPlans});
     
+});
+router.post("/referafriend",async(req,res)=>{
+    if (req.session.user) {
+        let userName = req.session.user.userName;
+        let email = req.body.email;
+        try {
+            let referafriend = await userData.referafriend(email,userName);
+            res.redirect("/")
+        }
+        catch(e){
+            res.status(404).json({ error: e });
+        }
+    }
+
+
+});
+
+router.get("/referafriend",async(req,res)=>{
+    if (req.session.user) {
+        // let userName = req.session.user.userName;
+        // let email = req.body.email;
+        try {
+            const user = await userData.userProfile(req.session.user.userName);
+            // let referafriend = await userData.referafriend(email,userName);
+            res.render("users/referafriend",{refercode:user.refercode})
+        }
+        catch(e){
+            res.status(404).json({ error: e });
+        }
+    }
+
+
 });
 
 module.exports = router;
