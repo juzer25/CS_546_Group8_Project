@@ -335,9 +335,23 @@ const exportedMethods = {
                throw "Plan already selected";
             }
        }
+       let newCard = true;
+       if(user.cardDetails.length !== 0){
+           for(let e of user.cardDetails){
+               if(cardDetails.cardNumber === e.cardNumber){
+                    //throw "Card number already exists";
+                    //break;
+                    newCard = false;
+                    break;
+               }
+           }
+       }
 
-        user.planSelected.push(selected);
+
+       if(newCard){
         user.cardDetails.push(cardDetails);
+       }
+        user.planSelected.push(selected);
 
         const updateInfo = await userCollection.updateOne(
             {_id : user._id},

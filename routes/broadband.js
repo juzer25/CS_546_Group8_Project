@@ -26,6 +26,11 @@ router.get('/', async(req, res) => {
     }
 });
 
+
+router.get('/error', async (req,res)=>{
+    res.status(400).render('errors/error');
+});
+
 router.get('/broadband/statistics', async(req, res) => {
     try {
         let broadbandList = await broadbandData.listPlans();
