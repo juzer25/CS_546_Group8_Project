@@ -3,6 +3,14 @@ const users = mongoCollections.users;
 let {ObjectId} = require("mongodb");
 
 const exportedMethods = {
+
+    async requestOfuser(userName){
+        const appointmentCollection = await appointment();
+        let userrequest = await appointmentCollection.find({userName: userName}).toArray();
+        if(!userrequest) throw "No request found";
+
+        return userrequest;
+    },
   
     async storeCardDetails(userName, nameOfCardHolder, cardNumber, expirationMonth, expirationYear){
        
@@ -97,7 +105,7 @@ const exportedMethods = {
            if (userInsertInfo.modifiedCount === 0) 
             throw 'Payment details could not be added';
     }
-
+  
     // async storeCardDetails(firstName, lastName, address, city, state, zipCode, email){
 
     //     let cardDeatils = {
@@ -112,6 +120,9 @@ const exportedMethods = {
     //     }
     
     // }
+ 
+
+
 
 };
 
