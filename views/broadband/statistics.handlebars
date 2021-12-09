@@ -1,8 +1,14 @@
 <script src='https://cdn.plot.ly/plotly-2.6.3.min.js'></script>
 
+{{!-- {{#if plan}} --}}
 <h2 id="plan" hidden>{{plan}}</h2>
+{{!-- {{/if}}
+{{#if users}} --}}
 <h2 id="users" hidden>{{users}}</h2>
-
+{{!-- {{/if}} --}}
+{{#if error}}
+<p>{{error}}</p>
+{{/if}}
 <div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
 
 <script src="/public/js/statistics.js"></script>
