@@ -35,6 +35,7 @@ module.exports = {
         }
         return broadbandList;
     },
+
     get,
 
     async getPlan(planName) {
