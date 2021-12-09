@@ -6,11 +6,14 @@ const broadband = mongoCollections.broadbandPlans;
 
 const get = async(id) => {
 
+    if (!id.replace(/\s/g, '').length) throw { statusCode: 400, message: 'ID not valid' };
+    if (!id) throw { statusCode: 400, message: 'ID not valid' };
+    if (typeof id != 'string') throw { statusCode: 400, message: `ID not valid` };
     try {
         const broadbandCollection = await broadband();
         let objectId = new ObjectId(id);
-
         const planByName = await broadbandCollection.findOne({ _id: objectId });
+        if (planByName == null) return null;
         return planByName;
     } catch (e) {
         if (e.statusCode) {
@@ -21,17 +24,15 @@ const get = async(id) => {
 }
 
 
-
-
-
-
 module.exports = {
 
     async listPlans() {
         const broadbandCollection = await broadband();
         const broadbandList = await broadbandCollection.find({}).toArray();
-        if (!broadbandList) throw "No Plans found";
-
+        if (broadbandList.length == 0) return null;
+        for (let i = 0; i < broadbandList.length; i++) {
+            broadbandList[i]._id = broadbandList[i]._id.toString();
+        }
         return broadbandList;
     },
     get,
@@ -60,6 +61,28 @@ module.exports = {
 
     async create(planName, price, validity, limit, discount) {
 
+        if (!planName) throw { statusCode: 400, message: 'Input PLANNAME cannot be empty' }
+        if (typeof planName != 'string') throw { statusCode: 400, message: 'Input PLANNAME should be string and valid' };
+        if (!planName.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input PLANNAME should be string and valid' };
+
+        if (!price) throw { statusCode: 400, message: 'Input PRICE cannot be empty' }
+        if (!(/^\d+$/.test(price))) throw { statusCode: 400, message: 'Input PRICE should only be number' }
+        if (typeof price != 'string') throw { statusCode: 400, message: 'Input PRICE should be string and valid' };
+        if (!price.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input PRICE should be string and valid' };
+
+        if (!validity) throw { statusCode: 400, message: 'Input VALIDITY cannot be empty' }
+        if (typeof validity != 'string') throw { statusCode: 400, message: 'Input VALIDITY should be string and valid' };
+        if (!validity.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input VALIDITY should be string and valid' };
+
+        if (!limit) throw { statusCode: 400, message: 'Input LIMIT cannot be empty' }
+        if (typeof limit != 'string') throw { statusCode: 400, message: 'Input LIMIT should be string and valid' };
+        if (!limit.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input LIMIT should be string and valid' };
+
+        if (!discount) throw { statusCode: 400, message: 'Input DISCOUNT cannot be empty' }
+        if (!(/^\d+$/.test(discount))) throw { statusCode: 400, message: 'Input DISCOUNT should only be number' }
+        if (typeof discount != 'string') throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
+        if (!discount.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
+
         try {
             const broadbandCollection = await broadband();
             let value = {
@@ -75,7 +98,7 @@ module.exports = {
             if (insertInfo.insertedCount === 0) throw { statusCode: 500, message: 'Could not add Broadband' };
             return insertInfo;
         } catch (e) {
-            if (e.statusCode) {
+            if (e.statusCode && e.statusCode != 500) {
                 throw { statusCode: e.statusCode, message: e.message };
             } else
                 throw { statusCode: 500, message: `Internal Server error` };
@@ -113,11 +136,15 @@ module.exports = {
         return true;
     },
 
-    async remove(name) {
+    async remove(id) {
 
+        if (!id.replace(/\s/g, '').length) throw { statusCode: 400, message: 'ID not valid' };
+        if (!id) throw { statusCode: 400, message: 'ID not valid' };
+        if (typeof id != 'string') throw { statusCode: 400, message: `ID not valid` };
         try {
+            let objectId = new ObjectId(id);
             const broadbandCollection = await broadband();
-            const deletionInfo = await broadbandCollection.deleteOne({ planName: name });
+            const deletionInfo = await broadbandCollection.deleteOne({ _id: objectId });
             if (deletionInfo.deletedCount === 0) {
                 throw { statusCode: 400, message: `Could not delete Plan` };
             }
@@ -132,25 +159,40 @@ module.exports = {
     },
 
 
-    async update(id, name, price, validity, limit, discount) {
+    async update(id, planName, price, validity, limit, discount) {
+
+        if (!planName) throw { statusCode: 400, message: 'Input PLANNAME cannot be empty' }
+        if (typeof planName != 'string') throw { statusCode: 400, message: 'Input PLANNAME should be string and valid' };
+        if (!planName.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input PLANNAME should be string and valid' };
+
+        if (!price) throw { statusCode: 400, message: 'Input PRICE cannot be empty' }
+        if (!(/^\d+$/.test(price))) throw { statusCode: 400, message: 'Input PRICE should only be number' }
+        if (typeof price != 'string') throw { statusCode: 400, message: 'Input PRICE should be string and valid' };
+        if (!price.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input PRICE should be string and valid' };
+
+        if (!validity) throw { statusCode: 400, message: 'Input VALIDITY cannot be empty' }
+        if (typeof validity != 'string') throw { statusCode: 400, message: 'Input VALIDITY should be string and valid' };
+        if (!validity.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input VALIDITY should be string and valid' };
+
+        if (!limit) throw { statusCode: 400, message: 'Input LIMIT cannot be empty' }
+        if (typeof limit != 'string') throw { statusCode: 400, message: 'Input LIMIT should be string and valid' };
+        if (!limit.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input LIMIT should be string and valid' };
+
+        if (!discount) throw { statusCode: 400, message: 'Input DISCOUNT cannot be empty' }
+        if (!(/^\d+$/.test(discount))) throw { statusCode: 400, message: 'Input DISCOUNT should only be number' }
+        if (typeof discount != 'string') throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
+        if (!discount.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
+
 
         try {
             const broadbandCollection = await broadband();
             let objectId = new ObjectId(id);
             let plan = await broadbandCollection.findOne({ _id: objectId });
             // if (plan == null) return null;
-            // let updatePlan = {
-            //     planName: planName,
-            //     price: price,
-            //     validity: validity,
-            //     limit: limit,
-            //     discount: discount,
-            // }
             const updatedPlan = await broadbandCollection.updateOne({ _id: objectId }, { $set: { price: price, validity: validity, limit: limit, discount: discount } });
-            // console.log(updatePlan)
-            // if (updatedRestuarant.modifiedCount === 0) {
-            //     throw { statusCode: 400, message: 'Could not update plan successfully' };
-            // }
+            if (updatedRestuarant.modifiedCount === 0) {
+                throw { statusCode: 400, message: 'Could not update plan successfully' };
+            }
             return "Update successful"
         } catch (e) {
             if (e.statusCode) {
