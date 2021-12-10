@@ -3,7 +3,6 @@ const users = mongoCollections.users;
 const broadband = mongoCollections.broadbandPlans;
 let {ObjectId} = require("mongodb");
 const data = require('../data');
-const userData = data.users;
 //const nodemailer = require("nodemailer");
 
 const exportedMethods = {

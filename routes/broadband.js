@@ -103,7 +103,7 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
     if (userName == 'admin') {
         isAdmin = true;
     }
-    console.log(isAdmin)
+
     try {
         let broadbandList = await broadbandData.listPlans();
         if (broadbandList === null) {
