@@ -1,9 +1,9 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
+const broadband = mongoCollections.broadbandPlans;
 let {ObjectId} = require("mongodb");
 const data = require('../data');
-//const userData = data.users;
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
 
 const exportedMethods = {
 
@@ -101,7 +101,11 @@ const exportedMethods = {
            
         userData.cardDetails.push(cardDetails);
         //console.log(userData);
-
+        //console.log(userData.planSelected);
+        //console.log(userData.planSelected[userData.planSelected.length-1].broadbandPlanId);
+       // console.log(userData.cardDetails);
+        // console.log(userData.expirationMonth);
+        // console.log(userData.dateOfBirth);
         const userInsertInfo = await userCollection.updateOne( { userName : userName },
                                                                         { $set: userData });
 
@@ -139,6 +143,16 @@ const exportedMethods = {
             //       console.log("Email sent: " + info.response);
             //     }
             //   });
+    },
+
+    async getBroadbandPlanById(Id) {
+        const broadbandCollection = await broadband();
+       
+        let planDetails = await broadbandCollection.findOne({ _id: ObjectId(Id) });
+
+        if (!planDetails) throw "Plan not found";
+        //console.log(planDetails);
+        return planDetails;
     }
   
     // async storeCardDetails(firstName, lastName, address, city, state, zipCode, email){
