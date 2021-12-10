@@ -191,7 +191,7 @@ module.exports = {
             let plan = await broadbandCollection.findOne({ _id: objectId });
             // if (plan == null) return null;
             const updatedPlan = await broadbandCollection.updateOne({ _id: objectId }, { $set: { price: price, validity: validity, limit: limit, discount: discount } });
-            if (updatedRestuarant.modifiedCount === 0) {
+            if (updatedPlan.modifiedCount === 0) {
                 throw { statusCode: 400, message: 'Could not update plan successfully' };
             }
             return "Update successful"
