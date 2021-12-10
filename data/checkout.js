@@ -41,7 +41,11 @@ const exportedMethods = {
     if(cardNumber.length !== 16) {
         throw"Please provide a valid card number";
     }
-    if(typeof cardNumber !== 'number'){
+    var regNo = /[0-9]{16}/;
+    if(!regNo.test(cardNumber)){
+        throw "Card number should be Interger";
+    }
+    if(typeof parseInt(cardNumber) !== 'number'){
         throw "Card number should be Interger";
     }
 
@@ -55,10 +59,14 @@ const exportedMethods = {
     if(expirationMonth.length !== 2){
         throw "Please provide a valid expiry Month";
     }
+    var regDate = /^\d{2}$/;
+    if(!regDate.test(expirationMonth)){
+        throw "Expiry month should be Interger";
+    }
     if(expirationMonth > 12){
         throw "Please provide a valid expiry Month";
     }
-    if(typeof expirationMonth !== 'number'){
+    if(typeof parseInt(expirationMonth) !== 'number'){
         throw "Expirt month should be Interger";
     }
 
@@ -69,7 +77,10 @@ const exportedMethods = {
     if(expirationYear.length !== 2) {
         throw "Please provide a valid expiry year";
     }
-    if(typeof expirationYear !== 'number'){
+    if(!regDate.test(expirationYear)){
+        throw "Expiry year should be Interger";
+    }
+    if(typeof parseInt(expirationYear) !== 'number'){
         throw "Expiry year should be Interger";
     }
 
