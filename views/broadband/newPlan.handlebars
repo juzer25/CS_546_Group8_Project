@@ -3,7 +3,7 @@
  		<ul>
  			<li><a href="/">HOME</a></li>
              <li><a href="/broadband/broadbandPlans">PLANS</a></li>
-		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
+		    <li><a href="/broadband/contactus">CONTACT US</a></li>
  		</ul>	
  		</div>
  		<div style="width: 16%;float:right"> 
@@ -32,13 +32,20 @@
         <span class="bar"></span>
         <label for="price">PRICE</label>
 	</div>
-    <div class="group">
-        <input type="text" id="validity" name="validity" value="{{validity}}">
+     <div class="group">
+        {{!-- <input type="text" id="validity" name="validity" value="{{validity}}"> --}}
         <span class="bar"></span>
         <label for="validity">VALIDITY</label>
 	</div>
+    <select  name="validity">
+			<option class="validity" selected=""; value="">SELECT A PLAN</option>
+			<option value="1">1 Month</option>
+			<option value="3">3 Month</option>
+			<option value="6">6 Month</option>
+            <option value="12">12 Month</option>
+	</select><br><br><br><br>
     <div class="group">
-        <input type="text" id="limit" name="limit" value="{{limit}}">
+        <input type="text" id="limit" name="limit" value="Unlimited" readonly>
         <span class="bar"></span>
         <label for="limit">LIMIT</label>
 	</div>

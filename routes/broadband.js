@@ -103,7 +103,6 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
     if (userName == 'admin') {
         isAdmin = true;
     }
-
     try {
         let broadbandList = await broadbandData.listPlans();
         if (broadbandList === null) {
@@ -273,7 +272,7 @@ router.post('/broadband/insert', async(req, res) => {
 
     if (!broadbandPlans.discount) {
         res.status(400).render('broadband/newPlan', {
-            error: "Input LIMIT cannot be empty",
+            error: "Input DISCOUNT cannot be empty",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
@@ -284,7 +283,7 @@ router.post('/broadband/insert', async(req, res) => {
     }
     if (!(/^\d+$/.test(broadbandPlans.discount))) {
         res.status(400).render('broadband/newPlan', {
-            error: "Input PRICE should be only numbers",
+            error: "Input DISCOUNT should be only numbers",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
@@ -295,7 +294,7 @@ router.post('/broadband/insert', async(req, res) => {
     }
     if (typeof broadbandPlans.discount != 'string') {
         res.status(400).render('broadband/newPlan', {
-            error: "Input LIMIT should be string and valid",
+            error: "Input DISCOUNT should be string and valid",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
@@ -306,7 +305,7 @@ router.post('/broadband/insert', async(req, res) => {
     }
     if (!broadbandPlans.discount.replace(/\s/g, '').length) {
         res.status(400).render('broadband/newPlan', {
-            error: "Input LIMIT should not have space",
+            error: "Input DISCOUNT should not have space",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
@@ -371,6 +370,16 @@ router.get('/broadband/subscribe/:name', async(req, res) => {
     } catch (e) {
         res.sendStatus(404);
     }
+});
+
+
+router.get('/broadband/contactus', async(req, res) => {
+    //if (req.session.user) {
+        res.render("broadband/contactus")
+    // }
+    // else {
+    //     res.redirect('/');
+    // }
 });
 
 router.post('/broadband/scrap/:id', async(req, res) => {
@@ -552,7 +561,7 @@ router.post('/broadband/update', async(req, res) => {
 
     if (!broadbandPlans.discount) {
         res.status(400).render('broadband/newPlan', {
-            error: "Input LIMIT cannot be empty",
+            error: "Input DISCOUNT cannot be empty",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
@@ -563,7 +572,7 @@ router.post('/broadband/update', async(req, res) => {
     }
     if (!(/^\d+$/.test(broadbandPlans.discount))) {
         res.status(400).render('broadband/newPlan', {
-            error: "Input PRICE should be only numbers",
+            error: "Input DISCOUNT should be only numbers",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
@@ -574,7 +583,7 @@ router.post('/broadband/update', async(req, res) => {
     }
     if (typeof broadbandPlans.discount != 'string') {
         res.status(400).render('broadband/newPlan', {
-            error: "Input LIMIT should be string and valid",
+            error: "Input DISCOUNT should be string and valid",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
@@ -585,7 +594,7 @@ router.post('/broadband/update', async(req, res) => {
     }
     if (!broadbandPlans.discount.replace(/\s/g, '').length) {
         res.status(400).render('broadband/newPlan', {
-            error: "Input LIMIT should not have space",
+            error: "Input DISCOUNT should not have space",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,

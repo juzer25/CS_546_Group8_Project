@@ -4,7 +4,7 @@
  			<li><a href="/">HOME</a></li>
              {{!-- Don't think we need this link if we are already on that page --}}
              <li><a href="/broadband/broadbandPlans">PLANS</a></li>
-		    <li><a href="/contact/contactus">CONTACT US</a></li>
+		    <li><a href="/broadband/contactus">CONTACT US</a></li>
  		</ul>	
  		</div>
  		<div style="width: 16%;float:right"> 
@@ -24,16 +24,5 @@
          {{!-- {{/if}}	 --}}
  		</div>
 </div>
-<h2>Appointment Request</h2>
-{{#if AppointmentRequest}}
-    <ol>
-    {{#each AppointmentRequest}}
-        <li>Username: {{this.userName}}<br>
-            EmailId:{{this.email}}     
-            Date: {{this.date}}<br>
-            Querises: {{this.queries}}<br>
-            RequestType: {{this.requestType}}<br>
-        </li>
-    {{/each}}
-    </ol>
-{{/if}}
+
+<h2> Contact us on <a href="/broadband/contactus">mybroadband47@gmail.com </a></h2>
