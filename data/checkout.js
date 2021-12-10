@@ -17,76 +17,82 @@ const exportedMethods = {
   
     async storeCardDetails(userName, nameOfCardHolder, cardNumber, expirationMonth, expirationYear){
        
-    //     if(!userName) throw "Please provide a userName";
-    //     if(!nameOfCardHolder) throw "Please provide a Card holder name";
-    //     if(!cardNumber) throw "Please provide a card number";
-    //     if(!expirationMonth) throw "Please provide a expiration month";
-    //     if(!expirationYear) throw "Please provide a expiration year";
+        if(!userName) throw "Please provide a userName";
+        if(!nameOfCardHolder) throw "Please provide a Card holder name";
+        if(!cardNumber) throw "Please provide a card number";
+        if(!expirationMonth) throw "Please provide a expiration month";
+        if(!expirationYear) throw "Please provide a expiration year";
 
 
-    // if(nameOfCardHolder.length === 0){
-    //     throw "Please provide a card holder name";
-    // }
-    // if(nameOfCardHolder.trim().length === 0){
-    //     throw "Please provide a card holder name";
-    // }
+    if(nameOfCardHolder.length === 0){
+        throw "Please provide a card holder name";
+    }
+    if(nameOfCardHolder.trim().length === 0){
+        throw "Please provide a card holder name";
+    }
 
 
-    // if(cardNumber.length === 0) {
-    //     throw "Please provide a card number";
-    // }
-    // if(cardNumber.trim().length === 0) {
-    //     throw "Please provide a card number";
-    // }
-    // if(cardNumber.length !== 16) {
-    //     throw"Please provide a valid card number";
-    // }
-    // if(typeof parseInt(cardNumber) !== 'number'){
-    //     throw "Card number should be Interger";
-    // }
+    if(cardNumber.length === 0) {
+        throw "Please provide a card number";
+    }
+    if(cardNumber.trim().length === 0) {
+        throw "Please provide a card number";
+    }
+    if(cardNumber.length !== 16) {
+        throw"Please provide a valid card number";
+    }
+    if(typeof cardNumber !== 'number'){
+        throw "Card number should be Interger";
+    }
 
 
-    // if(expirationMonth.length === 0) {
-    //     throw" Please provide a expiry Month";
-    // }
-    // if(expirationMonth.trim().length === 0) {
-    //     throw "Please provide a expiry Month";
-    // }
-    // if(expirationMonth.length !== 2 && expirationMonth.length !== 1){
-    //     throw "Please provide a valid expiry Month";
-    // }
-    // if(expirationMonth > 12){
-    //     throw "Please provide a valid expiry Month";
-    // }
-    // if(typeof parseInt(expirationMonth) !== 'number'){
-    //     throw "Expirt month should be Interger";
-    // }
+    if(expirationMonth.length === 0) {
+        throw" Please provide a expiry Month";
+    }
+    if(expirationMonth.trim().length === 0) {
+        throw "Please provide a expiry Month";
+    }
+    if(expirationMonth.length !== 2){
+        throw "Please provide a valid expiry Month";
+    }
+    if(expirationMonth > 12){
+        throw "Please provide a valid expiry Month";
+    }
+    if(typeof expirationMonth !== 'number'){
+        throw "Expirt month should be Interger";
+    }
 
 
-    // if(expirationYear.trim().length === 0) {
-    //     throw "Please provide a expiry year";
-    // }
-    // if(expirationYear.length !== 2) {
-    //     throw "Please provide a valid expiry year";
-    // }
-    // if(typeof parseInt(expirationYear) !== 'number'){
-    //     throw "Expiry year should be Interger";
-    // }
+    if(expirationYear.trim().length === 0) {
+        throw "Please provide a expiry year";
+    }
+    if(expirationYear.length !== 2) {
+        throw "Please provide a valid expiry year";
+    }
+    if(typeof expirationYear !== 'number'){
+        throw "Expiry year should be Interger";
+    }
 
-    //     let CurrentDate = new Date();
-    //     let currYearStr = CurrentDate.getFullYear().toString();
-    //     let expirationYearFourDigit = "20";
+        let CurrentDate = new Date();
+        let currMonthStr = CurrentDate.getMonth().toString();
+        currMonthStr = parseInt(currMonthStr) + 1;
+        currMonthStr = currMonthStr.toString();
+        let currYearStr = CurrentDate.getFullYear().toString();
+        let expirationYearFourDigit = "20";
         
-    //     if(expirationYear.length === 2){
-    //         expirationYearFourDigit = expirationYearFourDigit + expirationYear;
-    //     }
+        if(expirationYear.length === 2){
+            expirationYearFourDigit = expirationYearFourDigit + expirationYear;
+        }
 
-    //     if(expirationYearFourDigit < currYearStr)
-    //         console.log("You card has been expired. Please use different card for payment");
-    //     else if(parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10){
-    //         console.log("Please use different card for payment. This card seems ambitious");
-    //     }
-
+        if(expirationYearFourDigit < currYearStr)
+            throw "You card has been expired. Please use different card for payment";
+        else if(parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10){
+            throw "Please use different card for payment. This card seems ambitious";
+        }
+       // console.log(expirationYearFourDigit, currYearStr, expirationMonth, currMonthStr);
+        if(expirationYearFourDigit == currYearStr &&  expirationMonth < currMonthStr){
+            throw "You card has been expired. Please use different card for payment";
+        }
         let cardDetails = {
             nameOfCardHolder:nameOfCardHolder,
             cardNumber:cardNumber,
