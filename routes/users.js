@@ -1172,6 +1172,9 @@ router.get("/referafriend",async(req,res)=>{
             res.status(404).json({ error: e });
         }
     }
+    else {
+        res.redirect('/');
+    }
 
 
 });
