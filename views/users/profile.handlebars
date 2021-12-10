@@ -1,15 +1,34 @@
-
+<div class="container">
+        <div style="width:84%;float:left">
+ 		<ul>
+                        <li><a href="/">HOME</a></li>
+                        <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+                        <li><a href="/broadband/aboutus">ABOUT US</a></li>
+                </ul>
+        </div>
+ 		<div style="width: 16%;float:right">
+        <ul> 
+        {{#if userName}}      
+		<li><a href="/users/profile">PROFILE</a></li>
+		<li><a href="/users/logout">LOGOUT</a></li>
+         {{else}}
+                <li><a href="/users/signup">REGISTER</a></li>
+		<li><a href="/users/login">LOGIN</a></li>
+        {{/if}}	
+        </ul>
+        </div>
+</div>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
-<h1>User Profile</h1>
-<a href="/">Home</a>
+{{!-- <h1>User Profile</h1> --}}
+{{!-- <a href="/">Home</a> --}}
 <a href="update">Update Profile</a>
-<a href="profile/myPlans">My Plans</a>
-<a href="appointment">Appointments</a>
-</form>
-<p>Username : {{userName}}</p><br>
+{{!-- <a href="profile/myPlans">My Plans</a> --}}
+{{!-- <a href="appointment">Appointments</a> --}}
+{{!-- </form> --}}
+{{!-- <p>Username : {{userName}}</p><br>
 <p>firstName : {{firstName}}</p><br>
 <p>lastName : {{lastName}}</p><br>
 <p>email : {{email}}</p><br>
@@ -18,6 +37,37 @@
 <p>address : {{address}}</p><br>
 <p>city : {{city}}</p><br>
 <p>state : {{state}}</p><br>
-<p>zipCode : {{zipcode}}</p><br>
+<p>zipCode : {{zipcode}}</p><br> --}}
+
+<h2 class="table_heading">User Profile</h2>
+<div style="width:100%;float:left">
+        <table id='plansTable' border="1">
+                <tr>
+                        <th>Username</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th colspan="4">Email ID</th>
+                        <th colspan="5">DOB</th>
+                        <th colspan="3">Phone No.</th>
+                        <th colspan="3">Address</th>
+                        <th colspan="3">City</th>
+                        <th colspan="3">State</th>
+                        <th colspan="3">Zipcode</th>
+                </tr>
+                <tr>
+                        <td> {{userName}}</td>
+                        <td> {{firstName}}</td>
+                        <td> {{lastName}}</td>
+                        <td colspan="4"> {{email}}</td>
+                        <td colspan="5"> {{dateOfBirth}}</td>
+                        <td colspan="4"> {{phoneNo}}</td>
+                        <td > {{address}}</td>
+                        <td colspan="3"> {{city}}</td>
+                        <td colspan="3"> {{state}}</td>
+                        <td colspan="3"> {{zipcode}}</td>
+
+                </tr>
+        </table>
+</div>
 
 <script src="/public/js/script.js"></script>

@@ -68,7 +68,7 @@ router.get('/broadband/statistics', async(req, res) => {
 })
 
 
-router.get('/broadband/newPlan', async(req, res) => {
+router.post('/broadband/newPlan', async(req, res) => {
 
     // if (!req.session.user) {
     //     res.redirect('/');
@@ -100,9 +100,10 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
         userName = req.session.user.userName;
     }
 
-    if (userName === 'admin') {
+    if (userName == 'admin') {
         isAdmin = true;
     }
+    console.log(isAdmin)
     try {
         let broadbandList = await broadbandData.listPlans();
         if (broadbandList === null) {
@@ -628,7 +629,7 @@ router.post('/broadband/update', async(req, res) => {
     }
 });
 
-router.get('/broadband/getByName/:id', async(req, res) => {
+router.post('/broadband/getByName/:id', async(req, res) => {
 
     if (!req.params.id.replace(/\s/g, '').length) {
         res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time' });

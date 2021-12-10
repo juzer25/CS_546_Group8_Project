@@ -1,19 +1,18 @@
 <div class="container">
-		<div class="outerDiv">
+		<div style="width:84%;float:left">
  		<ul>
  			<li><a href="/">HOME</a></li>
             {{#if userName}} 
 				
-                <li><a href="users/logout">LOGOUT</a></li>
+                {{!-- <li><a href="users/logout">LOGOUT</a></li> --}}
 				{{#if isAdmin}}
 				<li><a href="/broadband/newPlan">Add Broadband service</a></li>
-    			<li><a>Update BroadBand service</a></li>
-    			<li><a>Delete Broadband service</a></li>
+    			{{!-- <li><a>Update BroadBand service</a></li>
+    			<li><a>Delete Broadband service</a></li> --}}
     			<li><a href="/allappointments">Check user Requests</a></li>
 				{{else}}
-		        <li><a href="users/profile">PROFILE</a></li>
+		        {{!-- <li><a href="users/profile">PROFILE</a></li> --}}
                 <li><a href="/appointment">CREATE APPOINTMENT</a></li>
-				<li><a href="users/referafriend">REFER A FRIEND</a></li>
 				{{/if}}
 
             {{/if}}
@@ -21,10 +20,11 @@
 		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
  		</ul>	
  		</div>
- 		<div class="innerDiv">
+ 		<div style="width: 16%;float:right">
         <ul> 
         {{#if userName}}      
-			<h2>{{userName}}</h2>
+		<li><a href="users/profile">PROFILE</a></li>
+			<li><a href="users/logout">LOGOUT</a></li>
          {{else}}
             <li><a href="/users/signup">REGISTER</a></li>
 			<li><a href="/users/login">LOGIN</a></li>
@@ -34,10 +34,23 @@
 </div>
 
 <h1>Welcome to BroadBand Website!!!</h1>
+<div>
+	{{#if userName}}
 
-<img id="myimg" src="/public/img/server_room.jpg" alt="server room">
+	{{#if appointmentdate}}
+    	
+    		{{#each appointmentdate}}
+				<p>Hey {{userName}} you have an appointment on {{date}}</p>
+			{{/each}}
+		
+	{{/if}}
+    
+
+{{/if}}
+</div>
+<img id="myimg" src="/public/img/server_room.jpg" width="100%" height="100%">
 		<br><br>
-		<div class="div2">
+		<div style="width:100%">
 		<div class="center">
 			<div class="temp">Customized Internet for Customers</div>
 			<br>
@@ -48,17 +61,17 @@
 		</div>
 		</div>
 		<br><br><br>
-		<div class="voidx">
+		<div class="voidx">&nbsp
 		</div>
 		<div class="box">
 			<h3>Instant Setup</h3><h5>We Provide Connectivity Setup within a day</h5>
 		</div>
-		<div class="voidx">
+		<div class="voidx">&nbsp
 		</div>
 		<div class="box">
-			<h3>Better Uptime</h3><h5>Hassle free! We assure &amp; provide 99.9% uptime.</h5>
+			<h3>Better Uptime</h3><h5>Hassle free! We assure & provide 99.9% uptime.</h5>
 		</div>
-		<div class="voidx">
+		<div class="voidx">&nbsp
 		</div>
 		<div class="box">
 			<h3>Reliable Speed</h3><h5>Speed is most important factor, we deliver unmatchable speed.</h5>
