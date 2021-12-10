@@ -2,15 +2,34 @@
 		<div style="width:84%;float:left">
  		<ul>
  			<li><a href="/">HOME</a></li>
-             <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+            {{#if userName}} 
+				
+                {{!-- <li><a href="users/logout">LOGOUT</a></li> --}}
+				{{#if isAdmin}}
+				<li><a href="/broadband/newPlan">Add Broadband service</a></li>
+    			{{!-- <li><a>Update BroadBand service</a></li>
+    			<li><a>Delete Broadband service</a></li> --}}
+    			<li><a href="/allappointments">Check user Requests</a></li>
+				{{else}}
+		        {{!-- <li><a href="users/profile">PROFILE</a></li> --}}
+                <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+				{{/if}}
+
+            {{/if}}
+			<li><a href="/broadband/broadbandPlans">PLANS</a></li>
 		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
  		</ul>	
  		</div>
- 		<div style="width: 16%;float:right"> 
- 		<ul>	
+ 		<div style="width: 16%;float:right">
+        <ul> 
+        {{#if isAdmin}}      
+		<li><a href="/users/profile">PROFILE</a></li>
+			<li><a href="/users/logout">LOGOUT</a></li>
+         {{else}}
             <li><a href="/users/signup">REGISTER</a></li>
-			<li><a href="users/login">LOGIN</a></li>
- 		</ul>	
+			<li><a href="/users/login">LOGIN</a></li>
+        {{/if}}	
+        </ul>
  		</div>
 </div>
 
@@ -18,18 +37,18 @@
 <div class="void">&nbsp
 </div>
 <div class="form_center">
-<form id="newPlan" action="/broadband/update" method="POST">
+<form id="updatePlan" action="/broadband/update" method="POST">
     <legend><h1>UPDATE PLAN</h1></legend>
     <div class="inputs">
-        <input  type="hidden" name="id" value="{{plan._id}}" >
+        <input  type="hidden" name="id" value="{{id}}" >
 	    <div class="group">
-        <input type="text" name="planName" value="{{plan.planName}}" readonly>
+        <input type="text" name="planName" id="planName" value="{{planName}}" readonly>
         <span class="bar"></span>
 	    <label for="planName">NAME OF THE PLAN</label>
 	</div>
     {{!-- <input type="password" name="password"><br> --}}
     <div class="group">
-        <input type="text" name="price" value="{{plan.price}}">
+        <input type="text" name="price" id="price" value="{{price}}">
         <span class="bar"></span>
         <label for="price">PRICE</label>
 	</div>
@@ -38,30 +57,33 @@
         <span class="bar"></span>
         <label for="validity">VALIDITY</label>
 	</div>
-     <select  name="validity">
-			<option class="validity" selected=""; value="{{plan.validity}} Month">{{plan.validity}} Month</option>
+     <select id="validity" name="validity">
+			<option class="validity" selected=""; value="{{validity}}">{{validity}} Month</option>
 			<option value="1">1 Month</option>
 			<option value="3">3 Month</option>
 			<option value="6">6 Month</option>
             <option value="12">12 Month</option>
 	</select><br><br><br><br>
     <div class="group">
-        <input type="text" name="limit" value="Unlimited" readonly>
+        <input type="text" id="limit" name="limit" value="Unlimited" readonly>
         <span class="bar"></span>
         <label for="limit">LIMIT</label>
 	</div>
     <div class="group">
-        <input type="text" name="discount" value="{{plan.discount}}">
+        <input type="text" id="discount" name="discount" value="{{discount}}">
         <span class="bar"></span>
         <label for="discount">DISCOUNT</label>
 	</div>
-    {{!-- <input type="text" name="address"><br>
-    <input type="text" name="city"><br>
-    <input type="number" name="zipCode"><br> --}}
+    {{#if error}}
+    <div>{{error}}</div>
+    {{/if}}
+        <div id="error" hidden></div>
+<br>
     <div>
         <input id="reg" type="submit" value="Update"> 
     </div>
     </div>
 </form>
 </div>
+<script src="/public/js/updatePlan.js"></script>
 
