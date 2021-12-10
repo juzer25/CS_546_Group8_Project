@@ -22,7 +22,6 @@
     <legend><h1>UPDATE PLAN</h1></legend>
     <div class="inputs">
         <input  type="hidden" name="id" value="{{plan._id}}" >
-
 	    <div class="group">
         <input type="text" name="planName" value="{{plan.planName}}" readonly>
         <span class="bar"></span>
@@ -35,12 +34,19 @@
         <label for="price">PRICE</label>
 	</div>
     <div class="group">
-        <input type="text" name="validity" value="{{plan.validity}}">
+        {{!-- <input type="text" name="validity" value="{{plan.validity}}" readonly> --}}
         <span class="bar"></span>
         <label for="validity">VALIDITY</label>
 	</div>
+     <select  name="validity">
+			<option class="validity" selected=""; value="{{plan.validity}} Month">{{plan.validity}} Month</option>
+			<option value="1">1 Month</option>
+			<option value="3">3 Month</option>
+			<option value="6">6 Month</option>
+            <option value="12">12 Month</option>
+	</select><br><br><br><br>
     <div class="group">
-        <input type="text" name="limit" value="{{plan.limit}}">
+        <input type="text" name="limit" value="Unlimited" readonly>
         <span class="bar"></span>
         <label for="limit">LIMIT</label>
 	</div>
