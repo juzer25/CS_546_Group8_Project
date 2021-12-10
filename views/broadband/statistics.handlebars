@@ -1,3 +1,29 @@
+<div class="container">
+		<div style="width:84%;float:left">
+ 		<ul>
+ 			<li><a href="/">HOME</a></li>
+             <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+		    <li><a href="/contact/contactus">CONTACT US</a></li>
+ 		</ul>	
+ 		</div>
+ 		<div style="width: 16%;float:right"> 
+        {{!-- {{#if userName}}
+            <h2 class="userType">{{userName}}</h2>
+        {{else}}
+        <h2 class="userType" hidden>guest</h2> --}}
+ 		<ul>	
+        {{#if userName}}      
+		    <li><a href="/users/profile">PROFILE</a></li>
+		    <li><a href="/users/logout">LOGOUT</a></li>
+        {{else}}
+            <li><a href="/users/signup">REGISTER</a></li>
+		    <li><a href="/users/login">LOGIN</a></li>
+        {{/if}}
+ 		</ul>
+         {{!-- {{/if}}	 --}}
+ 		</div>
+</div>
+
 <script src='https://cdn.plot.ly/plotly-2.6.3.min.js'></script>
 
 {{!-- {{#if plan}} --}}
