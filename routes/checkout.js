@@ -2,36 +2,40 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const xss = require('xss');
-const userCardData = data.checkout;
+const userCheckoutData = data.checkout;
 const userData = data.users;
 
 router.get('/checkout', async(req, res) => {
-   // if (req.session.user) {
+    if (req.session.user) {
         res.render("checkout/checkout")
-    // }
-    // else {
-    //     res.redirect('/');
-    // }
+    }
+    else {
+        res.redirect('/');
+    }
 });
 
 
 router.get('/checkout/bill', async(req, res) => {
 
-    // if (!req.session.user) {
-    //     res.redirect('/');
-    // }
+    if (!req.session.user) {
+        res.redirect('/');
+    }
 
     try {
-       // let user = await userData.userProfile(req.session.user.userName);
-        let user = "shivank";
+        let user = await userData.userProfile(req.session.user.userName);
+       // let user = "shivank";
         if (user) {
 
             let CurrentDate = new Date();
             let currDateString = CurrentDate.toString();
-
             let orderId = Date.now();
-            
+            let planId = user.planSelected[user.planSelected.length-1].broadbandPlanId;
+            let planDetails = await userCheckoutData.getBroadbandPlanById(planId);
             res.render('checkout/bill', {
+                planSelectedId: planId,
+                name: planDetails.planName,
+                price: planDetails.price,
+                validity: planDetails.validity,
                 orderId: orderId,
                 billDate: currDateString, 
                 userName: user.userName,
@@ -53,8 +57,8 @@ router.get('/checkout/bill', async(req, res) => {
 });
 
 router.post('/payment', async(req, res) => {
-    let userName = "shivank";
-    //let userName = xss(req.session.user.userName);
+    //let userName = "shivank";
+    let userName = xss(req.session.user.userName);
     let nameOfCardHolder = xss(req.body.cardname);
     let cardNumber = xss(req.body.cardnumber);
     let expirationMonth = xss(req.body.expmonth);
@@ -203,19 +207,19 @@ router.post('/payment', async(req, res) => {
     // }
     //TODO: check if cvv should be added to database or not
     
-       // if (req.session.user) {
+        if (req.session.user) {
             try{
-            // let userName = req.session.user.userName;
+            let userName = req.session.user.userName;
 
-            cardDetails = await userCardData.storeCardDetails(userName, nameOfCardHolder, cardNumber, expirationMonth, expirationYear);
+            cardDetails = await userCheckoutData.storeCardDetails(userName, nameOfCardHolder, cardNumber, expirationMonth, expirationYear);
             res.redirect("/checkout/bill");
             }
             catch(e){
                 res.status(500).json({ error: e });
             }
-        // }else {
-        //     res.redirect('/');
-        // }
+        }else {
+            res.redirect('/');
+        }
     
  
 });
