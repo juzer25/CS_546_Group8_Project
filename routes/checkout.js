@@ -14,7 +14,6 @@ router.get('/checkout', async(req, res) => {
     }
 });
 
-
 router.get('/checkout/bill', async(req, res) => {
 
     if (!req.session.user) {

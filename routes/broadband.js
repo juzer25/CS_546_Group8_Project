@@ -372,6 +372,16 @@ router.get('/broadband/subscribe/:name', async(req, res) => {
     }
 });
 
+
+router.get('/broadband/contactus', async(req, res) => {
+    //if (req.session.user) {
+        res.render("broadband/contactus")
+    // }
+    // else {
+    //     res.redirect('/');
+    // }
+});
+
 router.post('/broadband/scrap/:id', async(req, res) => {
 
     if (!req.params.id.replace(/\s/g, '').length) {
