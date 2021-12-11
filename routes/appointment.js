@@ -3,15 +3,18 @@ const router = express.Router();
 const data = require('../data');
 const xss = require('xss');
 
+
 const appointmentRequestData = data.appointment;
 router.get('/appointment', async(req, res) => {
     let isAdmin = false;
     if(!req.session.user){
         res.redirect('/');
+        return;
     }
 
     if(req.session.user.userName === "admin"){
-        isAdmin = true;
+        res.redirect('/');
+        return;
     }
     res.render("appointment/newappointment",{userName:req.session.user.userName,isAdmin:isAdmin})
 });
@@ -83,6 +86,14 @@ router.post('/appointment', async(req, res) => {
 
 
 router.get('/allappointments', async(req, res) => {
+    if(!req.session.user){
+        res.redirect('/');
+        return;
+    }
+    if(req.session.user.userName !== 'admin'){
+        res.redirect('/');
+        return;
+    }
     try{
         let apts = await appointmentRequestData.listappointmentRequest();
         res.render('appointment/allappointments', {AppointmentRequest:apts});

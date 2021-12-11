@@ -5,17 +5,18 @@
             {{#if userName}} 
 				
                 {{!-- <li><a href="users/logout">LOGOUT</a></li> --}}
-				{{#if isAdmin}}
-				<li><a href="/broadband/newPlan">Add Broadband service</a></li>
+				{{!--{{#if isAdmin}}
+				<li><a href="/broadband/newPlan">Add Broadband service</a></li>--}}
     			{{!-- <li><a>Update BroadBand service</a></li>
     			<li><a>Delete Broadband service</a></li> --}}
-    			<li><a href="/allappointments">Check user Requests</a></li>
-				{{else}}
+    			{{!--<li><a href="/allappointments">Check user Requests</a></li>--}}
+				
 		        {{!-- <li><a href="users/profile">PROFILE</a></li> --}}
-                <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+                <li><a href="/users/appointment">VIEW APPOINTMENTS</a></li>
+                
 				{{/if}}
 
-            {{/if}}
+ 
 			<li><a href="/broadband/broadbandPlans">PLANS</a></li>
             {{#if userName}}
 			{{#if isAdmin}}

@@ -200,10 +200,10 @@ const exportedMethods = {
         return user.isAdmin;
       },
 
-      async updateIsAdmin(){ console.log("11");
+      async updateIsAdmin(){ 
         const userCollection = await users();
-        let user = await userCollection.findOne({userName: "admin"});  console.log("12");
-        if(!user) throw "No user found"; console.log("13");
+        let user = await userCollection.findOne({userName: "admin"}); 
+        if(!user) throw "No user found";
         let updatedUser = {
             isAdmin: true
         }
@@ -480,11 +480,14 @@ const exportedMethods = {
 
         const userCollection = await users();
         let user = await userCollection.findOne({userName: userName}); 
+        const startDate = new Date();
+        const temp = new Date();
+        const endDate = new Date(temp.setMonth(temp.getMonth()+parseInt(plan.validity)));
         selected = {
             "broadbandPlanId": plan._id,
             "orderId": Date.now(),
-            "startDate":new Date().toString(),
-            "endData":plan.validity
+            "startDate": startDate.getMonth()+"/"+startDate.getDate()+"/"+startDate.getFullYear(),
+            "endData":endDate.getMonth()+"/"+endDate.getDate()+"/"+endDate.getFullYear() 
         }
 
         for(let e of user.planSelected){
@@ -517,7 +520,7 @@ const exportedMethods = {
         );
 
         if(updateInfo.modifiedCount === 0){
-            throw new Error('could not update the record successfully or record does not exist');
+            throw 'could not update the record successfully or record does not exist';
         }
 
         return true;

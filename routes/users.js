@@ -730,10 +730,14 @@ router.put('/update', async(req, res)=>{
 });
 
 router.get('/profile', async(req, res) => {
+    let isAdmin = false;
     if (!req.session.user) {
         res.redirect('/');
     }
 
+    if(req.session.user.userName === 'admin'){
+        isAdmin = true;
+    }
     try {
         let user = await userData.userProfile(req.session.user.userName);
 
@@ -748,7 +752,8 @@ router.get('/profile', async(req, res) => {
                 address: user.address,
                 city: user.city,
                 state: user.state,
-                zipcode: user.zipcode
+                zipcode: user.zipcode,
+                isAdmin: isAdmin
             })
         }
     } catch (e) {
@@ -1034,6 +1039,7 @@ router.put('/checkout', async(req,res)=>{
     }
 
     let adduser;
+    if(updateUser){
     try{
         adduser = await broadbandData.addUser(user._id,plan);
     }
@@ -1041,11 +1047,17 @@ router.put('/checkout', async(req,res)=>{
     {
         res.status(500);
     }
+}
     
 
     if(updateUser === true && adduser === true){
         //res.render('checkout/bill');
         res.json({ success: true});
+        return;
+    }
+    else{
+        res.json({ success: false});
+        return;
     }
 
 });
