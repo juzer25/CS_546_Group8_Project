@@ -192,6 +192,9 @@
         }
 
         let CurrentDate = new Date();
+        let currMonthStr = CurrentDate.getMonth().toString();
+        currMonthStr = parseInt(currMonthStr) + 1;
+        currMonthStr = currMonthStr.toString();
         let currYearStr = CurrentDate.getFullYear().toString();
         let expirationYearFourDigit = "20";
         
@@ -214,7 +217,13 @@
             return;; 
         }
 
-    
+        if(expirationYearFourDigit == currYearStr &&  expirationMonth < currMonthStr){
+            errDiv.innerHTML = "You card has been expired. Please use different card for payment";
+            errDiv.hidden = false;
+            month.focus();
+            month.value = '';
+            return;
+        }
 
         if(!cvv){
             errDiv.innerHTML = "Please provide cvv";
@@ -224,7 +233,7 @@
             return;
         }
 
-        if(cvv.length === 0 || cvv.length > 3){
+        if(cvv.length === 0 || cvv.length !== 3){
             errDiv.innerHTML = "Please provide a valid cvv";
             errDiv.hidden = false;
             cardcvv.focus();

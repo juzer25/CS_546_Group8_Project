@@ -943,6 +943,9 @@ router.put('/checkout', async(req,res)=>{
     }
 
     let CurrentDate = new Date();
+    let currMonthStr = CurrentDate.getMonth().toString();
+    currMonthStr = parseInt(currMonthStr) + 1;
+    currMonthStr = currMonthStr.toString();
     let currYearStr = CurrentDate.getFullYear().toString();
     let expirationYearFourDigit = "20";
     
@@ -958,13 +961,18 @@ router.put('/checkout', async(req,res)=>{
         res.json({success: false});
         return;
     }
+
+    if(expirationYearFourDigit == currYearStr &&  expirationMonth < currMonthStr){
+        res.json({success: false});
+        return;
+    }
 /*
     if(!cardDetails.cvv){
         res.status(400).json({error:"Invalid data" ,success: false});
         return;
     }
 
-    if(cardDetails.cvv.length === 0 || cvv.length > 3){
+    if(cardDetails.cvv.length === 0 || cvv.length !== 3){
         res.status(400).json({error:"Invalid data" ,success: false});
         return;
     }

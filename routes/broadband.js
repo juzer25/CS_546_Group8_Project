@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const broadbandData = data.broadband;
+const userData = data.users;
 const appointmentRequestData = data.appointment;
 
 
@@ -20,21 +21,63 @@ function a2b(a) {
 }
 
 
+
+router.get('/users/moderators', async(req, res) => {
+    // if (req.session.user) {
+        let userName;
+        //let isAdmin = false;
+        if (req.session.user) {
+            userName = req.session.user.userName;
+        }
+    
+        // if (userName == 'admin') {
+        //     isAdmin = true;
+        // }
+         const userNameList = await userData.getUsersList();
+         let isAdmin = await userData.isAdmin(userName);
+         res.render("users/moderators",{userName: userName, isAdmin: isAdmin, userNameList: userNameList })
+     // }
+     // else {
+     //     res.redirect('/');
+     // }
+ });
+
+router.get('/users/admin', async(req, res) => {
+    // if (req.session.user) {
+        let userName;
+        let isAdmin = false;
+        if (req.session.user) {
+            userName = req.session.user.userName;
+        }
+    
+        if (userName == 'admin') {
+            isAdmin = true;
+        }
+         res.render("users/admin",{userName: userName, isAdmin: isAdmin })
+     // }
+     // else {
+     //     res.redirect('/');
+     // }
+ });
+
 router.get('/', async(req, res) => {
     if (req.session.user) {
         // let userappointment;
-        let userName = req.session.user;
+        let userName = req.session.user.userName;
         // try {
         //     userappointment = await appointmentRequestData.requestOfuser(userName);
         //     //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});
         // } catch (e) {
         //     res.status(500).json({ error: e });
         // }
-
+        
 
         if (userName === "admin") {
-            res.render('broadband/index', { userName: userName, isAdmin: true });
+            //await userData.updateIsAdmin(userName);
+            //let isAdmin = await userData.isAdmin();
+            res.render('broadband/index', { userName: userName, isAdmin: true});
         } else {
+            //let isAdmin = await userData.isAdmin();
             res.render('broadband/index', { userName: userName, isAdmin: false });
         }
     } else {
