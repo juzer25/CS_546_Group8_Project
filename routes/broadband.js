@@ -23,7 +23,7 @@ function a2b(a) {
 router.get('/', async(req, res) => {
     if (req.session.user) {
         // let userappointment;
-        let userName = req.session.user;
+        let userName = req.session.user.userName;
         // try {
         //     userappointment = await appointmentRequestData.requestOfuser(userName);
         //     //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});

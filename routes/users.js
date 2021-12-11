@@ -1160,22 +1160,26 @@ router.post("/referafriend",async(req,res)=>{
 });
 
 router.get("/referafriend",async(req,res)=>{
-    if (req.session.user) {
-        // let userName = req.session.user.userName;
-        // let email = req.body.email;
+    if (!req.session.user) {
+        
+            res.redirect('/');
+
+    }
+        if(req.session.user.userName === 'admin'){
+            res.redirect('/');
+        }
+        let userName = req.session.user.userName;
+        let email = req.body.email;
         try {
             const user = await userData.userProfile(req.session.user.userName);
             // let referafriend = await userData.referafriend(email,userName);
-            res.render("users/referafriend",{refercode:user.refercode})
+            res.render("users/referafriend",{userName:userName,refercode:user.refercode})
         }
         catch(e){
             res.status(404).json({ error: e });
         }
-    }
-    else {
-        res.redirect('/');
-    }
-
+    
+    
 
 });
 
