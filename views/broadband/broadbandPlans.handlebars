@@ -1,7 +1,7 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 <div class="container">
-		<div style="width:84%;float:left">
+		<div id="interior">
  		<ul>
  			<li><a href="/">HOME</a></li>
              {{!-- Don't think we need this link if we are already on that page --}}
@@ -9,7 +9,7 @@
 		    <li><a href="/broadband/contactus">CONTACT US</a></li>
  		</ul>	
  		</div>
- 		<div style="width: 16%;float:right"> 
+ 		<div id="interior2"> 
         {{!-- {{#if userName}}
             <h2 class="userType">{{userName}}</h2>
         {{else}}
@@ -29,7 +29,7 @@
 
 <a href="/broadband/statistics" target="_blank">Check Statistics</a>
 <h2 class="table_heading">Broadband Plans</h2>
-<div style="width:100%;float:left">
+<div class="interior3">
     
 	<table id='plansTable' border="0">
         <tr>
