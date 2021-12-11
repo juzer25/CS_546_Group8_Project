@@ -5,10 +5,15 @@ const xss = require('xss');
 
 const appointmentRequestData = data.appointment;
 router.get('/appointment', async(req, res) => {
+    let isAdmin = false;
     if(!req.session.user){
         res.redirect('/');
     }
-    res.render("appointment/newappointment",{userName:req.session.user.userName})
+
+    if(req.session.user.userName === "admin"){
+        isAdmin = true;
+    }
+    res.render("appointment/newappointment",{userName:req.session.user.userName,isAdmin:isAdmin})
 });
 
 router.post('/appointment', async(req, res) => {
