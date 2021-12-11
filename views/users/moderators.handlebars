@@ -42,7 +42,10 @@
         {{!-- {{#if this.userName}}  --}}
 		<tr>
 			<th>{{userName}}</th> 
+			<th>{{isAdmin}}</th> 
+			{{!-- <form id="addmod" action="/users/" method="POST"> --}}
 			<td colspan="28"><button id="reg" type="submit" class="add" formmethod="post" formaction="/broadband/newPlan" >Make Moderator</button></td>
+			{{!-- </form> --}}
 			<td colspan="28"><button id="reg" type="submit" class="add" formmethod="post" formaction="/broadband/newPlan" >Delete Moderator</button></td>
 		</tr>
 		{{!-- {{/if}}	 --}}
