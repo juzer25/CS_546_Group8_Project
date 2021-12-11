@@ -117,6 +117,8 @@ const exportedMethods = {
 
     let hashedpwd = await bcrypt.hash(password,saltRounds);
     
+
+    let isAdmin = false;
         let newUser = {
             userName:userName.toLowerCase(),
             password:hashedpwd,
@@ -131,7 +133,8 @@ const exportedMethods = {
             zipcode:zipcode,
             cardDetails:[],
             planSelected:[],
-            refercode:refercode
+            refercode:refercode,
+            isAdmin: isAdmin
         } 
 
         const userCollection = await users();
@@ -170,6 +173,56 @@ const exportedMethods = {
          
         return {authenticated: true};
     },
+
+    async getUsersList(){
+        const userCollection = await users();
+        const userList = await userCollection.find({}).toArray();
+        for(let i = 0; i<userList.length; i++){
+          userList[i]._id = userList[i]._id.toString();
+    
+        }
+        let arr = [];
+        for(let i=0;i<userList.length;i++){
+            arr.push(userList[i].userName);
+        }
+       // console.log(arr);
+        return userList;
+      },
+
+      async isAdmin(userName){
+        console.log("12");
+        const userCollection = await users();
+        let user = await userCollection.findOne({userName: userName}); 
+        if(!user) throw "No user found";
+
+        console.log(user.isAdmin);
+        
+        return user.isAdmin;
+      },
+
+      async updateIsAdmin(){ console.log("11");
+        const userCollection = await users();
+        let user = await userCollection.findOne({userName: "admin"});  console.log("12");
+        if(!user) throw "No user found"; console.log("13");
+        let updatedUser = {
+            isAdmin: true
+        }
+        const updateInfo = await userCollection.updateOne({ _id: ObjectId(user._id) }, { $set: updatedUser });
+        // const updateInfo = await userCollection.updateOne(
+        //     {_id : user._id},
+        //     { $set: updatedUser}
+        // );
+        console.log(user._id);
+        console.log(updateInfo);
+    
+        if(updateInfo.modifiedCount === 0){
+            throw 'could not update the record successfully or record does not exist';
+        }
+
+       // console.log(user.isAdmin);
+        
+        return ;
+      },
 
     async userProfile(userName){
         const userCollection = await users();
