@@ -1,5 +1,25 @@
-.voidx {
-    float: left;
+#interior{
+    width:84%;
+    float:left;
+}
+
+#interior2{
+    width: 16%;
+    float:right;
+}
+
+#interior3{
+    width:100%;
+    float:left;
+}
+
+
+#bDiv{
+    width:100%;
+}
+
+.someDiv {
+    float : left;
     width: 175px;
 }
 
@@ -29,10 +49,6 @@ body {
 }
 
 
-/* .form_center {
-    height: 100px;
-} */
-
 .form_center,
 table {
     margin-top: 50px;
@@ -45,19 +61,21 @@ table {
     margin-left: 100px;
 }
 
+
 .inputs {
-    margin-left: 0px;
+    
     padding: 5px;
 }
 
 input,
 textarea {
     background-color: #263238;
-    display: block;
+    
     border: none;
     border-bottom: 1px solid white;
     color: white;
 }
+
 
 .group {
     position: relative;
@@ -65,12 +83,10 @@ textarea {
 }
 
 label {
-    /* color: #999; */
     color: #E91E63;
     font-size: 14px;
     font-weight: normal;
-    position: absolute;
-    pointer-events: none;
+    
     left: 5px;
     top: -10px;
     transition: 0.2s ease all;
@@ -81,6 +97,7 @@ textarea:focus {
     outline: none;
 }
 
+
 input:focus~label,
 input:valid~label,
 textarea:focus~label,
@@ -90,15 +107,14 @@ textarea:valid~label {
     color: #E91E63;
 }
 
-
-/* label:checked+label,
+label:checked+label,
 input:valid~label,
 textarea:checked+label,
 textarea:valid~label {
     top: -20px;
     font-size: 14px;
     color: #E91E63;
-} */
+} 
 
 .bar {
     position: relative;
@@ -113,7 +129,8 @@ textarea:valid~label {
     width: 0;
     bottom: 0px;
     position: absolute;
-    background: #E91E63;
+    /*background: #E91E63;*/
+    background: #E80C5f;
     transition: 0.2s ease all;
 }
 
@@ -136,20 +153,16 @@ textarea:focus~.bar:after {
     height: 40px;
     width: 120px;
     border-radius: 15px;
-    background-color: #E91E63;
+    background-color: #E80C5f;
     border-bottom: 0px solid white;
 }
+
 
 .container {
     width: 100%;
     height: 200px;
 }
 
-
-/*input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}*/
 
 ul li {
     display: inline;
@@ -161,7 +174,7 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #E91E63;
+    background: #E80C5f;
 }
 
 li {
@@ -247,11 +260,11 @@ th {
 .box:hover {
     opacity: 1;
 }
-
+/*
 .voidx {
     float: left;
     width: 175px;
-}
+}*/ 
 
 img {
     opacity: 1;
@@ -285,29 +298,29 @@ img:hover {
 
 .row {
     display: -ms-flexbox;
-    /* IE10 */
+
     display: flex;
     -ms-flex-wrap: wrap;
-    /* IE10 */
+  
     flex-wrap: wrap;
     margin: 0 -16px;
 }
 
 .col-25 {
     -ms-flex: 25%;
-    /* IE10 */
+  
     flex: 25%;
 }
 
 .col-50 {
     -ms-flex: 50%;
-    /* IE10 */
+  
     flex: 50%;
 }
 
 .col-75 {
     -ms-flex: 75%;
-    /* IE10 */
+   
     flex: 75%;
 }
 
@@ -325,8 +338,8 @@ img:hover {
 }
 
 
-/* 
-input[type=text] {
+ 
+input {
     width: 40%;
     margin-bottom: 20px;
     padding: 12px;
@@ -335,9 +348,9 @@ input[type=text] {
 }
 
 label {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
     display: block;
-} */
+} 
 
 .icon-container {
     margin-bottom: 20px;
@@ -373,7 +386,7 @@ table, th, td {
     border:1px solid black;
   }
 
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) 
 
 
 /*
@@ -387,5 +400,5 @@ table, th, td {
 }*/
 
 .my_plan {
-    border: solid #E91E63;
+    border: solid #E80C5f;
 }
