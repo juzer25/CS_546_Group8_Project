@@ -2,7 +2,7 @@
 		<div id="interior">
  		<ul>
  			<li><a href="/">HOME</a></li>
-
+             
             {{#if userName}} 
 				
                 {{!-- <li><a href="users/logout">LOGOUT</a></li> --}}
@@ -18,7 +18,13 @@
 
             {{/if}}
 			<li><a href="/broadband/broadbandPlans">PLANS</a></li>
-		    <li><a href="/broadband/aboutus">ABOUT US</a></li>
+            {{!-- {{#if userName}}
+			{{#if isAdmin}}
+			{{else}}
+			<li><a href="checkout/yourorders">YOUR ORDER</a></li>
+			{{/if}}
+		    {{/if}} --}}
+		    <li><a href="/broadband/contactus">CONTACT US</a></li>
 
  		</ul>	
  		</div>

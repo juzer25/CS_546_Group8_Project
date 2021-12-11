@@ -1,0 +1,75 @@
+<div class="container">
+		<div style="width:84%;float:left">
+ 		<ul>
+ 			<li><a href="/">HOME</a></li>
+            {{#if userName}} 
+				
+                {{!-- <li><a href="users/logout">LOGOUT</a></li> --}}
+				{{#if isAdmin}}
+				<li><a href="/broadband/newPlan">Add Broadband service</a></li>
+    			{{!-- <li><a>Update BroadBand service</a></li>
+    			<li><a>Delete Broadband service</a></li> --}}
+    			<li><a href="/allappointments">Check user Requests</a></li>
+				{{else}}
+		        {{!-- <li><a href="users/profile">PROFILE</a></li> --}}
+                <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+				{{/if}}
+
+            {{/if}}
+			<li><a href="/broadband/broadbandPlans">PLANS</a></li>
+            {{#if userName}}
+			{{#if isAdmin}}
+			{{else}}
+			<li><a href="checkout/yourorders">YOUR ORDER</a></li>
+			{{/if}}
+		    {{/if}}
+		    <li><a href="/broadband/contactus">CONTACT US</a></li>
+ 		</ul>		
+ 		</div>
+ 		<div style="width: 16%;float:right"> 
+        {{!-- {{#if userName}}
+            <h2 class="userType">{{userName}}</h2>
+        {{else}}
+        <h2 class="userType" hidden>guest</h2> --}}
+ 		<ul>	
+        {{#if userName}}      
+		    <li><a href="/users/profile">PROFILE</a></li>
+		    <li><a href="/users/logout">LOGOUT</a></li>
+        {{else}}
+            <li><a href="/users/signup">REGISTER</a></li>
+		    <li><a href="/users/login">LOGIN</a></li>
+        {{/if}}
+ 		</ul>
+         {{!-- {{/if}}	 --}}
+ 		</div>
+</div>
+
+{{#if userName}}
+<table>
+
+		<tr>
+			<th>Order Id: {{orderId}}</th> 
+            <th>Ordered Date: {{billDate}}</th>
+            <th>Plan Id: {{planSelectedId}}</th>
+            <th>Plan name: {{name}}</th>
+            <th>Price: {{price}}</th>
+            <th>Validity: {{validity}}</th>
+            {{!-- <form>
+            <td colspan="28"><button id="reg" type="submit" class="add">
+                <a href="http://localhost:3000/checkout/bill">
+               
+                 View Bill
+                
+                </button>
+                </a>
+            </td>
+            </form> --}}
+            <form>
+			<td colspan="28"><button id="reg" type="submit" class="add"><a href="http://localhost:3000/checkout/bill">View Bill</a></button></td>
+            </form>
+        </tr>
+
+</table>
+{{else}}
+<h1> You don't have any order history <h1>
+{{/if}}
