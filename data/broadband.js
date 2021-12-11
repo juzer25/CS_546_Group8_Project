@@ -80,7 +80,7 @@ module.exports = {
         if (!limit.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input LIMIT should be string and valid' };
 
         if (!discount) throw { statusCode: 400, message: 'Input DISCOUNT cannot be empty' }
-        if (!(/^\d+$/.test(discount))) throw { statusCode: 400, message: 'Input DISCOUNT should only be number' }
+        if (!(/^\d{1,2}$/.test(discount))) throw { statusCode: 400, message: 'Input DISCOUNT should only be number' }
         if (typeof discount != 'string') throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
         if (!discount.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
 
@@ -180,7 +180,7 @@ module.exports = {
         if (!limit.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input LIMIT should be string and valid' };
 
         if (!discount) throw { statusCode: 400, message: 'Input DISCOUNT cannot be empty' }
-        if (!(/^\d+$/.test(discount))) throw { statusCode: 400, message: 'Input DISCOUNT should only be number' }
+        if (!(/^\d{1,2}$/.test(discount))) throw { statusCode: 400, message: 'Input DISCOUNT should only be number' }
         if (typeof discount != 'string') throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
         if (!discount.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
 

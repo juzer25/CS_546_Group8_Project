@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
+const xss = require('xss');
+
 const appointmentRequestData = data.appointment;
 router.get('/appointment', async(req, res) => {
     if(!req.session.user){
@@ -10,23 +12,55 @@ router.get('/appointment', async(req, res) => {
 });
 
 router.post('/appointment', async(req, res) => {
-    userName=req.body.Username;
-    email=req.body.email;
-    date = req.body.Date;
-    queries = req.body.Querise;
-    requestType = req.body.RequestType;
-    if(!userName) {
-        res.status(400).render("appointment/newappointment", {error:"Please provide a Username"});
-        return;
-    }
+    userName=xss(req.body.Username);
+    email=xss(req.body.email);
+    date = xss(req.body.Date);
+    queries = xss(req.body.Querise);
+    requestType = xss(req.body.RequestType);
+    // if(!userName) {
+    //     res.status(400).render("appointment/newappointment", {error:"Please provide a Username"});
+    //     return;
+    // }
     if(!date) {
-        res.status(400).render("appointment/newappointment", {error:"Please provide a Appointment Date"});
+        res.status(400).render("appointment/newappointment", {error:"Please provide a Appointment Date",userName:userName,
+        email:email,date:'',queries:queries,requestType:requestType});
         return;
     }
     if(!queries) {
-        res.status(400).render("appointment/newappointment", {error:"Please provide Queries"});
+        res.status(400).render("appointment/newappointment", {error:"Please provide Queries",userName:userName,
+        email:email,date:date,queries:'',requestType:requestType});
         return;
     }
+    if(email.length === 0){
+        res.status(400).render("appointment/newappointment", {error:"Please provide an email",userName:userName,
+        email:'',date:date,queries:queries,requestType:requestType});
+    }
+    if(email.trim().length === 0){
+        res.status(400).render("appointment/newappointment", {error:"Please provide an email",userName:userName,
+        email:'',date:date,queries:queries,requestType:requestType});
+    }
+    emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(!emailReg.test(email)){
+        res.status(400).render("appointment/newappointment", {error:"Please provide an valid email",userName:userName,
+        email:'',date:date,queries:queries,requestType:requestType});
+    }
+    if(date.length === 0){
+        res.status(400).render("appointment/newappointment", {error:"Please provide appointment date",userName:userName,
+        email:email,date:'',queries:queries,requestType:requestType});
+    }
+    if(date.trim().length === 0){
+        res.status(400).render("appointment/newappointment", {error:"Please provide appointment date",userName:userName,
+        email:email,date:'',queries:queries,requestType:requestType});
+    }
+    if(queries.length === 0){
+        res.status(400).render("appointment/newappointment", {error:"Please provide queries",userName:userName,
+        email:email,date:date,queries:'',requestType:requestType});
+    }
+    if(queries.trim().length === 0){
+        res.status(400).render("appointment/newappointment", {error:"Please provide queries",userName:userName,
+        email:email,date:date,queries:'',requestType:requestType});
+    }
+
     let CurrentDate = new Date();
     dateforvalidation = new Date(date);
     if(dateforvalidation<CurrentDate){
@@ -38,7 +72,7 @@ router.post('/appointment', async(req, res) => {
         res.redirect('/');
     }
     catch(e){
-        res.status(400).render("appointment/newappointment");
+        res.status(400).render("appointment/newappointment",{userName:req.session.user.userName});
     }
 });
 

@@ -113,26 +113,15 @@ router.get('/broadband/statistics', async(req, res) => {
 
 router.post('/broadband/newPlan', async(req, res) => {
 
-    // if (!req.session.user) {
-    //     res.redirect('/');
-    // } else {
-    //     if (req.session.user.userName === 'admin') {
-    //         res.render('broadband/newPlan', { userName: req.session.user.userName });
-    //     } else {
-    //         res.redirect('/');
-    //     }
-    // }
-
-
-    // if (!req.session.user) {
-    //     res.redirect('/');
-    // } else {
-    //     if (req.session.user.userName === 'admin') {
-    res.render('broadband/newPlan');
-    //     } else {, { userName: req.session.user.userName }
-    //         res.redirect('/');
-    //     }
-    // }
+    if (req.session.user) {
+        // let userappointment;
+        let userName = req.session.user;
+        if (userName == 'admin')
+            res.render('broadband/newPlan', { userName: userName, isAdmin: true });
+        else
+            res.render('broadband/newPlan', { userName: userName, isAdmin: false });
+    } else
+        res.render('broadband/newPlan', { userName: userName, isAdmin: false });
 
 });
 
@@ -213,7 +202,7 @@ router.post('/broadband/insert', async(req, res) => {
     }
     if (!(/^\d+$/.test(broadbandPlans.price))) {
         res.status(400).render('broadband/newPlan', {
-            error: "Input PRICE should be only numbers",
+            error: "Input PRICE should be only numbers1",
             planName: broadbandPlans.planName,
             price: "",
             validity: broadbandPlans.validity,
@@ -324,7 +313,7 @@ router.post('/broadband/insert', async(req, res) => {
         });
         return
     }
-    if (!(/^\d+$/.test(broadbandPlans.discount))) {
+    if (!(/^\d{1,2}$/.test(broadbandPlans.discount))) {
         res.status(400).render('broadband/newPlan', {
             error: "Input DISCOUNT should be only numbers",
             planName: broadbandPlans.planName,
@@ -427,16 +416,26 @@ router.get('/broadband/contactus', async(req, res) => {
 
 router.post('/broadband/scrap/:id', async(req, res) => {
 
+    let userName;
+    let isAdmin = false;
+    if (req.session.user) {
+        userName = req.session.user.userName;
+    }
+
+    if (userName == 'admin') {
+        isAdmin = true;
+    }
+
     if (!req.params.id.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time' });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
         return;
     }
     if (!req.params.id) {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time' });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
         return;
     }
     if (typeof req.params.id != 'string') {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time' });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
         return;
     }
     try {
@@ -446,203 +445,229 @@ router.post('/broadband/scrap/:id', async(req, res) => {
         }
     } catch (e) {
         if (e.statusCode) {
-            res.status(e.statusCode).render('broadband/broadbandPlans', { error: e.message });
+            res.status(e.statusCode).render('broadband/broadbandPlans', { error: e.message, isAdmin: isAdmin });
         } else
-            res.status(e.statusCode).render('broadband/broadbandPlans', { error: "Internal Server error" });
+            res.status(e.statusCode).render('broadband/broadbandPlans', { error: "Internal Server error", isAdmin: isAdmin });
     }
 });
 
 router.post('/broadband/update', async(req, res) => {
 
+    let isAdmin = false;
+    let userName
+    if (req.session.user) {
+        userName = req.session.user.userName;
+    }
+
+    if (userName == 'admin') {
+        isAdmin = true;
+    }
     const broadbandPlans = req.body;
     if (!broadbandPlans.planName) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input PLANNAME cannot be empty",
             planName: "",
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (typeof broadbandPlans.planName != 'string') {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input PLANNAME should be string and valid",
             planName: "",
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (!broadbandPlans.planName.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input PLANNAME should not have space",
             planName: "",
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
 
     if (!broadbandPlans.price) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input PRCIE cannot be empty",
             planName: broadbandPlans.planName,
             price: "",
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (!(/^\d+$/.test(broadbandPlans.price))) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input PRICE should be only numbers",
             planName: broadbandPlans.planName,
             price: "",
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (typeof broadbandPlans.price != 'string') {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input PRICE should be only numbers",
             planName: broadbandPlans.planName,
             price: "",
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (!broadbandPlans.price.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input PRICE should not have space",
             planName: broadbandPlans.planName,
             price: "",
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
 
     if (!broadbandPlans.validity) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input VALIDITY cannot be empty",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: "",
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (typeof broadbandPlans.validity != 'string') {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input VALIDITY should be string and valid",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: "",
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (!broadbandPlans.validity.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input VALIDITY should not have space",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: "",
             limit: broadbandPlans.limit,
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
 
     if (!broadbandPlans.limit) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input LIMIT cannot be empty",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: "",
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (typeof broadbandPlans.limit != 'string') {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input LIMIT should be string and valid",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: "",
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
     if (!broadbandPlans.limit.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input LIMIT should not have space",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: "",
-            discount: broadbandPlans.discount
+            discount: broadbandPlans.discount,
+            isAdmin: isAdmin
         });
         return
     }
 
     if (!broadbandPlans.discount) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input DISCOUNT cannot be empty",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: ""
+            discount: "",
+            isAdmin: isAdmin
         });
         return
     }
-    if (!(/^\d+$/.test(broadbandPlans.discount))) {
-        res.status(400).render('broadband/newPlan', {
+    if (!(/^\d{1,2}$/.test(broadbandPlans.discount))) {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input DISCOUNT should be only numbers",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: ""
+            discount: "",
+            isAdmin: isAdmin
         });
         return
     }
     if (typeof broadbandPlans.discount != 'string') {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input DISCOUNT should be string and valid",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: ""
+            discount: "",
+            isAdmin: isAdmin
         });
         return
     }
     if (!broadbandPlans.discount.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/newPlan', {
+        res.status(400).render('broadband/updatePlan', {
             error: "Input DISCOUNT should not have space",
             planName: broadbandPlans.planName,
             price: broadbandPlans.price,
             validity: broadbandPlans.validity,
             limit: broadbandPlans.limit,
-            discount: ""
+            discount: "",
+            isAdmin: isAdmin
         });
         return
     }
@@ -660,22 +685,24 @@ router.post('/broadband/update', async(req, res) => {
 
     } catch (e) {
         if (e.statusCode && e.statusCode != 500) {
-            res.status(e.statusCode).render('broadband/newPlan', {
+            res.status(e.statusCode).render('broadband/updatePlan', {
                 error: e.message,
                 planName: broadbandPlans.planName,
                 price: broadbandPlans.price,
                 validity: broadbandPlans.validity,
                 limit: broadbandPlans.limit,
-                discount: broadbandPlans.discount
+                discount: broadbandPlans.discount,
+                isAdmin: isAdmin
             });
         } else {
-            res.status(500).render('broadband/newPlan', {
+            res.status(500).render('broadband/updatePlan', {
                 error: "Internal Server error",
                 planName: broadbandPlans.planName,
                 price: broadbandPlans.price,
                 validity: broadbandPlans.validity,
                 limit: broadbandPlans.limit,
-                discount: broadbandPlans.discount
+                discount: broadbandPlans.discount,
+                isAdmin: isAdmin
             });
         }
     }
@@ -683,30 +710,40 @@ router.post('/broadband/update', async(req, res) => {
 
 router.post('/broadband/getByName/:id', async(req, res) => {
 
+    let userName;
+    let isAdmin = false;
+    if (req.session.user) {
+        userName = req.session.user.userName;
+    }
+
+    if (userName == 'admin') {
+        isAdmin = true;
+    }
+
     if (!req.params.id.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time' });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
         return;
     }
     if (!req.params.id) {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time' });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
         return;
     }
     if (typeof req.params.id != 'string') {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time' });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
         return;
     }
 
     try {
         const plan = await broadbandData.get(req.params.id);
         if (plan == null) {
-            res.status(404).render('broadband/broadbandPlans', { error: 'No plan FOUND' });
+            res.status(404).render('broadband/broadbandPlans', { error: 'No plan FOUND', isAdmin: isAdmin });
         }
-        res.render('broadband/updatePlan', { plan: plan });
+        res.render('broadband/updatePlan', { id: plan._id, planName: plan.planName, price: plan.price, validity: plan.validity, limit: plan.limit, discount: plan.discount, isAdmin: isAdmin });
     } catch (e) {
         if (e.statusCode && e.statusCode != 500) {
-            res.status(e.statusCode).render('broadband/broadbandPlans', { error: e.message });
+            res.status(e.statusCode).render('broadband/broadbandPlans', { error: e.message, isAdmin: isAdmin });
         } else
-            res.status(500).render('broadband/broadbandPlans', { error: 'Internal Server Error' });
+            res.status(500).render('broadband/broadbandPlans', { error: 'Internal Server Error', isAdmin: isAdmin });
     }
 });
 
