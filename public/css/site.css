@@ -37,6 +37,21 @@
     width: 100%;
 }
 
+.div3{
+    width: 6%;
+    float:right;
+}
+
+.div4{
+    width:92%;
+    float:left;
+}
+
+.div5{
+    width: 8%;
+    float:right;
+}
+
 body {
     background-color: #212121;
     font-family: 'Sansation_Regular';
@@ -49,7 +64,7 @@ body {
 }
 
 
-.form_center,
+
 table {
     margin-top: 50px;
     float: left;
@@ -58,8 +73,22 @@ table {
     box-shadow: 0 1px 6px rgba(0, 0, 0, .3);
     text-align: center;
     padding: 50px;
-    margin-left: 100px;
+    margin-left: 250px;
 }
+
+.form_center
+    {
+        margin-top: 50px;
+        width: 30%;
+        margin-left: 390px;
+        background-color: #263238;
+        border-radius: 10px;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, .3);
+        text-align: center;
+        padding: 50px;
+        
+    }
+
 
 
 .inputs {
@@ -83,7 +112,7 @@ textarea {
 }
 
 label {
-    color: #E91E63;
+    color: #f76687;
     font-size: 14px;
     font-weight: normal;
     
@@ -104,7 +133,7 @@ textarea:focus~label,
 textarea:valid~label {
     top: -20px;
     font-size: 14px;
-    color: #E91E63;
+    color: #f76687;
 }
 
 label:checked+label,
@@ -113,7 +142,7 @@ textarea:checked+label,
 textarea:valid~label {
     top: -20px;
     font-size: 14px;
-    color: #E91E63;
+    color: #f76687;
 } 
 
 .bar {
@@ -399,4 +428,14 @@ table, th, td {
 
 .my_plan {
     border: solid #E80C5f;
+}
+
+.statdiv1{
+    width:84%;
+    float:left;
+}
+
+.statdiv2{
+    width: 16%;
+    float:right;
 }

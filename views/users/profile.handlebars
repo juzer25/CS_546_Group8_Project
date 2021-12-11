@@ -24,9 +24,13 @@
         crossorigin="anonymous"></script>
 {{!-- <h1>User Profile</h1> --}}
 {{!-- <a href="/">Home</a> --}}
+{{#if isAdmin}}
+{{else}}
 <a href="update">Update Profile</a>
-{{!-- <a href="profile/myPlans">My Plans</a> --}}
-{{!-- <a href="appointment">Appointments</a> --}}
+<a href="profile/myPlans">My Plans</a>
+<a href="appointment">Appointments</a> 
+{{/if}}
+
 {{!-- </form> --}}
 {{!-- <p>Username : {{userName}}</p><br>
 <p>firstName : {{firstName}}</p><br>

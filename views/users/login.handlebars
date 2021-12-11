@@ -1,12 +1,12 @@
 <div class="container">
-		<div style="width:92%;float:left">
+		<div class="div4">
  		<ul>
  			<li><a href="/">HOME</a></li>
 			 <li><a href="/broadband/broadbandPlans">PLANS</a></li>
 		    <li><a href="/broadband/contactus">CONTACT US</a></li>
  		</ul>	
  		</div>
- 		<div style="width: 8%;float:right"> 
+ 		<div class="div5"> 
  		<ul>	
             <li><a href="/users/signup">REGISTER</a></li>
 			{{!-- <li><a href="/users/login">LOGIN</a></li> --}}
@@ -15,14 +15,14 @@
 </div>
 {{!-- <h2>Login Form</h2> --}}
 
-<div class="void">&nbsp
+<div class="void">
 </div>
 <div class="form_center">
 {{#if error}}
 	<p>{{error}}</p>
 {{/if}}
 <form id="login-form" action="login" method="POST">
-    <legend><h1>LOGIN</h1></legend>
+    <h1>LOGIN</h1>
 	<div id="error" hidden></div>
     <div class="inputs">
 	    <div class="group">

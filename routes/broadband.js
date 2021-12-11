@@ -111,7 +111,7 @@ router.get('/broadband/statistics', async(req, res) => {
 })
 
 
-router.post('/broadband/newPlan', async(req, res) => {
+router.get('/broadband/newPlan', async(req, res) => {
 
     if (req.session.user) {
         // let userappointment;
@@ -406,12 +406,16 @@ router.get('/broadband/subscribe/:name', async(req, res) => {
 
 
 router.get('/broadband/contactus', async(req, res) => {
-    //if (req.session.user) {
-        res.render("broadband/contactus")
-    // }
-    // else {
-    //     res.redirect('/');
-    // }
+    if (!req.session.user) {
+        res.render("broadband/contactus");
+        return;
+    }
+    if (req.session.user.userName === 'admin'){
+        res.redirect('/');
+        return;
+    }
+
+        res.render("broadband/contactus",{userName:req.session.user.userName});
 });
 
 router.post('/broadband/scrap/:id', async(req, res) => {
