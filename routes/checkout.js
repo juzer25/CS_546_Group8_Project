@@ -14,6 +14,51 @@ router.get('/checkout', async(req, res) => {
     }
 });
 
+router.get('/checkout/yourorders', async(req, res) => {
+
+    if (!req.session.user) {
+        res.redirect('/');
+    }
+
+    try {
+        let user = await userData.userProfile(req.session.user.userName);
+       // let user = "shivank";
+        if (user) {
+
+            if(user.planSelected.length > 0){
+                let CurrentDate = new Date();
+                let currDateString = user.planSelected[user.planSelected.length-1].startDate;
+                let orderId = user.planSelected[user.planSelected.length-1].orderId;
+                let planId = user.planSelected[user.planSelected.length-1].broadbandPlanId;
+                let planDetails = await userCheckoutData.getBroadbandPlanById(planId);
+                res.render('checkout/yourorders', {
+                    planSelectedId: planId,
+                    name: planDetails.planName,
+                    price: planDetails.price,
+                    validity: planDetails.validity,
+                    orderId: orderId,
+                    billDate: currDateString, 
+                    userName: user.userName
+                    // firstName: user.firstName,
+                    // lastName:user.lastName,
+                    // email: user.email,
+                    // dateOfBirth: user.dateOfBirth,
+                    // phoneNo: user.phoneNo,
+                    // address: user.address,
+                    // city: user.city,
+                    // state: user.state,
+                    // zipcode: user.zipcode
+                })
+            }
+        }else{
+            res.render('checkout/yourorders',{userName: user.userName});
+        }
+    } catch (e) {
+        res.status(404).json({ error: e })
+    }
+    //res.render("checkout/bill")
+});
+
 router.get('/checkout/bill', async(req, res) => {
 
     if (!req.session.user) {
@@ -26,10 +71,13 @@ router.get('/checkout/bill', async(req, res) => {
         if (user) {
 
             let CurrentDate = new Date();
-            let currDateString = CurrentDate.toString();
-            let orderId = Date.now();
+            let currDateString = user.planSelected[user.planSelected.length-1].startDate;
+            let orderId = user.planSelected[user.planSelected.length-1].orderId;
             let planId = user.planSelected[user.planSelected.length-1].broadbandPlanId;
             let planDetails = await userCheckoutData.getBroadbandPlanById(planId);
+
+           
+
             res.render('checkout/bill', {
                 planSelectedId: planId,
                 name: planDetails.planName,
