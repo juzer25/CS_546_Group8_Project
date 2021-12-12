@@ -14,6 +14,8 @@ router.get('/checkout', async(req, res) => {
     }
 });
 
+
+
 router.get('/checkout/yourorders', async(req, res) => {
 
     if (!req.session.user) {
@@ -31,7 +33,10 @@ router.get('/checkout/yourorders', async(req, res) => {
                 let orderId = user.planSelected[user.planSelected.length-1].orderId;
                 let planId = user.planSelected[user.planSelected.length-1].broadbandPlanId;
                 let planDetails = await userCheckoutData.getBroadbandPlanById(planId);
+                let listplanDetails = new Array();
+                //listplanDetails.push(user.planSelected); 
                 res.render('checkout/yourorders', {
+                    listplanDetails: user.planSelected,
                     planSelectedId: planId,
                     name: planDetails.planName,
                     price: planDetails.price,
@@ -57,6 +62,81 @@ router.get('/checkout/yourorders', async(req, res) => {
         res.status(404).json({ error: e })
     }
     //res.render("checkout/bill")
+});
+
+
+router.post('/checkout/bill/:id', async(req, res) => {
+    if (!req.session.user) {
+        res.redirect('/');
+    }
+    let userName;
+    if (req.session.user) {
+        userName = xss(req.session.user.userName);
+    }
+    if (!req.params.id) {
+        res.status(400).render('checkout/yourorders', { error: 'Invalid ID. PLease try one more time'});
+        return;
+    }
+    if (typeof req.params.id != 'string') {
+        res.status(400).render('checkout/yourorders', { error: 'Invalid ID. Please try one more time'});
+        return;
+    }
+    try {
+        let user = await userData.userProfile(req.session.user.userName);
+        if (user) {
+            if(user.planSelected.length > 0){
+                let currDateString;
+                let orderId;
+                let planId;
+                let planName;
+                let price;
+                let validity;
+                for(let i=0; i<user.planSelected.length; i++){
+                    if(user.planSelected[i].broadbandPlanId == req.params.id){
+                        currDateString = user.planSelected[i].startDate;
+                        orderId = user.planSelected[i].orderId;
+                        planId = user.planSelected[i].broadbandPlanId;
+                        planName = user.planSelected[i].planName;
+                        price = user.planSelected[i].price;
+                        validity = user.planSelected[i].endDate;
+                        break;
+                    }
+                }
+                // let currDateString = user.planSelected[user.planSelected.length-1].startDate;
+                // let orderId = user.planSelected[user.planSelected.length-1].orderId;
+                // let planId = user.planSelected[user.planSelected.length-1].broadbandPlanId;
+                // let planDetails = await userCheckoutData.getBroadbandPlanById(planId);
+            
+                res.render('checkout/bill', {
+                    planSelectedId: planId,
+                    name: planName,
+                    price: price,
+                    validity: validity,
+                    orderId: orderId,
+                    billDate: currDateString, 
+                    userName: user.userName,
+                    firstName: user.firstName,
+                    lastName:user.lastName,
+                    email: user.email,
+                    dateOfBirth: user.dateOfBirth,
+                    phoneNo: user.phoneNo,
+                    address: user.address,
+                    city: user.city,
+                    state: user.state,
+                    zipcode: user.zipcode
+                })
+            }
+        
+        }
+            
+    
+        } catch (e) {
+        if (e.statusCode) {
+            res.status(e.statusCode).render('/checkout/yourorders', { error: e.message});
+        } else
+            res.status(e.statusCode).render('broadband/broadbandPlans', { error: "Internal Server error"});
+    }
+
 });
 
 router.get('/checkout/bill', async(req, res) => {
@@ -102,6 +182,7 @@ router.get('/checkout/bill', async(req, res) => {
     }
     //res.render("checkout/bill")
 });
+
 
 router.post('/payment', async(req, res) => {
     let userName = xss(req.session.user.userName);
