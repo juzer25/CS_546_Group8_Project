@@ -27,25 +27,37 @@ const get = async(id) => {
 module.exports = {
 
     async listPlans() {
-        const broadbandCollection = await broadband();
-        const broadbandList = await broadbandCollection.find({}).toArray();
-        if (broadbandList.length == 0) return null;
-        for (let i = 0; i < broadbandList.length; i++) {
-            broadbandList[i]._id = broadbandList[i]._id.toString();
+        try {
+            const broadbandCollection = await broadband();
+            const broadbandList = await broadbandCollection.find({}).toArray();
+            if (broadbandList.length == 0) return null;
+            for (let i = 0; i < broadbandList.length; i++) {
+                broadbandList[i]._id = broadbandList[i]._id.toString();
+            }
+            return broadbandList;
+        } catch (e) {
+            if (e.statusCode) {
+                throw { statusCode: e.statusCode, message: e.message };
+            } else
+                throw { statusCode: 500, message: `Internal Server error` };
         }
-        return broadbandList;
     },
 
     get,
 
     async getPlan(planName) {
-        const broadbandCollection = await broadband();
+        try {
+            const broadbandCollection = await broadband();
+            let plan = await broadbandCollection.findOne({ planName: planName });
+            if (!plan) throw { statusCode: 404, message: `Plan not found` };
+            return plan;
 
-        let plan = await broadbandCollection.findOne({ planName: planName });
-
-        if (!plan) throw "Plan not found";
-
-        return plan;
+        } catch (e) {
+            if (e.statusCode) {
+                throw { statusCode: e.statusCode, message: e.message };
+            } else
+                throw { statusCode: 500, message: `Internal Server error` };
+        }
     },
 
     //get plan by ID

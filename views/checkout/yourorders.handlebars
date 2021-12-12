@@ -46,7 +46,7 @@
 
 {{#if userName}}
 <table>
-        {{#each listplanDetails}}
+        {{!-- {{#each listplanDetails}}
 		<tr>
 			<th>Order Id: {{orderId}}</th> 
             <th>Plan name: {{planName}}</th>
@@ -54,6 +54,42 @@
             <th>Start Date: {{startDate}}</th>
             <th>End Date: {{endDate}}</th>
              <th>Price: {{price}}</th>
+             <form>
+            <td><button id="reg" type="submit" class="update" formmethod="post" formaction="/checkout/bill/{{broadbandPlanId}}" >View Bill</button></td>
+            {{!-- <a href="/broadband/getByName/{{this._id}}">Update</a> --}}
+         {{!-- </form> --}}
+            {{!-- <form>
+            <td colspan="28"><button id="reg" type="submit" class="add">
+                <a href="http://localhost:3000/checkout/bill">
+               
+                 View Bill
+                
+                </button>
+                </a>
+            </td>
+            </form> --}}
+            
+        {{!-- </tr>
+        <tr>
+			{{!-- <td colspan="6"><a href="http://localhost:3000/checkout/bill" id="reg" class="add">View Bill</a></td> --}}
+            
+        </tr> --}}
+        {{!-- {{/each}} --}} 
+<tr>
+			<th>Order Id</th> 
+            <th>Plan name</th>
+            <th>Plan Id</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+             <th>Price</th></tr>
+{{#each listplanDetails}}
+		<tr>
+			<td>{{orderId}}</td> 
+            <td>{{planName}}</td>
+            <td>{{broadbandPlanId}}</td>
+            <td>{{startDate}}</td>
+            <td>{{endDate}}</td>
+             <td>{{price}}</td>
              <form>
             <td><button id="reg" type="submit" class="update" formmethod="post" formaction="/checkout/bill/{{broadbandPlanId}}" >View Bill</button></td>
             {{!-- <a href="/broadband/getByName/{{this._id}}">Update</a> --}}
@@ -70,11 +106,14 @@
             </form> --}}
             
         </tr>
-        <tr>
+        {{!-- <tr>
 			{{!-- <td colspan="6"><a href="http://localhost:3000/checkout/bill" id="reg" class="add">View Bill</a></td> --}}
             
-        </tr>
+        </tr> --}}
         {{/each}}
+
+
+
 </table>
 {{else}}
 <h1> You don't have any order history <h1>
