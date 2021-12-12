@@ -52,6 +52,11 @@
     float:right;
 }
 
+.div6{
+    width:94%;
+    float:left;
+}
+
 body {
     background-color: #212121;
     font-family: 'Sansation_Regular';

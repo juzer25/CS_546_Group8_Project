@@ -1,5 +1,5 @@
 <div class="container">
-		<div style="width:84%;float:left">
+		<div id="interior">
  		<ul>
  			<li><a href="/">HOME</a></li>
              {{#if userName}}
@@ -7,16 +7,19 @@
             {{/if}}
              {{!-- Don't think we need this link if we are already on that page --}}
              <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+             <li><a href="/broadband/newPlan">ADD NEW BROADBAND PLAN</a></li>
              {{#if userName}}
+             
 			{{#if isAdmin}}
+            
 			{{else}}
 			<li><a href="checkout/yourorders">YOUR ORDER</a></li>
 			{{/if}}
 		    {{/if}}
-		    <li><a href="/broadband/contactus">CONTACT US</a></li>
+		
  		</ul>	
  		</div>
- 		<div style="width: 16%;float:right"> 
+ 		<div id="interior2"> 
         {{!-- {{#if userName}}
             <h2 class="userType">{{userName}}</h2>
         {{else}}

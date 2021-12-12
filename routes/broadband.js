@@ -115,13 +115,13 @@ router.get('/broadband/newPlan', async(req, res) => {
 
     if (req.session.user) {
         // let userappointment;
-        let userName = req.session.user;
+        let userName = req.session.user.userName;
         if (userName == 'admin')
             res.render('broadband/newPlan', { userName: userName, isAdmin: true });
         else
             res.render('broadband/newPlan', { userName: userName, isAdmin: false });
     } else
-        res.render('broadband/newPlan', { userName: userName, isAdmin: false });
+        res.render('broadband/index');
 
 });
 

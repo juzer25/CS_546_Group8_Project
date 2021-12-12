@@ -341,26 +341,40 @@ const exportedMethods = {
         id = ObjectId(id);
         const user = await this.userProfile(userName);
 
-        pwdMatch = await bcrypt.compare(password , user.password);
-        
-        if(!pwdMatch){
+        //pwdMatch = await bcrypt.compare(password , user.password);
+        let updatedUser
+        if(password === user.password){
+            updatedUser= {
+                userName:userName,
+                firstName:firstName,
+                lastName:lastName,
+                email:email,
+                dateOfBirth:dateOfBirth,
+                phoneNo:phoneNo,
+                address:address,
+                city:city,
+                state:state,
+                zipcode:zipcode
+            }
+        }
+        else{
             password = await bcrypt.hash(password,saltRounds);
-    
+            updatedUser= {
+                userName:userName,
+                password:password,
+                firstName:firstName,
+                lastName:lastName,
+                email:email,
+                dateOfBirth:dateOfBirth,
+                phoneNo:phoneNo,
+                address:address,
+                city:city,
+                state:state,
+                zipcode:zipcode
+            }
         }
 
-        let updatedUser = {
-            userName:userName,
-            password:password,
-            firstName:firstName,
-            lastName:lastName,
-            email:email,
-            dateOfBirth:dateOfBirth,
-            phoneNo:phoneNo,
-            address:address,
-            city:city,
-            state:state,
-            zipcode:zipcode
-        }
+         
         const updateInfo = await userCollection.updateOne(
             {_id : id},
             { $set: updatedUser}
