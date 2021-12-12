@@ -1,12 +1,12 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 <h2>selected Plan</h2>
-
+<form id="myForm" method="POST">
 <div class="row">
   <div class="col-75">
     <div class="container-form">
       <div id="error" hidden></div>
-      <form id="myForm" method="POST">
+      
 
           <label for="planName">Plan Name </label><input type="text" id="planName" name="planName" value="{{planName}}" readonly>
           <label for="price">Price </label><input type="text" id="price" name="price" value="{{price}}" readonly>
@@ -48,7 +48,6 @@
                 <input type="text" id="cvv" name="cvv" placeholder="CVV">
               </div>
             </div>
-            </form>
           </div>
           <input type="submit" value="Continue to checkout" class="btn">
         </div>
@@ -56,6 +55,7 @@
         <input name= '_method' value="PUT" type='hidden'>
       
     </div>
+</form>
 
 <a href='/broadband/broadbandPlans'>Go Back</a>
 
