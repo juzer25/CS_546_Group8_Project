@@ -4,6 +4,8 @@ const data = require('../data');
 const xss = require('xss');
 const userCheckoutData = data.checkout;
 const userData = data.users;
+const broadbandData = data.broadband;
+
 
 router.get('/checkout', async(req, res) => {
     if (req.session.user) {
@@ -82,6 +84,8 @@ router.post('/checkout/bill/:id', async(req, res) => {
     }
     try {
         let user = await userData.userProfile(req.session.user.userName);
+        // let plan = await broadbandData.get(req.params.id);
+        // if (plan == null) throw { statusCode: 404, message: 'plan not found' }
         if (user) {
             if (user.planSelected.length > 0) {
                 let currDateString;
@@ -96,7 +100,7 @@ router.post('/checkout/bill/:id', async(req, res) => {
                         orderId = user.planSelected[i].orderId;
                         planId = user.planSelected[i].broadbandPlanId;
                         planName = user.planSelected[i].planName;
-                        price = (user.planSelected[i].price)
+                        price = (user.planSelected[i].price);
                         validity = user.planSelected[i].endDate;
                         break;
                     }
@@ -147,7 +151,6 @@ router.get('/checkout/bill', async(req, res) => {
 
     try {
         let user = await userData.userProfile(req.session.user.userName);
-        // let user = "shivank";
         if (user) {
 
             let CurrentDate = new Date();
@@ -161,8 +164,8 @@ router.get('/checkout/bill', async(req, res) => {
             res.render('checkout/bill', {
                 planSelectedId: planId,
                 name: planDetails.planName,
-                price: planDetails.price,
-                validity: planDetails.validity,
+                price: user.planSelected[user.planSelected.length - 1].price,
+                validity: user.planSelected[user.planSelected.length - 1].endDate,
                 orderId: orderId,
                 billDate: currDateString,
                 userName: user.userName,

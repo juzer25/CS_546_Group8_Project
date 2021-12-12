@@ -34,6 +34,7 @@ module.exports = {
             for (let i = 0; i < broadbandList.length; i++) {
                 broadbandList[i]._id = broadbandList[i]._id.toString();
             }
+
             return broadbandList;
         } catch (e) {
             if (e.statusCode) {
@@ -41,6 +42,32 @@ module.exports = {
             } else
                 throw { statusCode: 500, message: `Internal Server error` };
         }
+    },
+    async maxplan() {
+
+        try {
+            const broadbandCollection = await broadband();
+            const broadbandList = await broadbandCollection.find({}).toArray();
+            if (broadbandList.length == 0) return null;
+            let maxplan = []
+
+            for (let i = 0; i < broadbandList.length; i++) {
+                maxplan[i] = broadbandList[i].userID.length;
+            }
+            let max = Math.max(...maxplan)
+            let name = [],
+                j = 0;
+            for (let i = 0; i < broadbandList.length; i++) {
+                if (max == broadbandList[i].userID.length) {
+                    name[j] = broadbandList[i].planName;
+                    j += 1;
+                }
+            }
+            return name;
+        } catch (e) {
+            throw { statusCode: 500, message: `Internal Server error` };
+        }
+
     },
 
     get,
@@ -50,6 +77,7 @@ module.exports = {
             const broadbandCollection = await broadband();
             let plan = await broadbandCollection.findOne({ planName: planName });
             if (!plan) throw { statusCode: 404, message: `Plan not found` };
+            // plan.price = plan.price * (1 - plan.discount / 100);
             return plan;
 
         } catch (e) {
@@ -98,18 +126,24 @@ module.exports = {
 
         try {
             const broadbandCollection = await broadband();
-            let value = {
-                planName: planName,
-                price: price,
-                validity: validity,
-                limit: limit,
-                discount: discount,
-                userID: [],
-                statistics: 0
+            const planByName = await broadbandCollection.findOne({ planName: planName });
+            if (planByName == null) {
+                let value = {
+                    planName: planName,
+                    price: price,
+                    validity: validity,
+                    limit: limit,
+                    discount: discount,
+                    userID: [],
+                    statistics: 0
+                }
+                const insertInfo = await broadbandCollection.insertOne(value);
+                if (insertInfo.insertedCount === 0) throw { statusCode: 500, message: 'Could not add Broadband' };
+                return insertInfo;
+            } else {
+                throw { statusCode: 400, message: 'Plan Name already exist' }
             }
-            const insertInfo = await broadbandCollection.insertOne(value);
-            if (insertInfo.insertedCount === 0) throw { statusCode: 500, message: 'Could not add Broadband' };
-            return insertInfo;
+
         } catch (e) {
             if (e.statusCode && e.statusCode != 500) {
                 throw { statusCode: e.statusCode, message: e.message };

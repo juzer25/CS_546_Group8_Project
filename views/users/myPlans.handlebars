@@ -9,19 +9,20 @@
         <table id='plansTable'>
         <tr>
             <th>Plan Name</th>
-            <th>Validity</th>
-            <th>Limit</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Price</th>
 
             <th></th>
         </tr>
-        {{#each plans}}
+        {{#each user.planSelected}}
         <tr>
             <td><p id='planName'>{{this.planName}}</p></td>
+            <td><p id='startDate'>{{this.startDate}}</p></td>
+            <td><p id='endDate'>{{this.endDate}}</p></td>
+            <td><p id='price'>{{this.price}}</p></td>
             
-            <td><p id='validity'>{{this.validity}}</p></td>
-            <td><p id='limit'>{{this.limit}}</p></td>
-            
-            <td><button type="submit" class="select" >Remove Plan</button></td>
+            <td><button id="reg" type="submit" class="select" >Remove Plan</button></td>
          
             
         </tr>{{/each}}
