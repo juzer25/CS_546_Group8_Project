@@ -91,18 +91,22 @@ router.get('/error', async(req, res) => {
 });
 
 router.get('/broadband/statistics', async(req, res) => {
+    let userName
+    if(req.session.user){
+        userName = req.session.user.userName;
+    }
     try {
         let broadbandList = await broadbandData.listPlans();
         let plan = [];
         let users = [];
         if (broadbandList == null) {
-            res.render('broadband/statistics', { plan: plan, users: users, error: 'No plans' });
+            res.render('broadband/statistics', { userName:userName ,plan: plan, users: users, error: 'No plans' });
         } else {
             for (let ele of broadbandList) {
                 plan.push(ele.planName);
                 users.push(ele.userID.length)
             }
-            res.render('broadband/statistics', { plan: plan, users: users });
+            res.render('broadband/statistics', {userName:userName, plan: plan, users: users });
         }
     } catch (e) {
         res.status(500).render('broadband/statistics', { error: 'Internal Server Error' });
