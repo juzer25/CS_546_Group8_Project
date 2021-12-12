@@ -1,8 +1,4 @@
 # CS_546_Group8_Project
-CS-546 Group 8 Project - BroadBand Service
-
-Project starts.
-
 
 <h1 align="center">CS_546_C Final Project Group 8</h1>
 
