@@ -46,6 +46,7 @@
 </div>
 <div class="form_center">
 <form id="newPlan" action="/broadband/insert" method="POST">
+<fieldset>
     <legend><h1>NEW PLAN</h1></legend>
     <div class="inputs">
 	    <div class="group">
@@ -65,7 +66,7 @@
         <label for="validity">VALIDITY</label>
 	</div>
     <select id="validity" name="validity">
-			<option class="validity" selected=""; value="">SELECT A PLAN</option>
+			<option class="validity" selected="" value="">SELECT A PLAN</option>
 			<option value="1">1 Month</option>
 			<option value="3">3 Month</option>
 			<option value="6">6 Month</option>
@@ -93,6 +94,7 @@
         <input id="reg" type="submit" value="Submit"> 
     </div>
     </div>
+    </fieldset>
 </form>
 </div>
 <script src="/public/js/newPlan.js"></script>
