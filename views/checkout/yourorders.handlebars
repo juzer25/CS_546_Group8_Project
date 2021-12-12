@@ -1,8 +1,7 @@
 <div class="container">
-		<div id="interior">
+		<div style="width:84%;float:left">
  		<ul>
  			<li><a href="/">HOME</a></li>
-             <li><a href="/broadband/broadbandPlans">PLANS</a></li>
             {{#if userName}} 
 				
                 {{!-- <li><a href="users/logout">LOGOUT</a></li> --}}
@@ -13,18 +12,21 @@
     			<li><a href="/allappointments">Check user Requests</a></li>
 				{{else}}
 		        {{!-- <li><a href="users/profile">PROFILE</a></li> --}}
-                <li><a href="/users/referafriend">REFER A FRIEND</a></li>
                 <li><a href="/appointment">CREATE APPOINTMENT</a></li>
-                <li><a href="/broadband/contactus">CONTACT US</a></li>
 				{{/if}}
-            
+
             {{/if}}
-			
-            
-		    
+			<li><a href="/broadband/broadbandPlans">PLANS</a></li>
+            {{#if userName}}
+			{{#if isAdmin}}
+			{{else}}
+			<li><a href="/checkout/yourorders">YOUR ORDER</a></li>
+			{{/if}}
+		    {{/if}}
+		    <li><a href="/broadband/contactus">CONTACT US</a></li>
  		</ul>		
  		</div>
- 		<div id="interior2"> 
+ 		<div style="width: 16%;float:right"> 
         {{!-- {{#if userName}}
             <h2 class="userType">{{userName}}</h2>
         {{else}}
@@ -44,14 +46,18 @@
 
 {{#if userName}}
 <table>
-
+        {{#each listplanDetails}}
 		<tr>
 			<th>Order Id: {{orderId}}</th> 
-            <th>Ordered Date: {{billDate}}</th>
-            <th>Plan Id: {{planSelectedId}}</th>
-            <th>Plan name: {{name}}</th>
-            <th>Price: {{price}}</th>
-            <th>Validity: {{validity}}</th>
+            <th>Plan name: {{planName}}</th>
+            <th>Plan Id: {{broadbandPlanId}}</th>
+            <th>Start Date: {{startDate}}</th>
+            <th>End Date: {{endDate}}</th>
+             <th>Price: {{price}}</th>
+             <form>
+            <td><button id="reg" type="submit" class="update" formmethod="post" formaction="/checkout/bill/{{broadbandPlanId}}" >View Bill</button></td>
+            {{!-- <a href="/broadband/getByName/{{this._id}}">Update</a> --}}
+         </form>
             {{!-- <form>
             <td colspan="28"><button id="reg" type="submit" class="add">
                 <a href="http://localhost:3000/checkout/bill">
@@ -65,8 +71,10 @@
             
         </tr>
         <tr>
-			<td colspan="6"><a href="http://localhost:3000/checkout/bill" id="reg" class="add">View Bill</a></td>
+			{{!-- <td colspan="6"><a href="http://localhost:3000/checkout/bill" id="reg" class="add">View Bill</a></td> --}}
+            
         </tr>
+        {{/each}}
 </table>
 {{else}}
 <h1> You don't have any order history <h1>
