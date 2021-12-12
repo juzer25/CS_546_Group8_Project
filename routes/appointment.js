@@ -86,17 +86,19 @@ router.post('/appointment', async(req, res) => {
 
 
 router.get('/allappointments', async(req, res) => {
+    let isAdmin = true;
     if(!req.session.user){
         res.redirect('/');
         return;
     }
     if(req.session.user.userName !== 'admin'){
+        isAdmin = false;
         res.redirect('/');
         return;
     }
     try{
         let apts = await appointmentRequestData.listappointmentRequest();
-        res.render('appointment/allappointments', {AppointmentRequest:apts});
+        res.render('appointment/allappointments', {userName:req.session.user.userName,isAdmin:isAdmin,AppointmentRequest:apts});
     }
     catch(e){
         res.status(500).json({ error: e });
