@@ -22,7 +22,7 @@ router.get('/checkout/yourorders', async(req, res) => {
 
     try {
         let user = await userData.userProfile(req.session.user.userName);
-       // let user = "shivank";
+       
         if (user) {
 
             if(user.planSelected.length > 0){
@@ -104,7 +104,6 @@ router.get('/checkout/bill', async(req, res) => {
 });
 
 router.post('/payment', async(req, res) => {
-    //let userName = "shivank";
     let userName = xss(req.session.user.userName);
     let nameOfCardHolder = xss(req.body.cardname);
     let cardNumber = xss(req.body.cardnumber);

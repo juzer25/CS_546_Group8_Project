@@ -6,17 +6,24 @@
  			<li><a href="/">HOME</a></li>
              
              {{#if userName}}
-                <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+                
             {{/if}}
              {{!-- Don't think we need this link if we are already on that page --}}
-             <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+             
              {{#if userName}}
 			{{#if isAdmin}}
+            <li><a href="/broadband/newPlan">ADD NEW BROADBAND PLAN</a></li>	
+    		<li><a href="/allappointments">CHECK USER REQUESTS</a></li>
 			{{else}}
-			<li><a href="checkout/yourorders">YOUR ORDER</a></li>
+            <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+			<li><a href="/checkout/yourorders">YOUR ORDER</a></li>
+            <li><a href="users/referafriend">REFER A FRIEND</a></li>
+            <li><a href="/broadband/contactus">CONTACT US</a></li>
 			{{/if}}
+            {{else}}
+            <li><a href="/broadband/contactus">CONTACT US</a></li>
 		    {{/if}}
-		    <li><a href="/broadband/contactus">CONTACT US</a></li>
+		   
  		</ul>	
  		</div>
  		<div id="interior2"> 
