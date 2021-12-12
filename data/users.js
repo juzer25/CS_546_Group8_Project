@@ -343,6 +343,7 @@ const exportedMethods = {
 
         //pwdMatch = await bcrypt.compare(password , user.password);
         let updatedUser
+        let updateInfo;
         if(password === user.password){
             updatedUser= {
                 userName:userName,
@@ -356,6 +357,11 @@ const exportedMethods = {
                 state:state,
                 zipcode:zipcode
             }
+            updateInfo = await userCollection.updateOne(
+                {_id : id},
+                { $set: {userName:updatedUser.userName,firstName:updatedUser.firstName,
+                lastName:updatedUser.lastName,email:updatedUser.email,dateOfBirth:updatedUser.dateOfBirth,phoneNo:updatedUser.phoneNo,address:updatedUser.address,city:updatedUser.city,state:updatedUser.state,zipcode:updatedUser.zipcode}}
+            );
         }
         else{
             password = await bcrypt.hash(password,saltRounds);
@@ -372,15 +378,14 @@ const exportedMethods = {
                 state:state,
                 zipcode:zipcode
             }
+
+            updateInfo = await userCollection.updateOne(
+                {_id : id},
+                { $set: updatedUser}
+            );
         }
 
-         
-        const updateInfo = await userCollection.updateOne(
-            {_id : id},
-            { $set: updatedUser}
-        );
-
-        if(updateInfo.modifiedCount === 0){
+        if(updateInfo.modifiedCount === 0 && updateInfo.matchedCount === 0){
             throw new Error('could not update the record successfully or record does not exist');
         }
 
