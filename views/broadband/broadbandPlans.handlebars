@@ -108,6 +108,17 @@
         {{#if error}}
         <div>{{error}}</div>
         {{/if}}
+        {{#if max}}
+        <tr><td colspan="7">
+        <div>Most subscribed plan</div><ol>
+        {{#each max}}
+        <li>{{this}}</li>
+        {{/each}}</ol></td>
+        </tr>
+        {{/if}}
      </table>
+
+
+
 </div>
 <script src="/public/js/broadbandScript.js"></script>

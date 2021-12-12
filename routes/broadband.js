@@ -140,11 +140,12 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
     }
     try {
         let broadbandList = await broadbandData.listPlans();
+        let max = await broadbandData.maxplan();
         if (broadbandList === null) {
             res.status(400).render('broadband/broadbandPlans', { noPlan: "No plans found", userName: userName, isAdmin: isAdmin });
             return
         } else {
-            res.render('broadband/broadbandPlans', { broadbandList: broadbandList, userName: userName, isAdmin: isAdmin });
+            res.render('broadband/broadbandPlans', { broadbandList: broadbandList, max: max, userName: userName, isAdmin: isAdmin });
         }
     } catch (e) {
         res.status(500).render('broadband/broadbandPlans', { error: 'Internal Server Error', userName: userName, isAdmin: isAdmin });
