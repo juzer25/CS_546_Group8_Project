@@ -575,14 +575,15 @@ router.post('/signup', async(req, res) => {
     try {
         check = await userData.checkUser(userName.toLowerCase(), password);
     } catch (e) {
-        res.status(400).render("users/signup", { error: "user already exists" });
+        return res.status(400).render("users/signup", { error: "user already exists" });
     }
 
     try {
         userCreated = await userData.createUser(userName, password, firstName, lastName, email, dateOfBirth, phoneNo, address, city, state, zipcode);
         res.redirect('login');
+        return;
     } catch (e) {
-        res.status(500).render("users/signup", { error: "Something went wrong" });
+        return res.status(500).render("users/signup", { error: "Something went wrong" });
     }
 });
 
@@ -1185,31 +1186,10 @@ router.put('/update', async(req, res) => {
         return;
     }
 
-    //let updatedUser = {};
-    /*let newUserName = req.body.userName.toLowerCase();
-    let newPassword = req.body.password;
-    let newFirstName = req.body.firstName;
-    let newLastName = req.body.lastName;
-    let newEmail = req.body.email;
-    let newDateOfBirth = req.body.dateOfBirth;
-    let newPhoneNo = req.body.phoneNo;
-    let newAddress = req.body.address;
-    let newCity = req.body.city;
-    let newState = req.body.state;
-    let newzipcode = req.body.zipcode;*/
+
     try {
         let user = await userData.userProfile(req.session.user.userName);
-        //if(newUserName===user.userName && newPassword===user.password && )
-        /*updatedUser.userName = newUserName;
-        updatedUser.password = newPassword;
-        updatedUser.fullName = newFullName;
-        updatedUser.email = newEmail;
-        updatedUser.dateOfBirth = newDateOfBirth;
-        updatedUser.phoneNo = newPhoneNo;
-        updatedUser.address = newAddress;
-        updatedUser.city = newCity;
-        updatedUser.state = newState;
-        updatedUser.zipcode = newzipcode;*/
+
         let id = user._id.toString();
         let updatedUser = await userData.updateUser(id, userName, password,
             firstName, lastName, email, dateOfBirth, phoneNo, address, city,
@@ -1467,27 +1447,7 @@ router.put('/checkout', async(req, res) => {
         res.json({ success: false });
         return;
     }
-    /*
-        if(!cardDetails.cvv){
-            res.status(400).json({error:"Invalid data" ,success: false});
-            return;
-        }
 
-        if(cardDetails.cvv.length === 0 || cvv.length !== 3){
-            res.status(400).json({error:"Invalid data" ,success: false});
-            return;
-        }
-
-        if(cardDetails.cvv.trim().length === 0){
-            res.status(400).json({error:"Invalid data" ,success: false});
-            return;
-        }
-
-        var regCvv = /^\d{3}$/;
-        if(!regCvv.test(cardDetails.cvv)){
-            res.status(400).json({error:"Invalid data" ,success: false});
-            return;
-        }*/
 
 
     let user;
@@ -1501,7 +1461,7 @@ router.put('/checkout', async(req, res) => {
     try {
         user = await userData.userProfile(req.session.user.userName);
     } catch (e) {
-        res.json({ success: false });
+        return res.json({ success: false });
     }
 
 
@@ -1509,7 +1469,7 @@ router.put('/checkout', async(req, res) => {
     try {
         plan = await broadbandData.getPlan(planName);
     } catch (e) {
-        res.json({ success: false });
+        return res.json({ success: false });
 
     }
     if (user.planSelected.length != 0) {
@@ -1527,7 +1487,7 @@ router.put('/checkout', async(req, res) => {
     try {
         updateUser = await userData.updatePlan(req.session.user.userName, plan, cardDetails);
     } catch (e) {
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 
     let adduser;
@@ -1535,7 +1495,7 @@ router.put('/checkout', async(req, res) => {
         try {
             adduser = await broadbandData.addUser(user._id, plan);
         } catch (e) {
-            res.status(500);
+            return res.status(500);
         }
     }
 
@@ -1562,27 +1522,27 @@ router.post('/removePlan', async(req, res) => {
     try {
         user = await userData.userProfile(req.session.user.userName);
     } catch (e) {
-        res.status(404);
+        return res.status(404);
     }
 
     let data = req.body;
     try {
         plan = await broadbandData.getPlan(xss(data.planName));
     } catch (e) {
-        res.status(404);
+        return res.status(404);
     }
     let updateUser
     try {
         updateUser = await userData.removePlan(req.session.user.userName, plan._id.toString());
     } catch (e) {
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 
     let userRemoved;
     try {
         userRemoved = await broadbandData.removeUser(user._id, plan);
     } catch (e) {
-        res.status(404);
+        return res.status(404);
     }
 
 
@@ -1609,6 +1569,7 @@ router.delete('/delete', async(req, res) => {
             if (req.session.user) {
                 req.session.destroy();
                 res.redirect('/');
+                return;
             }
         }
 
@@ -1625,7 +1586,7 @@ router.get("/profile/myPlans", async(req, res) => {
     try {
         user = await userData.userProfile(req.session.user.userName);
     } catch (e) {
-        res.status(500);
+        return res.status(500);
     }
 
     let userPlans = [];
@@ -1635,7 +1596,7 @@ router.get("/profile/myPlans", async(req, res) => {
             let broadbandPlan = await broadbandData.getPlanById(plans.broadbandPlanId);
             userPlans.push(broadbandPlan);
         } catch (e) {
-            res.status(404);
+            return res.status(404);
         }
     }
 

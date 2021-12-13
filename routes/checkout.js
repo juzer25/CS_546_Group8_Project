@@ -22,6 +22,15 @@ router.get('/checkout/yourorders', async(req, res) => {
     if (!req.session.user) {
         res.redirect('/');
     }
+    let userName;
+    let isAdmin = false;
+    if (req.session.user) {
+        userName = req.session.user.userName;
+    }
+
+    if (userName == 'admin') {
+        isAdmin = true;
+    }
 
     try {
         let user = await userData.userProfile(req.session.user.userName);
@@ -44,23 +53,16 @@ router.get('/checkout/yourorders', async(req, res) => {
                     validity: planDetails.validity,
                     orderId: orderId,
                     billDate: currDateString,
-                    userName: user.userName
-                        // firstName: user.firstName,
-                        // lastName:user.lastName,
-                        // email: user.email,
-                        // dateOfBirth: user.dateOfBirth,
-                        // phoneNo: user.phoneNo,
-                        // address: user.address,
-                        // city: user.city,
-                        // state: user.state,
-                        // zipcode: user.zipcode
+                    userName: user.userName,
+                    userName: userName,
+                    isAdmin: isAdmin
                 })
             }
         } else {
-            res.render('checkout/yourorders', { userName: user.userName });
+            res.render('checkout/yourorders', { userName: user.userName, userName: userName, isAdmin: isAdmin });
         }
     } catch (e) {
-        res.status(404).json({ error: e })
+        res.status(404).render('checkout/yourorders', { userName: userName, isAdmin: isAdmin });
     }
     //res.render("checkout/bill")
 });
@@ -132,7 +134,7 @@ router.post('/checkout/bill/:id', async(req, res) => {
             }
 
         }
-
+        return;
 
     } catch (e) {
         if (e.statusCode) {

@@ -2,34 +2,29 @@
 		<div id="interior">
  		<ul>
  			<li><a href="/">HOME</a></li>
-             {{!-- Don't think we need this link if we are already on that page --}}
-             <li><a href="/broadband/broadbandPlans">PLANS</a></li>
-      {{#if userName}}
+            <li><a href="/broadband/broadbandPlans">PLANS</a></li> 
+            {{#if userName}}
 			{{#if isAdmin}}
 			{{else}}
-			<li><a href="/checkout/yourorders">YOUR ORDER</a></li>
-      <li><a href="/broadband/contactus">CONTACT US</a></li>
+			<li><a href="/users/referafriend">REFER A FRIEND</a></li>
+            <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+			<li><a href="/checkout/yourorders">YOUR ORDER</a></li>           
+            <li><a href="/broadband/contactus">CONTACT US</a></li>
+
 			{{/if}}
-      
 		    {{/if}}
-		    
  		</ul>	
  		</div>
- 		<div id="interior2"> 
-        {{!-- {{#if userName}}
-            <h2 class="userType">{{userName}}</h2>
-        {{else}}
-        <h2 class="userType" hidden>guest</h2> --}}
- 		<ul>	
+ 		<div id="interior2">
+        <ul> 
         {{#if userName}}      
-		    <li><a href="/users/profile">PROFILE</a></li>
-		    <li><a href="/users/logout">LOGOUT</a></li>
-        {{else}}
+		<li><a href="/users/profile">PROFILE</a></li>
+			<li><a href="/users/logout">LOGOUT</a></li>
+         {{else}}
             <li><a href="/users/signup">REGISTER</a></li>
-		    <li><a href="/users/login">LOGIN</a></li>
-        {{/if}}
- 		</ul>
-         {{!-- {{/if}}	 --}}
+			<li><a href="/users/login">LOGIN</a></li>
+        {{/if}}	
+        </ul>
  		</div>
 </div>
 

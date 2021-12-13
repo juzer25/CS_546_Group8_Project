@@ -190,12 +190,10 @@ const exportedMethods = {
     },
 
     async isAdmin(userName) {
-        console.log("12");
         const userCollection = await users();
         let user = await userCollection.findOne({ userName: userName });
         if (!user) throw "No user found";
 
-        console.log(user.isAdmin);
 
         return user.isAdmin;
     },
@@ -232,6 +230,27 @@ const exportedMethods = {
         return user;
     },
 
+
+    async removeUserPlan(userId, id) {
+
+        if (!id.replace(/\s/g, '').length) throw { statusCode: 400, message: 'ID not valid' };
+        if (!id) throw { statusCode: 400, message: 'ID not valid' };
+        if (typeof id != 'string') throw { statusCode: 400, message: `ID not valid` };
+        try {
+            const userCollection = await users();
+            for (let i = 0; i < userId.length; i++) {
+                let user = await userCollection.findOne({ _id: userId[i] });
+                let removed = this.removePlan(user.userName, id)
+            }
+            return true;
+        } catch (e) {
+            if (e.statusCode) {
+                throw { statusCode: e.statusCode, message: e.message };
+            } else
+                throw { statusCode: 500, message: `Internal Server error` };
+        }
+
+    },
 
     async updateUser(id, userName, password, firstName, lastName, email, dateOfBirth, phoneNo, address, city, state, zipcode) {
 

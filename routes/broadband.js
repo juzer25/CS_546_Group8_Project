@@ -31,16 +31,11 @@ router.get('/users/moderators', async(req, res) => {
         userName = req.session.user.userName;
     }
 
-    // if (userName == 'admin') {
-    //     isAdmin = true;
-    // }
+
     const userNameList = await userData.getUsersList();
     let isAdmin = await userData.isAdmin(userName);
     res.render("users/moderators", { userName: userName, isAdmin: isAdmin, userNameList: userNameList })
-        // }
-        // else {
-        //     res.redirect('/');
-        // }
+
 });
 
 router.get('/users/admin', async(req, res) => {
@@ -54,31 +49,19 @@ router.get('/users/admin', async(req, res) => {
         isAdmin = true;
     }
     res.render("users/admin", { userName: userName, isAdmin: isAdmin })
-        // }
-        // else {
-        //     res.redirect('/');
-        // }
+
 });
 
 router.get('/', async(req, res) => {
     if (req.session.user) {
-        // let userappointment;
         let userName = req.session.user.userName;
-        // try {
-        //     userappointment = await appointmentRequestData.requestOfuser(userName);
-        //     //res.render("broadband/index",{user:userName,appointmentdate:userappointment.date});
-        // } catch (e) {
-        //     res.status(500).json({ error: e });
-        // }
-
 
         if (userName === "admin") {
-            //await userData.updateIsAdmin(userName);
-            //let isAdmin = await userData.isAdmin();
             res.render('broadband/index', { userName: userName, isAdmin: true });
+            return;
         } else {
-            //let isAdmin = await userData.isAdmin();
             res.render('broadband/index', { userName: userName, isAdmin: false });
+            return;
         }
     } else {
         res.render('broadband/index');
@@ -92,30 +75,35 @@ router.get('/error', async(req, res) => {
 
 router.get('/broadband/statistics', async(req, res) => {
     let userName
+    let isAdmin = true
     if (req.session.user) {
         userName = req.session.user.userName;
     }
+    if (userName == 'admin')
+        isAdmin = true
     try {
         let broadbandList = await broadbandData.listPlans();
         let plan = [];
         let users = [];
         if (broadbandList == null) {
-            res.render('broadband/statistics', { userName: userName, plan: plan, users: users, error: 'No plans' });
+            res.render('broadband/statistics', { userName: userName, plan: plan, users: users, error: 'No plans', isAdmin: isAdmin });
+            return;
         } else {
             for (let ele of broadbandList) {
                 plan.push(ele.planName);
                 users.push(ele.userID.length)
             }
-            res.render('broadband/statistics', { userName: userName, plan: plan, users: users });
+            res.render('broadband/statistics', { userName: userName, plan: plan, users: users, isAdmin: isAdmin });
+            return;
         }
     } catch (e) {
-        res.status(500).render('broadband/statistics', { error: 'Internal Server Error' });
+        res.status(500).render('broadband/statistics', { error: 'Internal Server Error', isAdmin: isAdmin });
 
     }
 })
 
 
-router.get('/broadband/newPlan', async(req, res) => {
+router.post('/broadband/newPlan', async(req, res) => {
 
     if (req.session.user) {
         let userName = req.session.user.userName;
@@ -141,6 +129,10 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
     try {
         let broadbandList = await broadbandData.listPlans();
         let max = await broadbandData.maxplan();
+        if (max == null && broadbandList != null) {
+            res.status(400).render('broadband/broadbandPlans', { broadbandList: broadbandList, userName: userName, isAdmin: isAdmin });
+            return
+        }
         if (broadbandList === null) {
             res.status(400).render('broadband/broadbandPlans', { noPlan: "No plans found", userName: userName, isAdmin: isAdmin });
             return
@@ -158,6 +150,14 @@ router.get('/broadband/broadbandPlans', async(req, res) => {
 
 router.post('/broadband/insert', async(req, res) => {
 
+    let userName
+    let isAdmin = true
+    if (req.session.user) {
+        userName = req.session.user.userName;
+    }
+    if (userName == 'admin')
+        isAdmin = true
+
     const broadbandPlans = req.body;
     planName = xss(broadbandPlans.planName);
     price = xss(broadbandPlans.price);
@@ -172,7 +172,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -183,7 +185,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -194,7 +198,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -206,7 +212,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: "",
             validity: validity,
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -217,7 +225,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: "",
             validity: validity,
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -228,7 +238,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: "",
             validity: validity,
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -239,7 +251,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: "",
             validity: validity,
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -251,7 +265,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: "",
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -262,7 +278,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: "",
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -273,7 +291,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: "",
             limit: limit,
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -285,7 +305,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: "",
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -296,7 +318,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: "",
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -307,7 +331,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: "",
-            discount: discount
+            discount: discount,
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -319,7 +345,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: limit,
-            discount: ""
+            discount: "",
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -330,7 +358,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: limit,
-            discount: ""
+            discount: "",
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -341,7 +371,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: limit,
-            discount: ""
+            discount: "",
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -352,7 +384,9 @@ router.post('/broadband/insert', async(req, res) => {
             price: price,
             validity: validity,
             limit: limit,
-            discount: ""
+            discount: "",
+            userName: userName,
+            isAdmin: isAdmin
         });
         return
     }
@@ -363,7 +397,7 @@ router.post('/broadband/insert', async(req, res) => {
         let plans = [];
         plans.push(newBroadband)
         res.redirect('/broadband/broadbandPlans');
-
+        return;
     } catch (e) {
         if (e.statusCode && e.statusCode != 500) {
             res.status(e.statusCode).render('broadband/newPlan', {
@@ -372,7 +406,9 @@ router.post('/broadband/insert', async(req, res) => {
                 price: price,
                 validity: validity,
                 limit: limit,
-                discount: discount
+                discount: discount,
+                userName: userName,
+                isAdmin: isAdmin
             });
         } else
             res.status(500).render('broadband/newPlan', {
@@ -381,7 +417,9 @@ router.post('/broadband/insert', async(req, res) => {
                 price: price,
                 validity: validity,
                 limit: limit,
-                discount: discount
+                discount: discount,
+                userName: userName,
+                isAdmin: isAdmin
             });
     }
 });
@@ -415,6 +453,7 @@ router.get('/broadband/subscribe/:name', async(req, res) => {
     try {
         let plan = await broadbandData.getPlan(planName);
         res.render('broadband/selectedPlan', { userName: req.session.user.userName, planName: plan.planName, price: plan.price, validity: plan.validity, limit: plan.limit, discount: plan.discount });
+        return;
     } catch (e) {
         if (e.statusCode) {
             redirect('broadband/broadbandPlans', { error: e.message });
@@ -461,16 +500,20 @@ router.post('/broadband/scrap/:id', async(req, res) => {
         res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
         return;
     }
+    let id = xss(req.params.id)
     try {
-        const removeBroadband = await broadbandData.remove(req.params.id);
+        const plan = await broadbandData.getPlanById(id)
+        const removeuserplan = await userData.removeUserPlan(plan.userID, id);
+        const removeBroadband = await broadbandData.remove(id);
         if (removeBroadband == 'Success') {
             res.redirect('/broadband/broadbandPlans');
         }
+        return;
     } catch (e) {
-        if (e.statusCode) {
-            res.status(e.statusCode).render('broadband/broadbandPlans', { error: e.message, isAdmin: isAdmin });
+        if (e.statusCode && e.statusCode != 500) {
+            return res.status(e.statusCode).redirect('/broadband/broadbandPlans');
         } else
-            res.status(e.statusCode).render('broadband/broadbandPlans', { error: "Internal Server error", isAdmin: isAdmin });
+            return res.status(500).redirect('/broadband/broadbandPlans');
     }
 });
 
@@ -500,7 +543,8 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
         });
         return
     }
@@ -512,7 +556,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -524,7 +570,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -537,7 +585,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -549,7 +599,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -561,7 +613,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -573,7 +627,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -586,7 +642,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: "",
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -598,7 +656,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: "",
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -610,7 +670,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: "",
             limit: limit,
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -623,7 +685,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: "",
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -635,7 +699,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: "",
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -647,7 +713,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: "",
             discount: discount,
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -660,7 +728,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: "",
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -672,7 +742,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: "",
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -684,7 +756,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: "",
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -696,7 +770,9 @@ router.post('/broadband/update', async(req, res) => {
             validity: validity,
             limit: limit,
             discount: "",
-            isAdmin: isAdmin
+            isAdmin: isAdmin,
+            userName: userName
+
         });
         return
     }
@@ -711,7 +787,7 @@ router.post('/broadband/update', async(req, res) => {
         //     return
         // }
         res.redirect('/broadband/broadbandPlans');
-
+        return;
     } catch (e) {
         if (e.statusCode && e.statusCode != 500) {
             res.status(e.statusCode).render('broadband/updatePlan', {
@@ -721,7 +797,9 @@ router.post('/broadband/update', async(req, res) => {
                 validity: validity,
                 limit: limit,
                 discount: discount,
-                isAdmin: isAdmin
+                isAdmin: isAdmin,
+                userName: userName
+
             });
         } else {
             res.status(500).render('broadband/updatePlan', {
@@ -731,7 +809,9 @@ router.post('/broadband/update', async(req, res) => {
                 validity: validity,
                 limit: limit,
                 discount: discount,
-                isAdmin: isAdmin
+                isAdmin: isAdmin,
+                userName: userName
+
             });
         }
     }
@@ -750,29 +830,31 @@ router.post('/broadband/getByName/:id', async(req, res) => {
     }
 
     if (!req.params.id.replace(/\s/g, '').length) {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin, userName: userName });
         return;
     }
     if (!req.params.id) {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin, userName: userName });
         return;
     }
     if (typeof req.params.id != 'string') {
-        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin });
+        res.status(400).render('broadband/broadbandPlans', { error: 'Invalid ID try one more time', isAdmin: isAdmin, userName: userName });
         return;
     }
-
+    let id = xss(req.params.id)
     try {
-        const plan = await broadbandData.get(req.params.id);
+        const plan = await broadbandData.get(id);
         if (plan == null) {
-            res.status(404).render('broadband/broadbandPlans', { error: 'No plan FOUND', isAdmin: isAdmin });
+            res.status(404).render('broadband/broadbandPlans', { error: 'No plan FOUND', isAdmin: isAdmin, userName: userName });
+            return;
         }
-        res.render('broadband/updatePlan', { id: plan._id, planName: plan.planName, price: plan.price, validity: plan.validity, limit: plan.limit, discount: plan.discount, isAdmin: isAdmin });
+        res.render('broadband/updatePlan', { userName: userName, id: plan._id, planName: plan.planName, price: plan.price, validity: plan.validity, limit: plan.limit, discount: plan.discount, isAdmin: isAdmin });
+        return;
     } catch (e) {
         if (e.statusCode && e.statusCode != 500) {
-            res.status(e.statusCode).render('broadband/broadbandPlans', { error: e.message, isAdmin: isAdmin });
+            res.status(e.statusCode).render('broadband/broadbandPlans', { userName: userName, error: e.message, isAdmin: isAdmin });
         } else
-            res.status(500).render('broadband/broadbandPlans', { error: 'Internal Server Error', isAdmin: isAdmin });
+            res.status(500).render('broadband/broadbandPlans', { userName: userName, error: 'Internal Server Error', isAdmin: isAdmin });
     }
 });
 
