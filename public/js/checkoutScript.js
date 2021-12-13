@@ -144,7 +144,7 @@
             return;
         }
 
-        if (expMonth > 12 && expMonth > 00) {
+        if (expMonth > 12) {
             errDiv.innerHTML = "Please provide a valid expiry Month";
             errDiv.hidden = false;
             month.focus();
@@ -201,21 +201,21 @@
         if (expYear.length === 2) {
             expirationYearFourDigit = expirationYearFourDigit + expYear;
         }
-
+        
         if (expirationYearFourDigit < currYearStr) {
             errDiv.innerHTML = "You card has been expired. Please use different card for payment";
             errDiv.hidden = false;
             year.focus();
             year.value = '';
-            return;;
+            return;
         } else if (parseInt(expirationYearFourDigit) > parseInt(currYearStr) + 10) {
             errDiv.innerHTML = "Please use different card for payment. This card seems ambitious";
             errDiv.hidden = false;
             year.focus();
             year.value = '';
-            return;;
+            return;
         }
-
+        
         if (expirationYearFourDigit == currYearStr && expirationMonth < currMonthStr) {
             errDiv.innerHTML = "You card has been expired. Please use different card for payment";
             errDiv.hidden = false;
@@ -223,6 +223,7 @@
             month.value = '';
             return;
         }
+       
 
         if (!cvv) {
             errDiv.innerHTML = "Please provide cvv";
@@ -232,7 +233,7 @@
             return;
         }
 
-        if (cvv.length === 0 || cvv.length !== 3) {
+        if (cvv.length !== 3) {
             errDiv.innerHTML = "Please provide a valid cvv";
             errDiv.hidden = false;
             cardcvv.focus();
