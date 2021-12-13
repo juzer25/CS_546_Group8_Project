@@ -55,6 +55,7 @@ module.exports = {
                 maxplan[i] = broadbandList[i].userID.length;
             }
             let max = Math.max(...maxplan)
+            if (max == 0) return null;
             let name = [],
                 j = 0;
             for (let i = 0; i < broadbandList.length; i++) {
@@ -72,8 +73,11 @@ module.exports = {
 
     get,
 
+
+
     async getPlan(planName) {
         try {
+            planName = planName.toLowerCase();
             const broadbandCollection = await broadband();
             let plan = await broadbandCollection.findOne({ planName: planName });
             if (!plan) throw { statusCode: 404, message: `Plan not found` };
@@ -90,13 +94,11 @@ module.exports = {
 
     //get plan by ID
     async getPlanById(planId) {
-        ObjectId(planId);
+
+        // ObjectId(planId);
         const broadbandCollection = await broadband();
-
-        plan = await broadbandCollection.findOne({ _id: planId });
-
+        plan = await broadbandCollection.findOne({ _id: ObjectId(planId) });
         if (!plan) throw "Plan not found";
-
         return plan;
     },
 
@@ -125,6 +127,7 @@ module.exports = {
         if (!discount.replace(/\s/g, '').length) throw { statusCode: 400, message: 'Input DISCOUNT should be string and valid' };
 
         try {
+            planName = planName.toLowerCase();
             const broadbandCollection = await broadband();
             const planByName = await broadbandCollection.findOne({ planName: planName });
             if (planByName == null) {

@@ -2,27 +2,29 @@
 		<div id="interior">
  		<ul>
  			<li><a href="/">HOME</a></li>
+			 <li><a href="/broadband/broadbandPlans">PLANS</a></li>
             {{#if userName}} 
 				
                 {{!-- <li><a href="users/logout">LOGOUT</a></li> --}}
 				{{#if isAdmin}}
-				<li><a href="/broadband/newPlan">ADD NEW BROADBAND PLAN</a></li>
+				{{!-- <li><a href="/broadband/newPlan">ADD NEW BROADBAND PLAN</a></li> --}}
     			{{!-- <li><a>Update BroadBand service</a></li>
     			<li><a>Delete Broadband service</a></li> --}}
     			<li><a href="/allappointments">CHECK USER REQUESTS</a></li>
 				{{else}}
 		        {{!-- <li><a href="users/profile">PROFILE</a></li> --}}
-				<li><a href="users/referafriend">REFER A FRIEND</a></li>
+				<li><a href="/users/referafriend">REFER A FRIEND</a></li>
                 <li><a href="/appointment">CREATE APPOINTMENT</a></li>
+				
 				{{/if}}
 
             {{/if}}
-			<li><a href="/broadband/broadbandPlans">PLANS</a></li>
+			
 			{{#if userName}}
 			{{#if isAdmin}}
 			{{else}}
 			<li><a href="/checkout/yourorders">YOUR ORDER</a></li>
-			
+			<li><a href="/broadband/contactus">CONTACT US</a></li>
 			{{/if}}
 			{{else}}
 				<li><a href="/broadband/contactus">CONTACT US</a></li>

@@ -4,7 +4,8 @@
 		<div id="interior">
  		<ul>
  			<li><a href="/">HOME</a></li>
-             
+            <li><a href="/broadband/broadbandPlans">PLANS</a></li>
+
              {{#if userName}}
                 
             {{/if}}
@@ -12,12 +13,12 @@
              
              {{#if userName}}
 			{{#if isAdmin}}
-            <li><a href="/broadband/newPlan">ADD NEW BROADBAND PLAN</a></li>	
+            {{!-- <li><a href="/broadband/newPlan">ADD NEW BROADBAND PLAN</a></li>	 --}}
     		<li><a href="/allappointments">CHECK USER REQUESTS</a></li>
 			{{else}}
+             <li><a href="/users/referafriend">REFER A FRIEND</a></li>
             <li><a href="/appointment">CREATE APPOINTMENT</a></li>
-			<li><a href="/checkout/yourorders">YOUR ORDER</a></li>
-            <li><a href="/users/referafriend">REFER A FRIEND</a></li>
+			<li><a href="/checkout/yourorders">YOUR ORDER</a></li>           
             <li><a href="/broadband/contactus">CONTACT US</a></li>
 			{{/if}}
             {{else}}
@@ -101,7 +102,7 @@
         {{#if isAdmin}}
         <tr>
         <form>
-        <td colspan="8"><button id="reg" type="submit" class="add" formmethod="get" formaction="/broadband/newPlan" >Add New Plan</button></td>
+        <td colspan="8"><button id="reg" type="submit" class="add" formmethod="post" formaction="/broadband/newPlan" >Add New Plan</button></td>
         </form>
         </tr>
         {{/if}}
