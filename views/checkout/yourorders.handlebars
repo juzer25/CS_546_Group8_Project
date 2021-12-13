@@ -3,7 +3,7 @@
  		<ul>
  			<li><a href="/">HOME</a></li>
             <li><a href="/broadband/broadbandPlans">PLANS</a></li> 
-            {{#if userName1}}
+            {{#if userName}}
 			{{#if isAdmin}}
 			{{else}}
 			<li><a href="/users/referafriend">REFER A FRIEND</a></li>
@@ -17,7 +17,7 @@
  		</div>
  		<div id="interior2">
         <ul> 
-        {{#if userName1}}      
+        {{#if userName}}      
 		<li><a href="/users/profile">PROFILE</a></li>
 			<li><a href="/users/logout">LOGOUT</a></li>
          {{else}}
@@ -35,7 +35,7 @@
 <tr>
 			<th>Order Id</th> 
             <th>Plan name</th>
-            <th>Plan Id</th>
+            {{!-- <th>Plan Id</th> --}}
             <th>Start Date</th>
             <th>End Date</th>
              <th>Price</th></tr>
@@ -43,7 +43,7 @@
 		<tr>
 			<td>{{orderId}}</td> 
             <td>{{planName}}</td>
-            <td>{{broadbandPlanId}}</td>
+            {{!-- <td>{{broadbandPlanId}}</td> --}}
             <td>{{startDate}}</td>
             <td>{{endDate}}</td>
              <td>{{price}}</td>

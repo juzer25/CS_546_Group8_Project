@@ -28,7 +28,7 @@ router.get('/checkout/yourorders', async(req, res) => {
         userName = req.session.user.userName;
     }
 
-    if (userName1 == 'admin') {
+    if (userName == 'admin') {
         isAdmin = true;
     }
 
@@ -62,7 +62,7 @@ router.get('/checkout/yourorders', async(req, res) => {
             res.render('checkout/yourorders', { userName: userName, isAdmin: isAdmin });
         }
     } catch (e) {
-        res.status(404).render('checkout/yourorders', { userName: userName, isAdmin: isAdmin });
+        res.redirect('/');
     }
     //res.render("checkout/bill")
 });
