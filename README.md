@@ -25,5 +25,7 @@
 ## Implemented Extra Features
 
 - [x] **Refer a friend**
+- [x] **Order History**
 
-
+## Ajax Form Submissions
+- Payment form is one with ajax
