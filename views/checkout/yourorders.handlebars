@@ -3,7 +3,7 @@
  		<ul>
  			<li><a href="/">HOME</a></li>
             <li><a href="/broadband/broadbandPlans">PLANS</a></li> 
-            {{#if userName1}}
+            {{#if userName}}
 			{{#if isAdmin}}
 			{{else}}
 			<li><a href="/users/referafriend">REFER A FRIEND</a></li>
@@ -17,7 +17,7 @@
  		</div>
  		<div id="interior2">
         <ul> 
-        {{#if userName1}}      
+        {{#if userName}}      
 		<li><a href="/users/profile">PROFILE</a></li>
 			<li><a href="/users/logout">LOGOUT</a></li>
          {{else}}
