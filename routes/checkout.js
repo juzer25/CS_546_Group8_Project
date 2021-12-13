@@ -22,10 +22,10 @@ router.get('/checkout/yourorders', async(req, res) => {
     if (!req.session.user) {
         res.redirect('/');
     }
-    let userName;
+    let userName1;
     let isAdmin = false;
     if (req.session.user) {
-        userName = req.session.user.userName;
+        userName1 = req.session.user.userName;
     }
 
     if (userName == 'admin') {
@@ -54,15 +54,15 @@ router.get('/checkout/yourorders', async(req, res) => {
                     orderId: orderId,
                     billDate: currDateString,
                     userName: user.userName,
-                    userName: userName,
+                    userName1: userName,
                     isAdmin: isAdmin
                 })
             }
         } else {
-            res.render('checkout/yourorders', { userName: user.userName, userName: userName, isAdmin: isAdmin });
+            res.render('checkout/yourorders', { userName1: userName1, isAdmin: isAdmin });
         }
     } catch (e) {
-        res.status(404).render('checkout/yourorders', { userName: userName, isAdmin: isAdmin });
+        res.status(404).render('checkout/yourorders', { userName1: userName1, isAdmin: isAdmin });
     }
     //res.render("checkout/bill")
 });
