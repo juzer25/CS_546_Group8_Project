@@ -28,7 +28,7 @@ router.get('/checkout/yourorders', async(req, res) => {
         userName1 = req.session.user.userName;
     }
 
-    if (userName == 'admin') {
+    if (userName1 == 'admin') {
         isAdmin = true;
     }
 
