@@ -32,23 +32,78 @@
 {{#if error}}
     <p>{{error}}</p>
 {{/if}}
+<div class="form_center">
 <div id='error' hidden></div>
 <form id='update-form' action='update' method='POST'>
-    <label for="userName"></label><input type='text' id="userName" name='userName' id='userName' value='{{userName}}'>
-    <label for="password"></label><input type='password' id="password" name='password' id='password' value='{{password}}'>
-    <label for="firstName"></label><input type='text' id="firstName" name='firstName' id='firstName' value='{{firstName}}'>
-    <label for="lastName"></label><input type='text' id="lastName" name='lastName' id='lastName' value='{{lastName}}'>
-    <label for="email"></label><input type='email' id="email" name='email' id='email' value='{{email}}'>
-    <label for="dob"></label><input type='date' id="dob" name='dateOfBirth' id='dateOfBirth' value='{{dateOfBirth}}'>
-    <label for="phoneNo"></label><input type='text' id="phoneNo" name='phoneNo' id='phoneNo' value='{{phoneNo}}'>
-    <label for="addr"></label><input type='text' id="addr" name='address' id='address' value='{{address}}'>
-    <label for="city"></label><input type='text' id="city" name='city' id='city' value='{{city}}'>
-    <label for="state"></label><input type='text' id="state" name='state' id='state' value='{{state}}'>
-    <label for="zip"></label><input type='text' id="zip" name='zipcode' id='zipcode' value='{{zipcode}}'>
+    <h1>UPDATE PROFILE</h1>
+    <div class="inputs">
+        <div class="group">
+            <input type='text' id="userName" name='userName' id='userName' value='{{userName}}'>
+            <span class="bar"></span>
+            <label for="userName">USERNAME</label>
+        </div>
+        
+        <div class="group">
+            <input type='password' id="password" name='password' id='password' value='{{password}}'>  
+            <span class="bar"></span>
+            <label for="password">PASSWORD</label> 
+        </div>
+        <div class="group">
+            <input type='text' id="firstName" name='firstName' id='firstName' value='{{firstName}}'>
+            <span class="bar"></span>
+            <label for="firstName">FIRST NAME</label>
+        </div>
+        <div class="group">
+            <input type='text' id="lastName" name='lastName' id='lastName' value='{{lastName}}'>
+            <span class="bar"></span>
+            <label for="lastName">LAST NAME</label>
+        </div>
+        <div class="group">
+            <input type='email' id="email" name='email' id='email' value='{{email}}'>
+            <span class="bar"></span>
+            <label for="email">EMAIL</label>
+        </div>
+        <div class="group">
+            <input type='date' id="dob" name='dateOfBirth' id='dateOfBirth' value='{{dateOfBirth}}'>
+            <span class="bar"></span>
+            <label for="dob">DATE OF BIRTH</label>
+        </div>
+        <div class="group">
+            <input type='text' id="phoneNo" name='phoneNo' id='phoneNo' value='{{phoneNo}}'>
+            <span class="bar"></span>
+                <label for="phoneNo">PHONE NUMBER</label>
+        </div>
+        <div class="group">
+            <input type='text' id="addr" name='address' id='address' value='{{address}}'>
+            <span class="bar"></span>
+            <label for="addr">ADDRESS</label>
+        </div>
+        <div class="group">
+            <input type='text' id="city" name='city' id='city' value='{{city}}'>
+            <span class="bar"></span>
+            <label for="city">CITY</label>
+        </div>
+        <div class="group">
+            <input type='text' id="state" name='state' id='state' value='{{state}}'>
+            <span class="bar"></span>
+            <label for="state">STATE</label>
+        </div>
+        <div class="group">
+            <input type='text' id="zip" name='zipcode' id='zipcode' value='{{zipcode}}'>
+            <span class="bar"></span>
+        <label for="zip">ZIPCODE</label>
+        </div>
+        </div>
+    
+    
+    
+    
+    <div><input id="reg" type='submit' value="Update Profile"></div>
 
-    <input type='submit' value="Update Profile">
+    
 
     <input name= '_method' value="PUT" type='hidden'>
+    </div>
 </form>
-
+</div>
 <script src="/public/js/update.js"></script>
